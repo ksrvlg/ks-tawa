@@ -112,7 +112,7 @@
       const items = Array.from(itemRows).map(row => ({
         name: row.querySelector('.item-name').value,
         department: row.querySelector('.item-department').value,
-        status: 'Received'
+        status: 'Pending'
       }));
 
       if (orderNumber && customerName && items.length > 0 && items.every(item => item.name)) {
@@ -148,9 +148,9 @@
           orderNumber: '101',
           customerName: 'John',
           items: [
-            { name: 'Kadahi Paneer', department: 'Indian', status: 'Received' },
-            { name: 'Tandoori Roti', department: 'Tandoor', status: 'Received' },
-            { name: 'Veg Momos', department: 'Chinese', status: 'Received' }
+            { name: 'Kadahi Paneer', department: 'Indian', status: 'Pending' },
+            { name: 'Tandoori Roti', department: 'Tandoor', status: 'Pending' },
+            { name: 'Veg Momos', department: 'Chinese', status: 'Pending' }
           ],
           timestamp: new Date().toLocaleString()
         }
@@ -165,14 +165,7 @@
       alert('Orders synced from Petpooja (mock). Contact Petpooja for API setup.');
     }
 
-    function confirmOrderReady(orderIndex) {
-      orders[orderIndex].confirmedReady = true;
-      renderOrders();
-      // Optionally sync confirmation to Petpooja via API
-    }
-
     function updateItemStatus(orderIndex, itemIndex, newStatus) {
-      // This function is for backend/Petpooja sync simulation
       orders[orderIndex].items[itemIndex].status = newStatus;
       const allItemsReady = orders[orderIndex].items.every(item => item.status === 'Ready');
       orders[orderIndex].status = allItemsReady ? 'Ready for Pickup' : 'Preparing';
@@ -182,6 +175,13 @@
       }
       renderOrders();
       renderPendingItems();
+      // Optionally sync status to Petpooja via API
+    }
+
+    function confirmOrderReady(orderIndex) {
+      orders[orderIndex].confirmedReady = true;
+      renderOrders();
+      // Optionally sync confirmation to Petpooja via API
     }
 
     function renderOrders() {
@@ -189,10 +189,27 @@
       tableBody.innerHTML = '';
       orders.forEach((order, orderIndex) => {
         const isFlashing = order.status === 'Preparing';
-        const itemList = order.items.map(item => `
-          <div class="${isFlashing ? 'flashing' : ''}">
+        const itemList = order.items.map((item, itemIndex) => `
+          <div class="${isFlashing && item.status === 'Pending' ? 'flashing' : ''}">
             ${item.name} (${item.department})
+            ${item.status === 'Pending' ? `
+              <button class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 ml-2" 
+                      disabled>
+                Pending
+              </button>
+              <button class="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 ml-2" 
+                      onclick="updateItemStatus(${orderIndex}, ${itemIndex}, 'Ready')">
+                Ready
+              </button>
+            ` : ''}
           </div>
+        `).join('');
+        const actionList = order.items.map(item => `
+          ${item.status === 'Ready' ? `
+            <div class="bg-green-700 text-white px-2 py-1 rounded mb-1">
+              ${item.name}: Ready
+            </div>
+          ` : ''}
         `).join('');
         const row = document.createElement('tr');
         row.innerHTML = `
@@ -200,7 +217,8 @@
           <td class="border p-2">${order.customerName} (Received: ${order.timestamp})</td>
           <td class="border p-2">${itemList}</td>
           <td class="border p-2">${order.status}</td>
-          <td class="border p-2 flex space-x-2">
+          <td class="border p-2 flex flex-col space-y-2">
+            ${actionList}
             <button class="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 ${order.confirmedReady ? 'bg-green-700' : ''}" 
                     onclick="confirmOrderReady(${orderIndex})" 
                     ${order.status !== 'Ready for Pickup' || order.confirmedReady ? 'disabled' : ''}>
@@ -238,9 +256,7 @@
     function simulatePetpoojaStatusUpdate() {
       orders.forEach((order, orderIndex) => {
         order.items.forEach((item, itemIndex) => {
-          if (item.status === 'Received' && Math.random() < 0.1) {
-            updateItemStatus(orderIndex, itemIndex, 'Preparing');
-          } else if (item.status === 'Preparing' && Math.random() < 0.1) {
+          if (item.status === 'Pending' && Math.random() < 0.1) {
             updateItemStatus(orderIndex, itemIndex, 'Ready');
           }
         });
