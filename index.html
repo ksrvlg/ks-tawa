@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restaurant Order Pickup System</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+  <div class="container mx-auto p-4">
+    <h1 class="text-2xl font-bold mb-4">Order Pickup System</h1>
+    
+    <!-- Add New Order Form -->
+    <div class="mb-6 bg-white p-4 rounded shadow">
+      <h2 class="text-lg font-semibold mb-2">Add New Order</h2>
+      <div class="flex space-x-4 mb-4">
+        <input id="orderNumber" type="text" placeholder="Order Number" class="border p-2 rounded w-1/3">
+        <input id="customerName" type="text" placeholder="Customer Name" class="border p-2 rounded w-1/3">
+      </div>
+      <div id="itemInputs" class="mb-4">
+        <div class="flex space-x-4 mb-2 item-row">
+          <input type="text" placeholder="Item Name" class="border p-2 rounded w-1/3 item-name">
+          <select class="border p-2 rounded w-1/3 item-department">
+            <option value="Indian">Indian</option>
+            <option value="Chinese">Chinese</option>
+            <option value="Tandoor">Tandoor</option>
+          </select>
+          <button onclick="removeItem(this)" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">Remove</button>
+        </div>
+      </div>
+      <button onclick="addItemInput()" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Add Item</button>
+      <button onclick="addOrder()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 ml-2">Submit Order</button>
+    </div>
+    
+    <!-- Department Pending Items -->
+    <div class="mb-6 bg-white p-4 rounded shadow">
+      <h2 class="text-lg font-semibold mb-2">Pending Items by Department</h2>
+      <div class="grid grid-cols-3 gap-4">
+        <div>
+          <h3 class="font-semibold">Indian</h3>
+          <ul id="indianPending" class="list-disc pl-5"></ul>
+        </div>
+        <div>
+          <h3 class="font-semibold">Chinese</h3>
+          <ul id="chinesePending" class="list-disc pl-5"></ul>
+        </div>
+        <div>
+          <h3 class="font-semibold">Tandoor</h3>
+          <ul id="tandoorPending" class="list-disc pl-5"></ul>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Orders Table -->
+    <div class="bg-white p-4 rounded shadow">
+      <h2 class="text-lg font-semibold mb-2">Current Orders</h2>
+      <table class="w-full border-collapse">
+        <thead>
+          <tr class="bg-gray-200">
+            <th class="border p-2">Order Number</th>
+            <th class="border p-2">Customer Name</th>
+            <th class="border p-2">Items</th>
+            <th class="border p-2">Status</th>
+            <th class="border p-2">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="ordersTable">
+          <!-- Orders will be dynamically added here -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    let orders = [];
+
+    function addItemInput() {
+      const itemInputs = document.getElementById('itemInputs');
+      const newItem = document.createElement('div');
+      newItem.className = 'flex space-x-4 mb-2 item-row';
+      newItem.innerHTML = `
+        <input type="text" placeholder="Item Name" class="border p-2 rounded w-1/3 item-name">
+        <select class="border p-2 rounded w-1/3 item-department">
+          <option value="Indian">Indian</option>
+          <option value="Chinese">Chinese</option>
+          <option value="Tandoor">Tandoor</option>
+        </select>
+        <button onclick="removeItem(this)" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">Remove</button>
+      `;
+      itemInputs.appendChild(newItem);
+    }
+
+    function removeItem(button) {
+      button.parentElement.remove();
+    }
+
+    function addOrder() {
+      const orderNumber = document.getElementById('orderNumber').value;
+      const customerName = document.getElementById('customerName').value;
+      const itemRows = document.querySelectorAll('.item-row');
+      const items = Array.from(itemRows).map(row => ({
+        name: row.querySelector('.item-name').value,
+        department: row.querySelector('.item-department').value,
+        status: 'Received'
+      }));
+
+      if (orderNumber && customerName && items.length > 0 && items.every(item => item.name)) {
+        if (orders.some(order => order.orderNumber === orderNumber)) {
+          alert('Order number must be unique.');
+          return;
+        }
+        orders.push({ orderNumber, customerName, items, status: 'Preparing', timestamp: new Date().toLocaleString() });
+        document.getElementById('orderNumber').value = '';
+        document.getElementById('customerName').value = '';
+        document.getElementById('itemInputs').innerHTML = `
+          <div class="flex space-x-4 mb-2 item-row">
+            <input type="text" placeholder="Item Name" class="border p-2 rounded w-1/3 item-name">
+            <select class="border p-2 rounded w-1/3 item-department">
+              <option value="Indian">Indian</option>
+              <option value="Chinese">Chinese</option>
+              <option value="Tandoor">Tandoor</option>
+            </select>
+            <button onclick="removeItem(this)" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">Remove</button>
+          </div>
+        `;
+        renderOrders();
+        renderPendingItems();
+      } else {
+        alert('Please fill in all fields: order number, customer name, and at least one item.');
+      }
+    }
+
+    function updateItemStatus(orderIndex, itemIndex, newStatus) {
+      orders[orderIndex].items[itemIndex].status = newStatus;
+      const allItemsReady = orders[orderIndex].items.every(item => item.status === 'Ready');
+      orders[orderIndex].status = allItemsReady ? 'Ready for Pickup' : 'Preparing';
+      if (newStatus === 'Picked Up') {
+        orders[orderIndex].status = 'Picked Up';
+      }
+      renderOrders();
+      renderPendingItems();
+    }
+
+    function renderOrders() {
+      const tableBody = document.getElementById('ordersTable');
+      tableBody.innerHTML = '';
+      orders.forEach((order, orderIndex) => {
+        const itemList = order.items.map((item, itemIndex) => `
+          <div>
+            ${item.name} (${item.department}): ${item.status}
+            <button class="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600 ml-2" 
+                    onclick="updateItemStatus(${orderIndex}, ${itemIndex}, 'Preparing')" 
+                    ${item.status !== 'Received' ? 'disabled' : ''}>
+              Preparing
+            </button>
+            <button class="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 ml-2" 
+                    onclick="updateItemStatus(${orderIndex}, ${itemIndex}, 'Ready')" 
+                    ${item.status !== 'Preparing' ? 'disabled' : ''}>
+              Ready
+            </button>
+          </div>
+        `).join('');
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td class="border p-2 font-bold">Order #${order.orderNumber}</td>
+          <td class="border p-2">${order.customerName} (Received: ${order.timestamp})</td>
+          <td class="border p-2">${itemList}</td>
+          <td class="border p-2">${order.status}</td>
+          <td class="border p-2">
+            <button class="bg-gray-500 text-white px-2 py-1 rounded hover:bg-gray-600" 
+                    onclick="updateItemStatus(${orderIndex}, 0, 'Picked Up')" 
+                    ${order.status !== 'Ready for Pickup' ? 'disabled' : ''}>
+              Picked Up
+            </button>
+          </td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+
+    function renderPendingItems() {
+      const departments = ['Indian', 'Chinese', 'Tandoor'];
+      departments.forEach(dept => {
+        const pendingList = document.getElementById(`${dept.toLowerCase()}Pending`);
+        pendingList.innerHTML = '';
+        orders.forEach(order => {
+          order.items.forEach((item, itemIndex) => {
+            if (item.department === dept && item.status !== 'Ready') {
+              const li = document.createElement('li');
+              li.textContent = `Order #${order.orderNumber}: ${item.name} (${item.status})`;
+              pendingList.appendChild(li);
+            }
+          });
+        });
+      });
+    }
+  </script>
+</body>
+</html>
