@@ -7,7 +7,262 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     @keyframes flash {
+      0%, 100% { background-color: #fee2e2; }<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restaurant Order Pickup System (Petpooja Sync)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @keyframes flash {
       0%, 100% { background-color: #fee2e2; }
+      50% { background-color: #fca5a5; }
+    }
+    .flashing {
+      animation: flash 1.5s infinite;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 font-sans">
+  <div class="container mx-auto p-4">
+    <h1 class="text-2xl font-bold mb-4">Order Pickup System (Synced with Petpooja)</h1>
+    
+    <!-- Sync and Add Order Section -->
+    <div class="mb-6 bg-white p-4 rounded shadow">
+      <h2 class="text-lg font-semibold mb-2">Order Management</h2>
+      <button onclick="fetchPetpoojaOrders()" class="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600 mb-4">Sync Orders from Petpooja</button>
+      <h3 class="text-md font-semibold mb-2">Manually Add Order (Fallback)</h3>
+      <div class="flex space-x-4 mb-4">
+        <input id="orderNumber" type="text" placeholder="Order Number" class="border p-2 rounded w-1/3">
+        <input id="customerName" type="text" placeholder="Customer Name" class="border p-2 rounded w-1/3">
+      </div>
+      <div id="itemInputs" class="mb-4">
+        <div class="flex space-x-4 mb-2 item-row">
+          <input type="text" placeholder="Item Name" class="border p-2 rounded w-1/3 item-name">
+          <select class="border p-2 rounded w-1/3 item-department">
+            <option value="Indian">Indian</option>
+            <option value="Chinese">Chinese</option>
+            <option value="Tandoor">Tandoor</option>
+          </select>
+          <button onclick="removeItem(this)" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">Remove</button>
+        </div>
+      </div>
+      <button onclick="addItemInput()" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Add Item</button>
+      <button onclick="addOrder()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 ml-2">Submit Manual Order</button>
+    </div>
+    
+    <!-- Department Pending Items -->
+    <div class="mb-6 bg-white p-4 rounded shadow">
+      <h2 class="text-lg font-semibold mb-2">Pending Items by Department</h2>
+      <div class="grid grid-cols-3 gap-4">
+        <div>
+          <h3 class="font-semibold">Indian</h3>
+          <ul id="indianPending" class="list-disc pl-5"></ul>
+        </div>
+        <div>
+          <h3 class="font-semibold">Chinese</h3>
+          <ul id="chinesePending" class="list-disc pl-5"></ul>
+        </div>
+        <div>
+          <h3 class="font-semibold">Tandoor</h3>
+          <ul id="tandoorPending" class="list-disc pl-5"></ul>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Orders Table -->
+    <div class="bg-white p-4 rounded shadow">
+      <h2 class="text-lg font-semibold mb-2">Current Orders</h2>
+      <table class="w-full border-collapse">
+        <thead>
+          <tr class="bg-gray-200">
+            <th class="border p-2">Order Number</th>
+            <th class="border p-2">Customer Name</th>
+            <th class="border p-2">Items</th>
+            <th class="border p-2">Status</th>
+            <th class="border p-2">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="ordersTable">
+          <!-- Orders will be dynamically added here -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    let orders = [];
+
+    function addItemInput() {
+      const itemInputs = document.getElementById('itemInputs');
+      const newItem = document.createElement('div');
+      newItem.className = 'flex space-x-4 mb-2 item-row';
+      newItem.innerHTML = `
+        <input type="text" placeholder="Item Name" class="border p-2 rounded w-1/3 item-name">
+        <select class="border p-2 rounded w-1/3 item-department">
+          <option value="Indian">Indian</option>
+          <option value="Chinese">Chinese</option>
+          <option value="Tandoor">Tandoor</option>
+        </select>
+        <button onclick="removeItem(this)" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">Remove</button>
+      `;
+      itemInputs.appendChild(newItem);
+    }
+
+    function removeItem(button) {
+      button.parentElement.remove();
+    }
+
+    function addOrder() {
+      const orderNumber = document.getElementById('orderNumber').value;
+      const customerName = document.getElementById('customerName').value;
+      const itemRows = document.querySelectorAll('.item-row');
+      const items = Array.from(itemRows).map(row => ({
+        name: row.querySelector('.item-name').value,
+        department: row.querySelector('.item-department').value,
+        status: 'Pending'
+      }));
+
+      if (orderNumber && customerName && items.length > 0 && items.every(item => item.name)) {
+        if (orders.some(order => order.orderNumber === orderNumber)) {
+          alert('Order number must be unique.');
+          return;
+        }
+        orders.push({ orderNumber, customerName, items, status: 'Preparing', timestamp: new Date().toLocaleString(), confirmedReady: false });
+        document.getElementById('orderNumber').value = '';
+        document.getElementById('customerName').value = '';
+        document.getElementById('itemInputs').innerHTML = `
+          <div class="flex space-x-4 mb-2 item-row">
+            <input type="text" placeholder="Item Name" class="border p-2 rounded w-1/3 item-name">
+            <select class="border p-2 rounded w-1/3 item-department">
+              <option value="Indian">Indian</option>
+              <option value="Chinese">Chinese</option>
+              <option value="Tandoor">Tandoor</option>
+            </select>
+            <button onclick="removeItem(this)" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">Remove</button>
+          </div>
+        `;
+        renderOrders();
+        renderPendingItems();
+      } else {
+        alert('Please fill in all fields: order number, customer name, and at least one item.');
+      }
+    }
+
+    function fetchPetpoojaOrders() {
+      // Mock API call (replace with actual Petpooja API integration)
+      const mockOrders = [
+        {
+          orderNumber: String(100 + orders.length + 1), // Ensure unique order number
+          customerName: 'John',
+          items: [
+            { name: 'Kadahi Paneer', department: 'Indian', status: 'Pending' },
+            { name: 'Tandoori Roti', department: 'Tandoor', status: 'Pending' },
+            { name: 'Veg Momos', department: 'Chinese', status: 'Pending' }
+          ],
+          timestamp: new Date().toLocaleString()
+        }
+      ];
+      mockOrders.forEach(order => {
+        if (!orders.some(o => o.orderNumber === order.orderNumber)) {
+          orders.push({ ...order, status: 'Preparing', confirmedReady: false });
+        }
+      });
+      renderOrders();
+      renderPendingItems();
+      alert('Orders synced from Petpooja (mock). Contact Petpooja for API setup.');
+    }
+
+    function updateItemStatus(orderIndex, itemIndex, newStatus) {
+      orders[orderIndex].items[itemIndex].status = newStatus;
+      const allItemsReady = orders[orderIndex].items.every(item => item.status === 'Ready');
+      orders[orderIndex].status = allItemsReady ? 'Ready for Pickup' : 'Preparing';
+      if (newStatus === 'Picked Up') {
+        orders[orderIndex].status = 'Picked Up';
+        orders[orderIndex].confirmedReady = false;
+      }
+      renderOrders();
+      renderPendingItems();
+      // Optionally sync status to Petpooja via API
+    }
+
+    function confirmOrderReady(orderIndex) {
+      orders[orderIndex].confirmedReady = true;
+      renderOrders();
+      // Optionally sync confirmation to Petpooja via API
+    }
+
+    function renderOrders() {
+      const tableBody = document.getElementById('ordersTable');
+      tableBody.innerHTML = '';
+      orders.forEach((order, orderIndex) => {
+        const isFlashing = order.status === 'Preparing';
+        const itemList = order.items.map((item, itemIndex) => `
+          <div class="${isFlashing && item.status === 'Pending' ? 'flashing' : ''}">
+            ${item.name} (${item.department})
+            ${item.status === 'Pending' ? `
+              <button class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 ml-2" 
+                      disabled>
+                Pending
+              </button>
+              <button class="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 ml-2" 
+                      onclick="updateItemStatus(${orderIndex}, ${itemIndex}, 'Ready')">
+                Ready
+              </button>
+            ` : ''}
+          </div>
+        `).join('');
+        const actionList = order.items.map(item => `
+          ${item.status === 'Ready' ? `
+            <div class="bg-green-700 text-white px-2 py-1 rounded mb-1">
+              ${item.name}: Ready
+            </div>
+          ` : ''}
+        `).join('');
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td class="border p-2 font-bold">Order #${order.orderNumber}</td>
+          <td class="border p-2">${order.customerName} (Received: ${order.timestamp})</td>
+          <td class="border p-2">${itemList}</td>
+          <td class="border p-2">${order.status}</td>
+          <td class="border p-2 flex flex-col space-y-2">
+            ${actionList}
+            <button class="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 ${order.confirmedReady ? 'bg-green-700' : ''}" 
+                    onclick="confirmOrderReady(${orderIndex})" 
+                    ${order.status !== 'Ready for Pickup' || order.confirmedReady ? 'disabled' : ''}>
+              Ready
+            </button>
+            <button class="bg-gray-500 text-white px-2 py-1 rounded hover:bg-gray-600" 
+                    onclick="updateItemStatus(${orderIndex}, 0, 'Picked Up')" 
+                    ${order.status !== 'Ready for Pickup' ? 'disabled' : ''}>
+              Picked Up
+            </button>
+          </td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+
+    function renderPendingItems() {
+      const departments = ['Indian', 'Chinese', 'Tandoor'];
+      departments.forEach(dept => {
+        const pendingList = document.getElementById(`${dept.toLowerCase()}Pending`);
+        pendingList.innerHTML = '';
+        orders.forEach(order => {
+          order.items.forEach(item => {
+            if (item.department === dept && item.status !== 'Ready') {
+              const li = document.createElement('li');
+              li.innerHTML = `Order #${order.orderNumber}: <span class="text-red-600">${item.name}</span>`;
+              pendingList.appendChild(li);
+            }
+          });
+        });
+      });
+    }
+  </script>
+</body>
+</html>
       50% { background-color: #fca5a5; }
     }
     .flashing {
