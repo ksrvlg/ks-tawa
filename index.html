@@ -5,6 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Restaurant Order Pickup System (Petpooja Sync)</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @keyframes flash {
+      0%, 100% { background-color: #fee2e2; }
+      50% { background-color: #fca5a5; }
+    }
+    .flashing {
+      animation: flash 1.5s infinite;
+    }
+  </style>
 </head>
 <body class="bg-gray-100 font-sans">
   <div class="container mx-auto p-4">
@@ -163,6 +172,7 @@
     }
 
     function updateItemStatus(orderIndex, itemIndex, newStatus) {
+      // This function is for backend/Petpooja sync simulation
       orders[orderIndex].items[itemIndex].status = newStatus;
       const allItemsReady = orders[orderIndex].items.every(item => item.status === 'Ready');
       orders[orderIndex].status = allItemsReady ? 'Ready for Pickup' : 'Preparing';
@@ -178,19 +188,10 @@
       const tableBody = document.getElementById('ordersTable');
       tableBody.innerHTML = '';
       orders.forEach((order, orderIndex) => {
-        const itemList = order.items.map((item, itemIndex) => `
-          <div>
-            ${item.name} (${item.department}): <span class="${item.status === 'Ready' ? 'text-green-600' : 'text-red-600'}">${item.status}</span>
-            <button class="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600 ml-2" 
-                    onclick="updateItemStatus(${orderIndex}, ${itemIndex}, 'Preparing')" 
-                    ${item.status !== 'Received' ? 'disabled' : ''}>
-              Preparing
-            </button>
-            <button class="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 ml-2" 
-                    onclick="updateItemStatus(${orderIndex}, ${itemIndex}, 'Ready')" 
-                    ${item.status !== 'Preparing' ? 'disabled' : ''}>
-              Ready
-            </button>
+        const isFlashing = order.status === 'Preparing';
+        const itemList = order.items.map(item => `
+          <div class="${isFlashing ? 'flashing' : ''}">
+            ${item.name} (${item.department})
           </div>
         `).join('');
         const row = document.createElement('tr');
@@ -222,16 +223,32 @@
         const pendingList = document.getElementById(`${dept.toLowerCase()}Pending`);
         pendingList.innerHTML = '';
         orders.forEach(order => {
-          order.items.forEach((item, itemIndex) => {
+          order.items.forEach(item => {
             if (item.department === dept && item.status !== 'Ready') {
               const li = document.createElement('li');
-              li.innerHTML = `Order #${order.orderNumber}: ${item.name} (<span class="text-red-600">${item.status}</span>)`;
+              li.innerHTML = `Order #${order.orderNumber}: <span class="text-red-600">${item.name}</span>`;
               pendingList.appendChild(li);
             }
           });
         });
       });
     }
+
+    // Simulate Petpooja status updates (for testing)
+    function simulatePetpoojaStatusUpdate() {
+      orders.forEach((order, orderIndex) => {
+        order.items.forEach((item, itemIndex) => {
+          if (item.status === 'Received' && Math.random() < 0.1) {
+            updateItemStatus(orderIndex, itemIndex, 'Preparing');
+          } else if (item.status === 'Preparing' && Math.random() < 0.1) {
+            updateItemStatus(orderIndex, itemIndex, 'Ready');
+          }
+        });
+      });
+    }
+
+    // Run simulation every 5 seconds (remove in production)
+    setInterval(simulatePetpoojaStatusUpdate, 5000);
   </script>
 </body>
 </html>
