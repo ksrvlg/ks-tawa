@@ -118,7 +118,8 @@
           alert('Order number must be unique.');
           return;
         }
-        orders.push({ orderNumber, customerName, items, status: 'Preparing', timestamp: new Date().toLocaleString(), confirmedReady: false });
+        const newOrder = { orderNumber, customerName, items, status: 'Preparing', timestamp: new Date().toLocaleString(), confirmedReady: false };
+        orders.push(newOrder);
         document.getElementById('orderNumber').value = '';
         document.getElementById('customerName').value = '';
         document.getElementById('itemInputs').innerHTML = `
@@ -132,6 +133,25 @@
             <button onclick="removeItem(this)" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">Remove</button>
           </div>
         `;
+        // Announce order submission
+        if ('speechSynthesis' in window) {
+          const departments = ['Indian', 'Chinese', 'Tandoor'];
+          const deptItems = departments.map(dept => ({
+            dept,
+            items: items.filter(item => item.department === dept).map(item => item.name)
+          })).filter(dept => dept.items.length > 0);
+          const announcementParts = [`Order number ${orderNumber}`];
+          deptItems.forEach(dept => {
+            announcementParts.push(`${dept.dept}: ${dept.items.join(', ')}`);
+          });
+          const announcement = announcementParts.join(', ');
+          const utterance = new SpeechSynthesisUtterance(announcement);
+          utterance.volume = 0.8;
+          utterance.lang = 'en-US';
+          window.speechSynthesis.speak(utterance);
+        } else {
+          alert('Speech synthesis not supported in this browser. Please use Chrome or Edge.');
+        }
         renderOrders();
         renderPendingItems();
       } else {
@@ -153,14 +173,16 @@
 
     function confirmOrderReady(orderIndex) {
       orders[orderIndex].confirmedReady = true;
-      // Announce order details
-      const order = orders[orderIndex];
-      const itemNames = order.items.map(item => item.name).join(', ');
-      const announcement = `Order number ${order.orderNumber} for ${order.customerName} is ready. Items: ${itemNames}`;
-      const utterance = new SpeechSynthesisUtterance(announcement);
-      utterance.volume = 0.8;
-      utterance.lang = 'en-US';
-      window.speechSynthesis.speak(utterance);
+      // Announce order ready
+      if ('speechSynthesis' in window) {
+        const order = orders[orderIndex];
+        const itemNames = order.items.map(item => item.name).join(', ');
+        const announcement = `Order number ${order.orderNumber} for ${order.customerName} is ready. Items: ${itemNames}`;
+        const utterance = new SpeechSynthesisUtterance(announcement);
+        utterance.volume = 0.8;
+        utterance.lang = 'en-US';
+        window.speechSynthesis.speak(utterance);
+      }
       renderOrders();
     }
 
