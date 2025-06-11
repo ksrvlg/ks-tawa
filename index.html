@@ -103,6 +103,30 @@
       button.parentElement.remove();
     }
 
+    function speakAnnouncement(text, repeat = 1) {
+      if ('speechSynthesis' in window) {
+        const voices = speechSynthesis.getVoices();
+        const indianMaleVoice = voices.find(voice => 
+          voice.lang === 'en-IN' && (voice.name.includes('Male') || voice.name.includes('Ravi') || voice.name.includes('हिन्दी'))
+        ) || voices.find(voice => voice.lang === 'en-IN') || voices[0];
+
+        for (let i = 0; i < repeat; i++) {
+          const utterance = new SpeechSynthesisUtterance(text);
+          utterance.voice = indianMaleVoice;
+          utterance.volume = 0.8;
+          utterance.lang = 'en-IN';
+          utterance.rate = 1.0;
+          // Add slight delay between repetitions
+          utterance.onstart = () => {
+            if (i > 0) setTimeout(() => {}, 500);
+          };
+          window.speechSynthesis.speak(utterance);
+        }
+      } else {
+        alert('Speech synthesis not supported in this browser. Please use Chrome or Edge.');
+      }
+    }
+
     function addOrder() {
       const orderNumber = document.getElementById('orderNumber').value;
       const customerName = document.getElementById('customerName').value;
@@ -134,24 +158,17 @@
           </div>
         `;
         // Announce order submission
-        if ('speechSynthesis' in window) {
-          const departments = ['Indian', 'Chinese', 'Tandoor'];
-          const deptItems = departments.map(dept => ({
-            dept,
-            items: items.filter(item => item.department === dept).map(item => item.name)
-          })).filter(dept => dept.items.length > 0);
-          const announcementParts = [`Order number ${orderNumber}`];
-          deptItems.forEach(dept => {
-            announcementParts.push(`${dept.dept}: ${dept.items.join(', ')}`);
-          });
-          const announcement = announcementParts.join(', ');
-          const utterance = new SpeechSynthesisUtterance(announcement);
-          utterance.volume = 0.8;
-          utterance.lang = 'en-US';
-          window.speechSynthesis.speak(utterance);
-        } else {
-          alert('Speech synthesis not supported in this browser. Please use Chrome or Edge.');
-        }
+        const departments = ['Indian', 'Chinese', 'Tandoor'];
+        const deptItems = departments.map(dept => ({
+          dept,
+          items: items.filter(item => item.department === dept).map(item => item.name)
+        })).filter(dept => dept.items.length > 0);
+        const announcementParts = [`Order number ${orderNumber}`];
+        deptItems.forEach(dept => {
+          announcementParts.push(`${dept.dept}: ${dept.items.join(', ')}`);
+        });
+        const announcement = announcementParts.join(', ');
+        speakAnnouncement(announcement, 2);
         renderOrders();
         renderPendingItems();
       } else {
@@ -174,15 +191,10 @@
     function confirmOrderReady(orderIndex) {
       orders[orderIndex].confirmedReady = true;
       // Announce order ready
-      if ('speechSynthesis' in window) {
-        const order = orders[orderIndex];
-        const itemNames = order.items.map(item => item.name).join(', ');
-        const announcement = `Order number ${order.orderNumber} for ${order.customerName} is ready. Items: ${itemNames}`;
-        const utterance = new SpeechSynthesisUtterance(announcement);
-        utterance.volume = 0.8;
-        utterance.lang = 'en-US';
-        window.speechSynthesis.speak(utterance);
-      }
+      const order = orders[orderIndex];
+      const itemNames = order.items.map(item => item.name).join(', ');
+      const announcement = `Order number ${order.orderNumber} for ${order.customerName} is ready. Items: ${itemNames}`;
+      speakAnnouncement(announcement, 2);
       renderOrders();
     }
 
@@ -253,6 +265,11 @@
         });
       });
     }
+
+    // Load voices (some browsers need this)
+    window.speechSynthesis.onvoiceschanged = () => {
+      window.speechSynthesis.getVoices();
+    };
   </script>
 </body>
 </html>
