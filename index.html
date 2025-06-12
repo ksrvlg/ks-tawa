@@ -107,7 +107,7 @@
       'Raita': 'Indian',
       'Veg Manchurian': 'Chinese',
       'Veg Fried Rice': 'Chinese',
-      'Manchurian': 'Chinese' // Additional mapping
+      'Manchurian': 'Chinese'
     };
 
     function addItemInput() {
@@ -147,12 +147,13 @@
       }
       try {
         const result = await Tesseract.recognize(file, 'eng', {
-          logger: m => console.log(m)
+          logger: m => console.log(m) // Log OCR progress
         });
-        const text = result.data.text;
+        const text = result.data.text.trim();
+        console.log('OCR Extracted Text:', text); // Debug: Show raw OCR output
         const bill = parseBillText(text);
         if (!validateBill(bill)) {
-          alert('Invalid bill data extracted. Ensure bill includes order number, customer name, type (Pickup/Dine-In), and items with quantities. All items must map to Indian, Chinese, or Tandoor.');
+          alert('Invalid bill data extracted. Ensure bill includes order number, customer name, type (Pickup/Dine-In), and items with quantities. All items must map to Indian, Chinese, or Tandoor. Extracted text: ' + text);
           return;
         }
         if (orders.some(order => order.orderNumber === bill.orderNumber)) {
@@ -179,8 +180,8 @@
         alert('Bill uploaded and processed successfully.');
         document.getElementById('billUpload').value = ''; // Reset file input
       } catch (error) {
-        alert('Error processing JPEG bill. Ensure the image is clear and contains readable text.');
-        console.error(error);
+        alert('Error processing JPEG bill. Ensure the image is clear and contains readable text. Error details: ' + error.message);
+        console.error('OCR Error:', error);
       }
     }
 
@@ -199,31 +200,28 @@
           const match = line.match(/^(\d+)\s+x\s+(.+)/i);
           if (match) {
             const quantity = parseInt(match[1]);
-            let name = match[2].trim();
-            // Handle thali with multiple items in parentheses
-            if (name.includes('Thali') && name.includes('(') && name.includes(')')) {
-              const baseName = name.split('(')[0].trim();
-              const subItems = name.match(/\(([^)]+)\)/)[1].split('+').map(s => s.trim());
-              items = items.concat(subItems.map(subItem => ({
-                name: subItem,
-                department: itemDepartments[subItem] || null,
-                quantity: quantity
-              })));
+            let name = match[2].trim().replace(/\(.*\)/, '').trim(); // Remove parenthetical content for base name
+            let subItems = [];
+            const thaliMatch = match[2].match(/\(([^)]+)\)/);
+            if (thaliMatch) {
+              subItems = thaliMatch[1].split('+').map(s => s.trim());
+              name = subItems.join(' + '); // Use combined name for display
             } else {
-              const department = itemDepartments[name] || null;
-              if (department) {
-                items.push({ name, department, quantity });
-              }
+              subItems = [name];
             }
+            items = items.concat(subItems.map(subItem => {
+              const department = itemDepartments[subItem] || null;
+              if (!department) {
+                throw new Error(`Unknown item: ${subItem}. Please assign department manually.`);
+              }
+              return { name: subItem, department, quantity };
+            }));
           }
         }
       }
 
       if (!orderNumber || !customerName || !items.length) {
-        throw new Error('Could not extract required bill details (order number, customer name, or items).');
-      }
-      if (!items.every(item => item.department)) {
-        throw new Error('Some items could not be mapped to departments. Please assign manually.');
+        throw new Error('Could not extract required bill details (order number, customer name, or items). Extracted text: ' + text);
       }
       return { orderNumber, customerName, orderType, items };
     }
