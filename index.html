@@ -36,12 +36,13 @@
       </div>
       <div id="itemInputs" class="mb-4">
         <div class="flex space-x-4 mb-2 item-row">
-          <input type="text" placeholder="Item Name" class="border p-2 rounded w-1/3 item-name">
-          <select class="border p-2 rounded w-1/3 item-department">
+          <input type="text" placeholder="Item Name" class="border p-2 rounded w-1/4 item-name">
+          <select class="border p-2 rounded w-1/4 item-department">
             <option value="Indian">Indian</option>
             <option value="Chinese">Chinese</option>
             <option value="Tandoor">Tandoor</option>
           </select>
+          <input type="number" placeholder="Quantity" value="1" min="1" class="border p-2 rounded w-1/4 item-quantity">
           <button onclick="removeItem(this)" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">Remove</button>
         </div>
       </div>
@@ -97,12 +98,13 @@
       const newItem = document.createElement('div');
       newItem.className = 'flex space-x-4 mb-2 item-row';
       newItem.innerHTML = `
-        <input type="text" placeholder="Item Name" class="border p-2 rounded w-1/3 item-name">
-        <select class="border p-2 rounded w-1/3 item-department">
+        <input type="text" placeholder="Item Name" class="border p-2 rounded w-1/4 item-name">
+        <select class="border p-2 rounded w-1/4 item-department">
           <option value="Indian">Indian</option>
           <option value="Chinese">Chinese</option>
           <option value="Tandoor">Tandoor</option>
         </select>
+        <input type="number" placeholder="Quantity" value="1" min="1" class="border p-2 rounded w-1/4 item-quantity">
         <button onclick="removeItem(this)" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">Remove</button>
       `;
       itemInputs.appendChild(newItem);
@@ -110,29 +112,6 @@
 
     function removeItem(button) {
       button.parentElement.remove();
-    }
-
-    function speakAnnouncement(text, repeat = 1) {
-      if ('speechSynthesis' in window) {
-        const voices = speechSynthesis.getVoices();
-        const hindiMaleVoice = voices.find(voice => 
-          voice.lang === 'hi-IN' && (voice.name.includes('Male') || voice.name.includes('हिन्दी'))
-        ) || voices.find(voice => voice.lang === 'hi-IN') || voices[0];
-
-        for (let i = 0; i < repeat; i++) {
-          const utterance = new SpeechSynthesisUtterance(text);
-          utterance.voice = hindiMaleVoice;
-          utterance.volume = 0.8;
-          utterance.lang = 'hi-IN';
-          utterance.rate = 1.0;
-          if (i > 0) {
-            utterance.onstart = () => new Promise(resolve => setTimeout(resolve, 500));
-          }
-          window.speechSynthesis.speak(utterance);
-        }
-      } else {
-        alert('Speech synthesis not supported in this browser. Please use Chrome or Edge.');
-      }
     }
 
     function addOrder() {
@@ -143,10 +122,11 @@
       const items = Array.from(itemRows).map(row => ({
         name: row.querySelector('.item-name').value,
         department: row.querySelector('.item-department').value,
+        quantity: parseInt(row.querySelector('.item-quantity').value) || 1,
         status: 'Pending'
       }));
 
-      if (orderNumber && customerName && items.length > 0 && items.every(item => item.name)) {
+      if (orderNumber && customerName && items.length > 0 && items.every(item => item.name && item.quantity > 0)) {
         if (orders.some(order => order.orderNumber === orderNumber)) {
           alert('Order number must be unique.');
           return;
@@ -158,32 +138,20 @@
         document.querySelector('input[name="orderType"][value="Pickup"]').checked = true;
         document.getElementById('itemInputs').innerHTML = `
           <div class="flex space-x-4 mb-2 item-row">
-            <input type="text" placeholder="Item Name" class="border p-2 rounded w-1/3 item-name">
-            <select class="border p-2 rounded w-1/3 item-department">
+            <input type="text" placeholder="Item Name" class="border p-2 rounded w-1/4 item-name">
+            <select class="border p-2 rounded w-1/4 item-department">
               <option value="Indian">Indian</option>
               <option value="Chinese">Chinese</option>
               <option value="Tandoor">Tandoor</option>
             </select>
+            <input type="number" placeholder="Quantity" value="1" min="1" class="border p-2 rounded w-1/4 item-quantity">
             <button onclick="removeItem(this)" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">Remove</button>
           </div>
         `;
-        // Announce order submission in Hindi
-        const departments = ['Indian', 'Chinese', 'Tandoor'];
-        const deptItems = departments.map(dept => ({
-          dept: dept === 'Indian' ? 'इंडियन' : dept === 'Tandoor' ? 'तंदूर' : 'चाइनीज़',
-          items: items.filter(item => item.department === dept).map(item => item.name)
-        })).filter(dept => dept.items.length > 0);
-        const orderTypeHindi = orderType === 'Pickup' ? 'पिकअप' : 'डाइन-इन';
-        const announcementParts = [`आर्डर नंबर ${orderNumber}, ${orderTypeHindi}`];
-        deptItems.forEach(dept => {
-          announcementParts.push(`${dept.dept}: ${dept.items.join(', ')}`);
-        });
-        const announcement = announcementParts.join(', ');
-        speakAnnouncement(announcement, 2);
         renderOrders();
         renderPendingItems();
       } else {
-        alert('Please fill in all fields: order number, customer name, order type, and at least one item.');
+        alert('Please fill in all fields: order number, customer name, order type, item names, and quantities (minimum 1).');
       }
     }
 
@@ -201,12 +169,6 @@
 
     function confirmOrderReady(orderIndex) {
       orders[orderIndex].confirmedReady = true;
-      // Announce order ready in Hindi
-      const order = orders[orderIndex];
-      const itemNames = order.items.map(item => item.name).join(', ');
-      const orderTypeHindi = order.orderType === 'Pickup' ? 'पिकअप' : 'डाइन-इन';
-      const announcement = `आर्डर नंबर ${order.orderNumber} ${order.customerName} के लिए तैयार है, ${orderTypeHindi}। आइटम: ${itemNames}`;
-      speakAnnouncement(announcement, 2);
       renderOrders();
     }
 
@@ -217,7 +179,7 @@
         const isFlashing = order.status === 'Preparing';
         const itemList = order.items.map((item, itemIndex) => `
           <div class="${isFlashing && item.status === 'Pending' ? 'flashing' : ''}">
-            ${item.name} (${item.department})
+            ${item.quantity} ${item.name} (${item.department})
             ${item.status === 'Pending' ? `
               <button class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 ml-2" 
                       disabled>
@@ -232,11 +194,10 @@
         `).join('');
         const actionList = order.items.map(item => `
           ${item.status === 'Ready' ? `
-            <div class="bg-green-700 text-white px-4 py-1 rounded mb-2">
-              ${item.name}: Ready
+            <div class="bg-green-700 text-white px-2 py-1 rounded mb-1">
+              ${item.quantity} ${item.name}: Ready
             </div>
           ` : ''}
-        </div>
         `).join('');
         const row = document.createElement('tr');
         row.innerHTML = `
@@ -247,12 +208,12 @@
           <td class="border p-2">${order.status}</td>
           <td class="border p-2 flex flex-col space-y-2">
             ${actionList}
-            <button class="bg-green-500 text-white px-4 py-1 rounded hover:bg-green-600 ${order.confirmedReady ? 'bg-green-700' : ''}" 
+            <button class="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 ${order.confirmedReady ? 'bg-green-700' : ''}" 
                     onclick="confirmOrderReady(${orderIndex})" 
                     ${order.status !== 'Ready for Pickup' && order.status !== 'Ready for Dine-In' || order.confirmedReady ? 'disabled' : ''}>
               Ready
             </button>
-            <button class="bg-gray-500 text-white px-4 py-1 rounded hover:bg-gray-600" 
+            <button class="bg-gray-500 text-white px-2 py-1 rounded hover:bg-gray-600" 
                     onclick="updateItemStatus(${orderIndex}, 0, '${order.orderType === 'Pickup' ? 'Picked Up' : 'Served'}')" 
                     ${order.status !== 'Ready for Pickup' && order.status !== 'Ready for Dine-In' ? 'disabled' : ''}>
               ${order.orderType === 'Pickup' ? 'Picked Up' : 'Served'}
@@ -272,18 +233,13 @@
           order.items.forEach(item => {
             if (item.department === dept && item.status !== 'Ready') {
               const li = document.createElement('li');
-              li.innerHTML = `Order #${order.orderNumber}: <span class="text-red-600">${item.name}</span>`;
+              li.innerHTML = `Order #${order.orderNumber}: <span class="text-red-600">${item.quantity} ${item.name}</span>`;
               pendingList.appendChild(li);
             }
           });
         });
       });
     }
-
-    // Load voices
-    window.speechSynthesis.onvoiceschanged = () => {
-      window.speechSynthesis.getVoices();
-    };
   </script>
 </body>
 </html>
