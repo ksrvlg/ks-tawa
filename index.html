@@ -105,7 +105,9 @@
       'Dal Fry': 'Indian',
       'Chole': 'Indian',
       'Raita': 'Indian',
-      'Manchurian': 'Chinese' // Example for other orders
+      'Veg Manchurian': 'Chinese',
+      'Veg Fried Rice': 'Chinese',
+      'Manchurian': 'Chinese' // Additional mapping
     };
 
     function addItemInput() {
@@ -187,30 +189,43 @@
       let orderNumber, customerName, orderType = 'Pickup', items = [];
       
       for (const line of lines) {
-        if (line.startsWith('Order #')) {
-          orderNumber = line.replace('Order #', '').trim();
+        if (line.startsWith('#')) {
+          orderNumber = line.replace('#', '').trim().split(' ')[0]; // Extract first number after #
         } else if (line.startsWith('Customer:')) {
           customerName = line.replace('Customer:', '').trim();
-        } else if (line.startsWith('Type:')) {
-          orderType = line.replace('Type:', '').trim() === 'Dine-In' ? 'Dine-In' : 'Pickup';
-        } else if (line.match(/^\d+\s+/)) {
-          const match = line.match(/^(\d+)\s+(.+)$/);
+        } else if (line.toLowerCase().includes('home delivery')) {
+          orderType = 'Pickup';
+        } else if (line.match(/^\d+\s+x\s+.+/i)) {
+          const match = line.match(/^(\d+)\s+x\s+(.+)/i);
           if (match) {
             const quantity = parseInt(match[1]);
-            const name = match[2].trim();
-            const department = itemDepartments[name] || null;
-            if (department) {
-              items.push({ name, department, quantity });
+            let name = match[2].trim();
+            // Handle thali with multiple items in parentheses
+            if (name.includes('Thali') && name.includes('(') && name.includes(')')) {
+              const baseName = name.split('(')[0].trim();
+              const subItems = name.match(/\(([^)]+)\)/)[1].split('+').map(s => s.trim());
+              items = items.concat(subItems.map(subItem => ({
+                name: subItem,
+                department: itemDepartments[subItem] || null,
+                quantity: quantity
+              })));
+            } else {
+              const department = itemDepartments[name] || null;
+              if (department) {
+                items.push({ name, department, quantity });
+              }
             }
           }
         }
       }
 
-      const bill = { orderNumber, customerName, orderType, items };
-      if (!bill.items.every(item => item.department)) {
-        throw new Error('Some items could not be mapped to departments.');
+      if (!orderNumber || !customerName || !items.length) {
+        throw new Error('Could not extract required bill details (order number, customer name, or items).');
       }
-      return bill;
+      if (!items.every(item => item.department)) {
+        throw new Error('Some items could not be mapped to departments. Please assign manually.');
+      }
+      return { orderNumber, customerName, orderType, items };
     }
 
     function addOrder() {
