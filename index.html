@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Your Restaurant Menu</title>
+  <title>K's Tawa V/s Tandoor Junction Menu</title>
   <style>
     body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f9f9f9; }
     header { background:#c9184a; color:#fff; padding:1rem; text-align:center; }
@@ -12,118 +12,62 @@
     ul { list-style: none; padding: 0; margin:0 0 1rem 0; }
     li { padding: .5rem 0; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; }
     .price { font-weight: bold; }
+    .order-btn { display: inline-block; margin: 0.5rem 0; padding: 0.75rem 1.5rem; background: #ffde00; color: #000; text-decoration: none; font-weight: bold; border-radius: 4px; }
+    .qr-container { text-align: center; margin: 1rem 0; }
+    .qr-container img { width: 150px; height: 150px; }
+    .qr-container p { margin: 0.5rem 0; font-weight: bold; color: #333; }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 </head>
 <body>
-
   <header>
-    <h1>Your Restaurant Name</h1>
+    <h1>K's Tawa V/s Tandoor Junction</h1>
     <p>Dwarka Sector 7, New Delhi</p>
+    <a href="https://billing.petpooja.com/onlines/online_dashboard/" target="_blank" class="order-btn">Order on PetPooja</a>
+    <div class="qr-container">
+      <p>Scan to Order</p>
+      <img src="https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=https%3A%2F%2Fbilling.petpooja.com%2Fonlines%2Fonline_dashboard%2F&chld=H|0" alt="QR code to order">
+    </div>
   </header>
-
-  <div class="container">
-    <section>
-      <h2>Veg Main Course[KT]</h2>
-      <ul>
-        <li><span>Paneer Butter Masala</span><span class="price">₹299</span></li>
-        <li><span>Shahi Paneer</span><span class="price">₹319</span></li>
-        <!-- …etc. for all 22 items… -->
-      </ul>
-    </section>
-
-    <section>
-      <h2>Chinese[KT]</h2>
-      <ul>
-        <li><span>Veg Schezwan Noodles</span><span class="price">₹249</span></li>
-        <li><span>Chili Paneer</span><span class="price">₹269</span></li>
-        <!-- …etc. for all 22 items… -->
-      </ul>
-    </section>
-
-    <section>
-      <h2>Best Of Indian Breads</h2>
-      <ul>
-        <li><span>Butter Naan</span><span class="price">₹49</span></li>
-        <li><span>Garlic Naan</span><span class="price">₹59</span></li>
-        <!-- …etc. for all 17 items… -->
-      </ul>
-    </section>
-
-    <section>
-      <h2>Noodles[KT]</h2>
-      <ul>
-        <li><span>Chicken Hakka Noodles</span><span class="price">₹299</span></li>
-        <li><span>Veg Hakka Noodles</span><span class="price">₹259</span></li>
-        <!-- …etc. for all 17 items… -->
-      </ul>
-    </section>
-
-    <section>
-      <h2>Non Veg Main Course[KT]</h2>
-      <ul>
-        <li><span>Butter Chicken</span><span class="price">₹349</span></li>
-        <li><span>Chicken Lababdar</span><span class="price">₹329</span></li>
-        <!-- …etc. for all 16 items… -->
-      </ul>
-    </section>
-
-    <section>
-      <h2>Non-Veg Tandoori Starters</h2>
-      <ul>
-        <li><span>Tandoori Chicken</span><span class="price">₹299</span></li>
-        <li><span>Murgh Malai Tikka</span><span class="price">₹319</span></li>
-        <!-- …etc. for all 15 items… -->
-      </ul>
-    </section>
-
-    <section>
-      <h2>Rocking Rolls</h2>
-      <ul>
-        <li><span>Paneer Tikka Roll</span><span class="price">₹129</span></li>
-        <li><span>Chicken Seekh Roll</span><span class="price">₹149</span></li>
-        <!-- …etc. for all 14 items… -->
-      </ul>
-    </section>
-
-    <section>
-      <h2>Non-Veg Sizzlers</h2>
-      <ul>
-        <li><span>Smoke Chicken Sizzler</span><span class="price">₹779</span></li>
-        <li><span>Chicken Steak Sizzler</span><span class="price">₹749</span></li>
-        <!-- …etc. for all 13 items… -->
-      </ul>
-    </section>
-
-    <section>
-      <h2>Tandoori Starters</h2>
-      <ul>
-        <li><span>Paneer Tikka</span><span class="price">₹259</span></li>
-        <li><span>Hara Bhara Kebab</span><span class="price">₹219</span></li>
-        <!-- …etc. for all 13 items… -->
-      </ul>
-    </section>
-
-    <section>
-      <h2>Thali Special + Free Achar</h2>
-      <ul>
-        <li><span>Veg Thali</span><span class="price">₹199</span></li>
-        <li><span>Non-Veg Thali</span><span class="price">₹249</span></li>
-        <!-- …etc. for all 12 items… -->
-      </ul>
-    </section>
-
-    <section>
-      <h2>Dum Biryani</h2>
-      <ul>
-        <li><span>Chicken Biryani</span><span class="price">₹279</span></li>
-        <li><span>Veg Biryani</span><span class="price">₹229</span></li>
-        <!-- …etc. for all 12 items… -->
-      </ul>
-    </section>
-
-    <!-- …continue for Salads, Platters, Kolkata Kathi Rolls, Soft Drink, Spring Rolls[KT], Veg Momos [10 Pcs], Paneer Momos [10 Pcs], Chicken Momos [10 Pcs], Rice, etc. -->
-
-  </div>
-
+  <div class="container" id="menu"></div>
+  <script>
+    function groupBy(data, key) {
+      return data.reduce((acc, row) => {
+        const cat = row[key] || 'Uncategorized';
+        const name = row['Name'];
+        const price = Math.round(parseFloat(row['Price'] || 0));
+        if (!name || !name.trim()) return acc;
+        if (!acc[cat]) acc[cat] = [];
+        acc[cat].push({ name, price });
+        return acc;
+      }, {});
+    }
+    function renderSections(container, groupedData) {
+      Object.keys(groupedData).forEach(category => {
+        const items = groupedData[category];
+        if (!items.length) return;
+        const section = document.createElement('section');
+        section.innerHTML = `<h2>${category}</h2>`;
+        const ul = document.createElement('ul');
+        items.forEach(item => {
+          const li = document.createElement('li');
+          li.innerHTML = `<span>${item.name}</span><span class="price">₹${item.price}</span>`;
+          ul.appendChild(li);
+        });
+        section.appendChild(ul);
+        container.appendChild(section);
+      });
+    }
+    function loadCSV(file, key, callback) {
+      Papa.parse(file, { download: true, header: true, complete(results) { callback(groupBy(results.data, key)); } });
+    }
+    const container = document.getElementById('menu');
+    loadCSV('items.csv', 'Category_online_display', itemsGrouped => {
+      renderSections(container, itemsGrouped);
+      loadCSV('addons.csv', 'Addon_Group', addonsGrouped => {
+        renderSections(container, addonsGrouped);
+      });
+    });
+  </script>
 </body>
 </html>
