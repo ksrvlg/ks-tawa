@@ -6,67 +6,123 @@
   <title>Your Restaurant Menu</title>
   <style>
     body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f9f9f9; }
-    header { background:#333; color:#fff; padding:1rem; text-align:center; }
+    header { background:#c9184a; color:#fff; padding:1rem; text-align:center; }
     .container { max-width: 800px; margin: auto; padding: 1rem; }
     h2 { border-bottom: 2px solid #ddd; padding-bottom: .5rem; margin-top:2rem; }
-    ul { list-style: none; padding: 0; }
+    ul { list-style: none; padding: 0; margin:0 0 1rem 0; }
     li { padding: .5rem 0; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; }
     .price { font-weight: bold; }
-    /* Variation styling */
-    .variations { font-size: .9em; color: #555; margin-left: .5rem; }
-    /* Add-ons */
-    .addons { margin-top:3rem; }
   </style>
 </head>
 <body>
 
   <header>
     <h1>Your Restaurant Name</h1>
-    <p>Dwarka Sector 7</p>
+    <p>Dwarka Sector 7, New Delhi</p>
   </header>
 
   <div class="container">
-    <!-- Repeat this block for each category -->
+    <section>
+      <h2>Veg Main Course[KT]</h2>
+      <ul>
+        <li><span>Paneer Butter Masala</span><span class="price">₹299</span></li>
+        <li><span>Shahi Paneer</span><span class="price">₹319</span></li>
+        <!-- …etc. for all 22 items… -->
+      </ul>
+    </section>
+
+    <section>
+      <h2>Chinese[KT]</h2>
+      <ul>
+        <li><span>Veg Schezwan Noodles</span><span class="price">₹249</span></li>
+        <li><span>Chili Paneer</span><span class="price">₹269</span></li>
+        <!-- …etc. for all 22 items… -->
+      </ul>
+    </section>
+
+    <section>
+      <h2>Best Of Indian Breads</h2>
+      <ul>
+        <li><span>Butter Naan</span><span class="price">₹49</span></li>
+        <li><span>Garlic Naan</span><span class="price">₹59</span></li>
+        <!-- …etc. for all 17 items… -->
+      </ul>
+    </section>
+
+    <section>
+      <h2>Noodles[KT]</h2>
+      <ul>
+        <li><span>Chicken Hakka Noodles</span><span class="price">₹299</span></li>
+        <li><span>Veg Hakka Noodles</span><span class="price">₹259</span></li>
+        <!-- …etc. for all 17 items… -->
+      </ul>
+    </section>
+
+    <section>
+      <h2>Non Veg Main Course[KT]</h2>
+      <ul>
+        <li><span>Butter Chicken</span><span class="price">₹349</span></li>
+        <li><span>Chicken Lababdar</span><span class="price">₹329</span></li>
+        <!-- …etc. for all 16 items… -->
+      </ul>
+    </section>
+
+    <section>
+      <h2>Non-Veg Tandoori Starters</h2>
+      <ul>
+        <li><span>Tandoori Chicken</span><span class="price">₹299</span></li>
+        <li><span>Murgh Malai Tikka</span><span class="price">₹319</span></li>
+        <!-- …etc. for all 15 items… -->
+      </ul>
+    </section>
+
+    <section>
+      <h2>Rocking Rolls</h2>
+      <ul>
+        <li><span>Paneer Tikka Roll</span><span class="price">₹129</span></li>
+        <li><span>Chicken Seekh Roll</span><span class="price">₹149</span></li>
+        <!-- …etc. for all 14 items… -->
+      </ul>
+    </section>
+
     <section>
       <h2>Non-Veg Sizzlers</h2>
       <ul>
-        <li>
-          <span>Smoke Chicken Sizzler</span>
-          <span class="price">₹779</span>
-        </li>
-        <!-- more items... -->
+        <li><span>Smoke Chicken Sizzler</span><span class="price">₹779</span></li>
+        <li><span>Chicken Steak Sizzler</span><span class="price">₹749</span></li>
+        <!-- …etc. for all 13 items… -->
       </ul>
     </section>
 
     <section>
-      <h2>Rice (Buy 1 Get 1 Free)</h2>
+      <h2>Tandoori Starters</h2>
       <ul>
-        <li>
-          <span>Egg Fried Rice</span>
-          <span class="price">Full – ₹170</span><br>
-          <span class="variations">Buy 1 Get 1 Free – ₹280</span>
-        </li>
-        <!-- more items... -->
+        <li><span>Paneer Tikka</span><span class="price">₹259</span></li>
+        <li><span>Hara Bhara Kebab</span><span class="price">₹219</span></li>
+        <!-- …etc. for all 13 items… -->
       </ul>
     </section>
 
-    <!-- …and so on for all other categories… -->
-
-    <!-- Add-Ons -->
-    <div class="addons">
-      <h2>Add-Ons</h2>
+    <section>
+      <h2>Thali Special + Free Achar</h2>
       <ul>
-        <li>
-          <span>Free Lemon Soda</span>
-          <span class="price">₹0</span>
-        </li>
-        <li>
-          <span>Chef’s Special Dish</span>
-          <span class="price">₹40</span>
-        </li>
-        <!-- more add-ons… -->
+        <li><span>Veg Thali</span><span class="price">₹199</span></li>
+        <li><span>Non-Veg Thali</span><span class="price">₹249</span></li>
+        <!-- …etc. for all 12 items… -->
       </ul>
-    </div>
+    </section>
+
+    <section>
+      <h2>Dum Biryani</h2>
+      <ul>
+        <li><span>Chicken Biryani</span><span class="price">₹279</span></li>
+        <li><span>Veg Biryani</span><span class="price">₹229</span></li>
+        <!-- …etc. for all 12 items… -->
+      </ul>
+    </section>
+
+    <!-- …continue for Salads, Platters, Kolkata Kathi Rolls, Soft Drink, Spring Rolls[KT], Veg Momos [10 Pcs], Paneer Momos [10 Pcs], Chicken Momos [10 Pcs], Rice, etc. -->
+
   </div>
 
 </body>
