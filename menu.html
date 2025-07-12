@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>Our Restaurant Menu</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; max-width: 800px; margin: auto; background: #fdfdfd; color: #333; }
+    h1 { text-align: center; margin-bottom: 40px; }
+    section { margin-bottom: 30px; }
+    h2 { border-bottom: 2px solid #e2e2e2; padding-bottom: 8px; margin-bottom: 15px; color: #c0392b; }
+    ul { list-style: none; padding: 0; margin: 0; }
+    li { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px dashed #e2e2e2; }
+    .item-name { font-weight: 500; }
+    .item-price { font-weight: 700; }
+    .chef-link { display: inline-block; padding: 10px 20px; background-color: #c0392b; color: #fff; border-radius: 4px; text-decoration: none; font-weight: bold; animation: pulse 1.5s ease-in-out infinite; }
+    @keyframes pulse {0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); }}
+  </style>
+</head>
+<body>
+  <h1>🌶️ Our Menu 🌶️</h1>
+  <section>
+    <h2>🥟 Paneer Momos (10 pcs)</h2>
+    <ul>
+      <li><span class="item-name">Paneer Kurkure Momos</span><span class="item-price">₹180</span></li>
+      <li><span class="item-name">Paneer Steam Momos</span><span class="item-price">₹160</span></li>
+      <li><span class="item-name">Paneer Fried Momos</span><span class="item-price">₹180</span></li>
+      <li><span class="item-name">Paneer Afghani Momos</span><span class="item-price">₹200</span></li>
+      <li><span class="item-name">Paneer Malai Momos</span><span class="item-price">₹200</span></li>
+      <li><span class="item-name">Paneer Gravy Momos</span><span class="item-price">₹250</span></li>
+      <li><span class="item-name">Paneer Chilli Momos</span><span class="item-price">₹250</span></li>
+    </ul>
+  </section>
+  <section>
+    <h2>🥟 Veg Momos (10 pcs)</h2>
+    <ul>
+      <li><span class="item-name">Veg Kurkure Momos</span><span class="item-price">₹110</span></li>
+      <li><span class="item-name">Veg Steam Momos</span><span class="item-price">₹80</span></li>
+      <li><span class="item-name">Veg Tandoori Momos</span><span class="item-price">₹100</span></li>
+      <li><span class="item-name">Veg Fried Momos</span><span class="item-price">₹110</span></li>
+      <li><span class="item-name">Veg Afghani Momos</span><span class="item-price">₹120</span></li>
+      <li><span class="item-name">Veg Malai Momos</span><span class="item-price">₹120</span></li>
+      <li><span class="item-name">Veg Gravy Momos</span><span class="item-price">₹130</span></li>
+      <li><span class="item-name">Veg Chilli Momos</span><span class="item-price">₹150</span></li>
+    </ul>
+  </section>
+  <section>
+    <h2>🔥 Tandoori Starters</h2>
+    <ul>
+      <li><span class="item-name">Achari Chaap</span><span class="item-price">Half ₹110 | Full ₹180</span></li>
+      <li><span class="item-name">Lemon Chaap</span><span class="item-price">Half ₹110 | Full ₹180</span></li>
+      <li><span class="item-name">Chatpati Chaap</span><span class="item-price">Half ₹110 | Full ₹180</span></li>
+      <li><span class="item-name">Malai Chaap</span><span class="item-price">Half ₹110 | Full ₹180</span></li>
+      <li><span class="item-name">Paneer Tikka</span><span class="item-price">Half ₹120 | Full ₹200</span></li>
+      <li><span class="item-name">Paneer Achari Tikka</span><span class="item-price">Half ₹120 | Full ₹200</span></li>
+      <li><span class="item-name">Peri Peri Soya Chaap</span><span class="item-price">Half ₹110 | Full ₹180</span></li>
+      <li><span class="item-name">Peri Peri Paneer Tikka</span><span class="item-price">Half ₹120 | Full ₹200</span></li>
+      <li><span class="item-name">Mushroom Tikka</span><span class="item-price">Half ₹120 | Full ₹200</span></li>
+      <li><span class="item-name">Afghani Tandoori Chaap</span><span class="item-price">Half ₹140 | Full ₹220</span></li>
+    </ul>
+  </section>
+  <section>
+    <h2>🌯 Rocking Rolls</h2>
+    <ul>
+      <li><span class="item-name">Chicken Seekh Roll</span><span class="item-price">₹180</span></li>
+      <li><span class="item-name">Chicken Tikka Roll</span><span class="item-price">₹220</span></li>
+      <li><span class="item-name">Malai Chaap Roll</span><span class="item-price">Half ₹120 | Full ₹190</span></li>
+      <li><span class="item-name">Chatpati Chaap Roll</span><span class="item-price">Half ₹120 | Full ₹190</span></li>
+      <li><span class="item-name">Achari Chaap Roll</span><span class="item-price">Half ₹120 | Full ₹190</span></li>
+      <li><span class="item-name">Afghani Chaap Roll</span><span class="item-price">Half ₹130 | Full ₹220</span></li>
+      <li><span class="item-name">Lemon Chaap Roll</span><span class="item-price">Half ₹120 | Full ₹190</span></li>
+      <li><span class="item-name">Mushroom Roll</span><span class="item-price">Half ₹140 | Full ₹200</span></li>
+      <li><span class="item-name">Paneer Tikka Roll</span><span class="item-price">Half ₹120 | Full ₹200</span></li>
+      <li><span class="item-name">Peri Peri Soya Chaap Roll</span><span class="item-price">Half ₹120 | Full ₹190</span></li>
+      <li><span class="item-name">Peri Peri Paneer Tikka Roll</span><span class="item-price">Half ₹140 | Full ₹200</span></li>
+    </ul>
+  </section>
+  <section>
+    <h2>🥗 Veg Main Course</h2>
+    <ul>
+      <li><span class="item-name">Tawa Chaap Masala</span><span class="item-price">Half ₹160 | Full ₹230</span></li>
+      <li><span class="item-name">Tawa Mushroom Masala</span><span class="item-price">Half ₹160 | Full ₹230</span></li>
+      <li><span class="item-name">Tawa Paneer Masala</span><span class="item-price">Half ₹160 | Full ₹230</span></li>
+      <li><span class="item-name">Paneer Takatak</span><span class="item-price">Half ₹170 | Full ₹240</span></li>
+      <li><span class="item-name">Butter Chaap</span><span class="item-price">Half ₹170 | Full ₹240</span></li>
+      <li><span class="item-name">Shahi Paneer</span><span class="item-price">Half ₹120 | Full ₹200</span></li>
+      <li><span class="item-name">Kadhai Chaap</span><span class="item-price">Half ₹120 | Full ₹210</span></li>
+      <li><span class="item-name">Mix Veg</span><span class="item-price">Half ₹120 | Full ₹190</span></li>
+      <li><span class="item-name">Kadhai Paneer</span><span class="item-price">Half ₹120 | Full ₹200</span></li>
+      <li><span class="item-name">Paneer Butter Masala</span><span class="item-price">Half ₹140 | Full ₹230</span></li>
+      <li><span class="item-name">Mushroom Do Pyaza</span><span class="item-price">₹240</span></li>
+      <li><span class="item-name">Matar Paneer</span><span class="item-price">Half ₹130 | Full ₹220</span></li>
+      <li><span class="item-name">Paneer Lababdar</span><span class="item-price">Half ₹160 | Full ₹250</span></li>
+      <li><span class="item-name">Tadka Dal Fry</span><span class="item-price">Half ₹120 | Full ₹180</span></li>
+    </ul>
+  </section>
+  <section>
+    <h2>🍗 Non-Veg Main Course</h2>
+    <ul>
+      <li><span class="item-name">Chicken Utterly Butterly</span><span class="item-price">Half ₹350 | Full ₹580</span></li>
+      <li><span class="item-name">Butter Chicken (Quarter/Half/Full)</span><span class="item-price">₹220 | ₹390 | ₹650</span></li>
+      <li><span class="item-name">Boneless Butter Chicken (Quarter/Half/Full)</span><span class="item-price">₹230 | ₹430 | ₹700</span></li>
+      <li><span class="item-name">Chicken Do Pyaza</span><span class="item-price">Half ₹390 | Full ₹650</span></li>
+      <li><span class="item-name">Kadai Chicken (Quarter/Half/Full)</span><span class="item-price">₹220 | ₹390 | ₹650</span></li>
+      <li><span class="item-name">Tawa Chicken (Quarter/Half/Full)</span><span class="item-price">₹220 | ₹420 | ₹660</span></li>
+      <li><span class="item-name">Ghar Jaisa Chicken Curry (Quarter/Half/Full)</span><span class="item-price">₹220 | ₹370 | ₹630</span></li>
+      <li><span class="item-name">Chicken Rara Punjabi KS Special (Quarter/Half/Full)</span><span class="item-price">₹220 | ₹450 | ₹700</span></li>
+      <li><span class="item-name">Boti Chicken Masala</span><span class="item-price">Half ₹390 | Full ₹650</span></li>
+      <li><span class="item-name">Chicken Malmal</span><span class="item-price">Half ₹440 | Full ₹700</span></li>
+      <li><span class="item-name">Chicken Tikka Butter Masala</span><span class="item-price">Half ₹420 | Full ₹720</span></li>
+      <li><span class="item-name">Egg Curry (4 pcs)</span><span class="item-price">₹250</span></li>
+      <li><span class="item-name">Chicken Seekh Masala (500 ml)</span><span class="item-price">₹260</span></li>
+    </ul>
+  </section>
+  <section>
+    <h2>🔥 Non-Veg Tandoori Starters</h2>
+    <ul>
+      <li><span class="item-name">Bhatti Murg (4 pcs)</span><span class="item-price">₹260</span></li>
+      <li><span class="item-name">Bhatti Murg (8 pcs)</span><span class="item-price">₹480</span></li>
+      <li><span class="item-name">Tandoori Chicken</span><span class="item-price">₹260 | ₹480</span></li>
+      <li><span class="item-name">Chicken Tikka (8 pcs)</span><span class="item-price">₹300</span></li>
+      <li><span class="item-name">Chicken Seekh (2 pcs)</span><span class="item-price">₹180</span></li>
+    </ul>
+  </section>
+  <section>
+    <h2>🍞 Best Of Indian Breads</h2>
+    <ul>
+      <li><span class="item-name">Tandoori Roti</span><span class="item-price">₹12</span></li>
+      <li><span class="item-name">Rumali Roti</span><span class="item-price">₹10</span></li>
+      <li><span class="item-name">Butter Roti</span><span class="item-price">₹15</span></li>
+      <li><span class="item-name">Laccha Paratha</span><span class="item-price">₹25</span></li>
+      <li><span class="item-name">Plain Naan</span><span class="item-price">₹30</span></li>
+      <li><span class="item-name">Butter Naan</span><span class="item-price">₹40</span></li>
+      <li><span class="item-name">Onion Naan</span><span class="item-price">₹50</span></li>
+      <li><span class="item-name">Stuffed Naan</span><span class="item-price">₹60</span></li>
+      <li><span class="item-name">Garlic Naan</span><span class="item-price">₹60</span></li>
+      <li><span class="item-name">Aloo Paratha</span><span class="item-price">₹50</span></li>
+      <li><span class="item-name">Chicken Keema Naan</span><span class="item-price">₹90</span></li>
+      <li><span class="item-name">Paneer Paratha</span><span class="item-price">₹70</span></li>
+      <li><span class="item-name">Missi Roti</span><span class="item-price">₹25</span></li>
+    </ul>
+  </section>
+  <section>
+    <h2>🍲 Dum Biryani</h2>
+    <ul>
+      <li><span class="item-name">Hyderabadi Chicken Dum Biryani</span><span class="item-price">₹249</span></li>
+      <li><span class="item-name">Chicken Seekh Dum Biryani</span><span class="item-price">₹249</span></li>
+      <li><span class="item-name">Hyderabadi Veg Dum Biryani</span><span class="item-price">₹149</span></li>
+      <li><span class="item-name">Paneer Tikka Dum Biryani</span><span class="item-price">₹199</span></li>
+      <li><span class="item-name">Egg Dum Biryani</span><span class="item-price">₹199</span></li>
+      <li><span class="item-name">Mushroom Dum Biryani</span><span class="item-price">₹199</span></li>
+      <li><span class="item-name">Soya Chaap Dum Biryani</span><span class="item-price">₹190</span></li>
+    </ul>
+  </section>
+  <section>
+    <h2>🍚 Rice</h2>
+    <ul>
+      <li><span class="item-name">Egg Fried Rice</span><span class="item-price">₹170</span></li>
+      <li><span class="item-name">Veg Fried Rice</span><span class="item-price">₹140</span></li>
+      <li><span class="item-name">Jeera Rice</span><span class="item-price">₹130</span></li>
+      <li><span class="item-name">Steam Rice</span><span class="item-price">₹120</span></li>
+      <li><span class="item-name">Veg Schezwan Rice</span><span class="item-price">₹150</span></li>
+      <li><span class="item-name">Chicken Fried Rice</span><span class="item-price">₹220</span></li>
+      <li><span class="item-name">Chicken Schezwan Rice</span><span class="item-price">₹260</span></li>
+    </ul>
+  </section>
+  <section>
+    <h2>🍜 Noodles</h2>
+    <ul>
+      <li><span class="item-name">Chicken Noodles</span><span class="item-price">₹180</span></li>
+      <li><span class="item-name">Chicken Hakka Noodles</span><span class="item-price">₹200</span></li>
+      <li><span class="item-name">Chicken Schezwan Noodles</span><span class="item-price">₹200</span></li>
+      <li><span class="item-name">Chicken Chilli Garlic Noodles</span><span class="item-price">₹200</span></li>
+      <li><span class="item-name">Chicken Singapori Noodles</span><span class="item-price">₹200</span></li>
+      <li><span class="item-name">Veg Noodles</span><span class="item-price">₹120</span></li>
+      <li><span class="item-name">Veg Hakka Noodles</span><span class="item-price">₹150</span></li>
+      <li><span class="item-name">Veg Schezwan Noodles</span><span class="item-price">₹150</span></li>
+      <li><span class="item-name">Chilli Garlic Noodles</span><span class="item-price">₹150</span></li>
+      <li><span class="item-name">Singapori Noodles</span><span class="item-price">₹150</span></li>
+      <li><span class="item-name">Paneer Noodles</span><span class="item-price">₹170</span></li>
+      <li><span class="item-name">Mushroom Noodles</span><span class="item-price">₹170</span></li>
+      <li><span class="item-name">Egg Noodles</span><span class="item-price">₹170</span></li>
+    </ul>
+  </section>
+  <section>
+    <h2>🥢 Chinese Delights</h2>
+    <ul>
+      <li><span class="item-name">Chilli Chicken Dry (10 pcs)</span><span class="item-price">₹250</span></li>
+      <li><span class="item-name">Chilli Chicken Gravy (10 pcs)</span><span class="item-price">₹250</span></li>
+      <li><span class="item-name">Chicken Manchurian Dry (10 pcs)</span><span class="item-price">₹250</span></li>
+      <li><span class="item-name">Chicken Manchurian Gravy (10 pcs)</span><span class="item-price">₹250</span></li>
+      <li><span class="item-name">Crispy Chilli Honey Potato</span><span class="item-price">₹140</span></li>
+      <li><span class="item-name">Chilli Paneer Gravy</span><span class="item-price">₹220</span></li>
+      <li><span class="item-name">Chilli Paneer (Dry)</span><span class="item-price">₹200</span></li>
+      <li><span class="item-name">Chilli Mushroom</span><span class="item-price">₹190</span></li>
+      <li><span class="item-name">French Fries</span><span class="item-price">₹100</span></li>
+      <li><span class="item-name">Chilli Gobi Dry</span><span class="item-price">₹190</span></li>
+      <li><span class="item-name">Chilli Potato</span><span class="item-price">₹130</span></li>
+    </ul>
+  </section>
+  <section>
+    <h2>🍝 Pasta K's Special</h2>
+    <ul>
+      <li><span class="item-name">Mix Pasta Mac & Cheese</span><span class="item-price">₹140</span></li>
+      <li><span class="item-name">Red Sauce Pasta Mac & Cheese</span><span class="item-price">₹140</span></li>
+      <li><span class="item-name">White Sauce Pasta Mac & Cheese</span><span class="item-price">₹140</span></li>
+      <li><span class="item-name">Chicken Mix Pasta Mac & Cheese</span><span class="item-price">₹180</span></li>
+      <li><span class="item-name">Chicken Red Sauce Pasta Mac & Cheese</span><span class="item-price">₹180</span></li>
+      <li><span class="item-name">Chicken White Sauce Pasta Mac & Cheese</span><span class="item-price">₹180</span></li>
+    </ul>
+  </section>
+  <section>
+    <h2>👨‍🍳 Our Chef in Action</h2>
+    <p><a href="https://www.instagram.com/reel/CxxQROBvHLW/?igsh=YXk5bWN4Z3Azcmpv" class="chef-link" target="_blank">Watch our Chef in Action</a></p>
+  </section>
+</body>
+</html>
