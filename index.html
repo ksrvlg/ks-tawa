@@ -211,6 +211,30 @@
             50% { opacity: 0.8; transform: scale(1.02); }
             100% { opacity: 1; }
         }
+        /* --- Style for the new Footer --- */
+        footer {
+            text-align: center;
+            padding: 25px;
+            margin-top: 40px;
+            background: linear-gradient(45deg, #c0392b, #d35400);
+            color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 -4px 12px rgba(0,0,0,0.1);
+        }
+        footer p {
+            margin: 8px 0;
+            font-size: 1.1em;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+        footer a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        footer a:hover {
+            color: #f1c40f;
+        }
     </style>
 </head>
 <body>
@@ -465,7 +489,7 @@
                 <li><div class="item-details"><span class="item-name">Steam Rice</span><span class="item-price">₹120</span></div><button class="order-button">Order</button></li>
                 <li><div class="item-details"><span class="item-name">Veg Schezwan Rice</span><span class="item-price">₹150</span></div><button class="order-button">Order</button></li>
                 <li><div class="item-details"><span class="item-name">Chicken Fried Rice</span><span class="item-price">₹220</span></div><button class="order-button">Order</button></li>
-                <li><div class="item-details"><span class="item-name">Chicken Schezwan Rice</span><span class="item-price">₹260</span></div><button class="order-button">Order</button></li>
+                <li><div class="item-details"><span class.item-name">Chicken Schezwan Rice</span><span class="item-price">₹260</span></div><button class="order-button">Order</button></li>
             </ul>
         </section>
         <section>
@@ -491,6 +515,13 @@
         <span class="close-lightbox" onclick="closeLightbox()">×</span>
         <img class="lightbox-content" id="lightbox-img">
     </div>
+
+    <!-- Footer with Address and Phone -->
+    <footer>
+        <p>📍 Address: Ramphal Chowk Rd, near Nukkad Cafe, Block C, Sector 7 Dwarka, Palam, New Delhi, Delhi, 110075</p>
+        
+        <p>📞 Phone: <a href="tel:07678654713">076786 54713</a></p>
+    </footer>
 
     <script>
         function openTab(event, tabName) {
