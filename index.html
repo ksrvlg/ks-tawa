@@ -232,8 +232,6 @@
         footer a:hover {
             color: #f1c40f;
         }
-
-        /* --- Style for the Cart --- */
         #cart-container {
             background: #fff;
             border-radius: 12px;
@@ -287,11 +285,9 @@
         #place-order-button:hover {
             background-color: #c0392b;
         }
-
-        /* --- Style for Cart Success Message --- */
         #cart-success-message {
-            background-color: #e8f5e9; /* Light green background */
-            color: #2e7d32; /* Dark green text */
+            background-color: #e8f5e9;
+            color: #2e7d32;
             padding: 12px;
             border-radius: 8px;
             text-align: center;
@@ -306,8 +302,6 @@
 </head>
 <body>
     <h1>K's Tawa V/s Tandoor Junction</h1>
-
-    <!-- =================== CART SECTION =================== -->
     <div id="cart-container">
         <h2>Your Cart</h2>
         <div id="cart-success-message" class="hidden">
@@ -319,8 +313,6 @@
         <div id="cart-total">Total: ₹0</div>
         <button id="place-order-button" onclick="placeFinalOrder()">Place Full Order</button>
     </div>
-    <!-- ======================================================= -->
-
     <div class="tabs">
         <div class="tab-link active" onclick="openTab(event, 'starters')">Starters & Platters</div>
         <div class="tab-link" onclick="openTab(event, 'main_course')">Main Course</div>
@@ -329,10 +321,7 @@
         <div class="tab-link" onclick="openTab(event, 'breads_biryani')">Breads & Biryani</div>
         <div class="tab-link" onclick="openTab(event, 'sides_drinks')">Sides & Drinks</div>
     </div>
-
-    <!-- Starters & Platters Tab -->
     <div id="starters" class="tab-content active">
-        <!-- Offer Banner Added Here -->
         <div class="offer-banner">
             <h3>🎁 Special Offer! 🎁</h3>
             <p>Free Lemon Soda on orders of ₹1000 or Free 250ml Coke on orders of ₹1500</p>
@@ -404,8 +393,6 @@
             </ul>
         </section>
     </div>
-
-    <!-- Main Course Tab -->
     <div id="main_course" class="tab-content">
         <section>
             <h2>🥗 Veg Main Course</h2>
@@ -447,8 +434,6 @@
             </ul>
         </section>
     </div>
-
-    <!-- Rolls & Pasta Tab -->
     <div id="rolls_pasta" class="tab-content">
         <section>
             <h2>🌯 Rocking Rolls</h2>
@@ -480,8 +465,6 @@
             </ul>
         </section>
     </div>
-
-    <!-- Chinese Tab -->
     <div id="chinese" class="tab-content">
         <section>
             <h2>🍜 Noodles</h2>
@@ -520,8 +503,6 @@
             </ul>
         </section>
     </div>
-
-    <!-- Breads & Biryani Tab -->
     <div id="breads_biryani" class="tab-content">
         <section>
             <h2>🍞 Best Of Indian Breads</h2>
@@ -556,8 +537,6 @@
             </ul>
         </section>
     </div>
-
-    <!-- Sides & Drinks Tab -->
     <div id="sides_drinks" class="tab-content">
         <section>
             <h2>🍚 Rice</h2>
@@ -590,23 +569,19 @@
         </section>
     </div>
 
-    <!-- Lightbox for Image Gallery -->
     <div class="lightbox" id="lightbox">
         <span class="close-lightbox" onclick="closeLightbox()">×</span>
         <img class="lightbox-content" id="lightbox-img">
     </div>
 
-    <!-- Footer with Address and Phone -->
     <footer>
         <p>📍 Address: Ramphal Chowk Rd, near Nukkad Cafe, Block C, Sector 7 Dwarka, Palam, New Delhi, Delhi, 110075</p>
         <p>📞 Phone: <a href="tel:07678654713">076786 54713</a></p>
     </footer>
 
     <script>
-        // --- Global Cart Variable ---
         let cart = [];
 
-        // --- Tab and Lightbox Functions ---
         function openTab(event, tabName) {
             let i, tabcontent, tablinks;
             tabcontent = document.getElementsByClassName("tab-content");
@@ -637,13 +612,10 @@
             }
         });
 
-        // --- CART LOGIC ---
         function addToCart(button) {
             const name = button.getAttribute('data-name');
             const price = parseFloat(button.getAttribute('data-price'));
-
             const existingItem = cart.find(item => item.name === name);
-
             if (existingItem) {
                 existingItem.quantity++;
             } else {
@@ -657,9 +629,7 @@
             const cartTotalElement = document.getElementById('cart-total');
             const successMessageElement = document.getElementById('cart-success-message');
             let total = 0;
-
             cartItemsElement.innerHTML = '';
-
             if (cart.length === 0) {
                 cartItemsElement.innerHTML = '<li>Your cart is currently empty.</li>';
                 successMessageElement.classList.add('hidden');
@@ -683,13 +653,11 @@
                 alert("Your cart is empty. Please add items before placing an order.");
                 return;
             }
-
-            const apiEndpoint = 'https://ks-kitchen-api.onrender.com/api/order';';
+            const apiEndpoint = 'https://ks-kitchen-api.onrender.com/api/order';
             const orderData = {
                 items: cart,
                 total: cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
             };
-
             fetch(apiEndpoint, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -707,10 +675,11 @@
             });
         }
 
-        // Set the first tab to be active on page load
         document.addEventListener('DOMContentLoaded', () => {
             document.querySelector('.tab-link').click();
         });
     </script>
 </body>
 </html>
+
+--- END OF FILE index.html ---
