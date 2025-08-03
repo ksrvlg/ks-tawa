@@ -764,4 +764,36 @@ checkoutBtn.onclick = () => {
     <button onclick=\"document.getElementById('checkoutModal').style.display='none'\" style=\"margin-left:10px;\">Cancel</button>
   </div>
 </div>
+<script>
+function showCheckoutForm() {
+  document.getElementById('checkoutModal').style.display = 'flex';
+}
+
+function submitOrder() {
+  const name = document.getElementById("custName").value.trim();
+  const phone = document.getElementById("custPhone").value.trim();
+
+  if (!name || !phone) {
+    alert("Please fill name and phone");
+    return;
+  }
+
+  fetch("http://localhost:3000/orders", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, phone, items: cart })
+  })
+  .then(res => res.json())
+  .then(data => {
+    alert("✅ Order Placed!");
+    cart = [];
+    document.getElementById("checkoutModal").style.display = "none";
+  })
+  .catch(err => {
+    alert("❌ Error placing order");
+    console.error(err);
+  });
+}
+</script>
+
 
