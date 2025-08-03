@@ -779,22 +779,27 @@ function submitOrder() {
   }
 
   fetch("https://orede-receive.onrender.com/orders", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ name, phone, items: cart })
+})
+.then(async res => {
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(`Server responded with ${res.status}: ${text}`);
+  }
+  return res.json();
+})
+.then(data => {
+  alert("✅ Order placed!");
+  cart = [];
+  document.getElementById("checkoutModal").style.display = "none";
+})
+.catch(err => {
+  console.error("Error placing final order:", err);
+  alert("❌ Could not place order. Please try again.");
+});
 
-ers", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name, phone, items: cart })
-  })
-  .then(res => res.json())
-  .then(data => {
-    alert("✅ Order Placed!");
-    cart = [];
-    document.getElementById("checkoutModal").style.display = "none";
-  })
-  .catch(err => {
-    alert("❌ Error placing order");
-    console.error(err);
-  });
 }
 </script>
 
