@@ -714,3 +714,41 @@
     </script>
 </body>
 </html>
+<script>
+// 1. Store cart items
+let cart = [];
+
+// 2. Handle Order button clicks
+document.querySelectorAll(".order-button").forEach(button => {
+  button.addEventListener("click", () => {
+    const item = button.parentElement.querySelector(".item-name").innerText;
+    const priceText = button.parentElement.querySelector(".item-price").innerText;
+    const price = parseInt(priceText.match(/₹(\d+)/)[1]); // get numeric value
+    cart.push({ name: item, price: price });
+    alert(`${item} added to cart`);
+  });
+});
+
+// 3. Add a floating checkout button
+const checkoutBtn = document.createElement("button");
+checkoutBtn.textContent = "🛒 Checkout";
+checkoutBtn.style.position = "fixed";
+checkoutBtn.style.bottom = "20px";
+checkoutBtn.style.right = "20px";
+checkoutBtn.style.padding = "15px 25px";
+checkoutBtn.style.background = "#e67e22";
+checkoutBtn.style.color = "#fff";
+checkoutBtn.style.border = "none";
+checkoutBtn.style.borderRadius = "30px";
+checkoutBtn.style.fontWeight = "bold";
+checkoutBtn.style.fontSize = "16px";
+checkoutBtn.style.cursor = "pointer";
+checkoutBtn.style.boxShadow = "0 4px 12px rgba(0,0,0,0.2)";
+document.body.appendChild(checkoutBtn);
+
+// 4. On checkout click, show form
+checkoutBtn.onclick = () => {
+  if (cart.length === 0) return alert("Cart is empty");
+  showCheckoutForm();
+};
+</script>
