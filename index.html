@@ -58,23 +58,594 @@
 <body>
 
 <header>
-  <h1>K's Tawa - Menu</h1>
-</header>
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>K's Tawa V/s Tandoor Junction Menu</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 10px;
+      background: #fdfdfd;
+      margin: 0;
+    }
 
-<div class="menu">
-  <div class="item">
-    <span>Paneer Tikka</span>
-    <button class="cart-button" onclick="addToCart('Paneer Tikka', 180)">Add ₹180</button>
+    header {
+      background: #ffe0b2;
+      border-bottom: 2px solid #ff9800;
+      padding: 16px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 24px;
+      margin: 0;
+      color: #d84315;
+    }
+
+    .offer-banner {
+      background: #fff8e1;
+      text-align: center;
+      padding: 12px;
+      border-bottom: 1px dashed #ffc107;
+    }
+
+    .offer-banner h3 {
+      margin: 0;
+      font-size: 18px;
+      color: #ef6c00;
+    }
+
+    .offer-banner p {
+      margin: 5px 0 0;
+      font-size: 14px;
+      color: #6d4c41;
+    }
+
+    h2 {
+      font-size: 20px;
+      color: #d84315;
+      margin-top: 30px;
+    }
+
+    .gallery {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .gallery img {
+      width: 100%;
+      max-width: 320px;
+      border-radius: 8px;
+    }
+
+    .item-name {
+      color: #007BFF;
+      font-weight: bold;
+      font-size: 16px;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .cart-button {
+      background: #ff7043;
+      color: #fff;
+      padding: 8px 14px;
+      border: none;
+      border-radius: 6px;
+      margin: 4px 6px 12px 0;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background 0.2s ease;
+    }
+
+    .cart-button:hover {
+      background: #e64a19;
+    }
+
+    .item {
+      padding: 12px 0;
+      border-bottom: 1px solid #e0e0e0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header Title -->
+  <header>
+    <h1>K’s Tawa V/s Tandoor Junction Menu</h1>
+  </header>
+
+  <!-- Offer Banner -->
+  <div class="offer-banner">
+    <h3>🎁 Special Offer! 🎁</h3>
+    <p>Free Lemon Soda on orders of ₹1000 or Free 250ml Coke on orders of ₹1500</p>
   </div>
-  <div class="item">
-    <span>Butter Naan</span>
-    <button class="cart-button" onclick="addToCart('Butter Naan', 40)">Add ₹40</button>
+
+  <!-- 🔥 Tandoori Starters (Veg) Section -->
+  <section class="section" id="tandoori-veg">
+    <h2>🔥 Tandoori Starters (Veg)</h2>
+    <div class="gallery">
+      <img src="https://orders.popskitchen.in/storage/2024/09/image-362.png" alt="Tandoori Starters">
+    </div>
+
+    <div class="item"><span class="item-name">Achari Chaap</span><button class="cart-button">Half ₹110</button><button class="cart-button">Full ₹180</button></div>
+    <div class="item"><span class="item-name">Lemon Chaap</span><button class="cart-button">Half ₹110</button><button class="cart-button">Full ₹180</button></div>
+    <div class="item"><span class="item-name">Chatpati Chaap</span><button class="cart-button">Half ₹110</button><button class="cart-button">Full ₹180</button></div>
+    <div class="item"><span class="item-name">Malai Chaap</span><button class="cart-button">Half ₹110</button><button class="cart-button">Full ₹180</button></div>
+    <div class="item"><span class="item-name">Paneer Tikka</span><button class="cart-button">Half ₹120</button><button class="cart-button">Full ₹200</button></div>
+    <div class="item"><span class="item-name">Paneer Malai Tikka</span><button class="cart-button">Half ₹140</button><button class="cart-button">Full ₹240</button></div>
+    <div class="item"><span class="item-name">Paneer Achari Tikka</span><button class="cart-button">Half ₹120</button><button class="cart-button">Full ₹200</button></div>
+    <div class="item"><span class="item-name">Peri Peri Soya Chaap</span><button class="cart-button">Half ₹110</button><button class="cart-button">Full ₹180</button></div>
+    <div class="item"><span class="item-name">Peri Peri Paneer Tikka</span><button class="cart-button">Half ₹120</button><button class="cart-button">Full ₹200</button></div>
+    <div class="item"><span class="item-name">Mushroom Tikka</span><button class="cart-button">Half ₹120</button><button class="cart-button">Full ₹200</button></div>
+    <div class="item"><span class="item-name">Afghani Tandoori Chaap</span><button class="cart-button">Half ₹140</button><button class="cart-button">Full ₹220</button></div>
+  </section>
+
+</body>
+</html>
+<!-- 🔥 Tandoori Starters (Non-Veg) -->
+<section class="section" id="tandoori-nonveg">
+  <h2 style="color:#c0392b; font-size: 24px; margin-top: 40px;">🔥 Tandoori Starters (Non-Veg)</h2>
+  <div class="gallery" style="text-align: center; margin: 10px 0;">
+    <img src="https://www.dosanchutney.com/cdn/shop/files/TANDOORIMIXPLATTERNONVEG.jpg?v=1682602405" alt="Non-Veg Tandoori Starters" style="width: 100%; max-width: 300px; border-radius: 8px;">
   </div>
+
   <div class="item">
-    <span>Dal Makhani</span>
-    <button class="cart-button" onclick="addToCart('Dal Makhani', 160)">Add ₹160</button>
+    <span class="item-name" style="color:#007BFF; font-weight:bold;">Bhatti Murg</span><br/>
+    <button class="cart-button">4 pcs ₹260</button>
+    <button class="cart-button">8 pcs ₹480</button>
   </div>
-</div>
+
+  <div class="item">
+    <span class="item-name" style="color:#007BFF; font-weight:bold;">Tandoori Chicken</span><br/>
+    <button class="cart-button">4 pcs ₹260</button>
+    <button class="cart-button">8 pcs ₹480</button>
+  </div>
+
+  <div class="item">
+    <span class="item-name" style="color:#007BFF; font-weight:bold;">Chicken Tikka</span><br/>
+    <button class="cart-button">8 pcs ₹300</button>
+  </div>
+
+  <div class="item">
+    <span class="item-name" style="color:#007BFF; font-weight:bold;">Chicken Seekh</span><br/>
+    <button class="cart-button">2 pcs ₹180</button>
+  </div>
+</section>
+<!-- 🥟 Paneer Momos (10 pcs) -->
+<section class="section" id="paneer-momos">
+  <h2 style="color:#c0392b; font-size: 24px; margin-top: 40px;">🥟 Paneer Momos (10 pcs)</h2>
+  <div class="gallery" style="text-align: center; margin: 10px 0;">
+    <img src="https://images.jdmagicbox.com/quickquotes/images_main/paneer-kurkure-momo-2220178843-ve46z6u4.jpg" alt="Paneer Momos" style="width: 100%; max-width: 300px; border-radius: 8px;">
+  </div>
+
+  <div class="item">
+    <span class="item-name" style="color:#007BFF; font-weight:bold;">Paneer Kurkure Momos</span><br/>
+    <button class="cart-button">₹140</button>
+  </div>
+
+  <div class="item">
+    <span class="item-name" style="color:#007BFF; font-weight:bold;">Paneer Steam Momos</span><br/>
+    <button class="cart-button">₹120</button>
+  </div>
+
+  <div class="item">
+    <span class="item-name" style="color:#007BFF; font-weight:bold;">Paneer Fried Momos</span><br/>
+    <button class="cart-button">₹140</button>
+  </div>
+
+  <div class="item">
+    <span class="item-name" style="color:#007BFF; font-weight:bold;">Paneer Afghani Momos</span><br/>
+    <button class="cart-button">₹180</button>
+  </div>
+
+  <div class="item">
+    <span class="item-name" style="color:#007BFF; font-weight:bold;">Paneer Malai Momos</span><br/>
+    <button class="cart-button">₹180</button>
+  </div>
+
+  <div class="item">
+    <span class="item-name" style="color:#007BFF; font-weight:bold;">Paneer Gravy Momos</span><br/>
+    <button class="cart-button">₹200</button>
+  </div>
+
+  <div class="item">
+    <span class="item-name" style="color:#007BFF; font-weight:bold;">Paneer Chilli Momos</span><br/>
+    <button class="cart-button">₹220</button>
+  </div>
+</section>
+<!-- 🥟 Veg Momos (10 pcs) -->
+<section class="section" id="veg-momos">
+  <h2 style="color:#c0392b; font-size: 24px; margin-top: 40px;">🥟 Veg Momos (10 pcs)</h2>
+  <div class="gallery" style="text-align: center; margin: 10px 0;">
+    <img src="https://img-global.cpcdn.com/recipes/631f7db78bd8a38a/1200x630cq80/photo.jpg" alt="Veg Momos" style="width: 100%; max-width: 300px; border-radius: 8px;">
+  </div>
+
+  <div class="item">
+    <span class="item-name" style="color:#007BFF; font-weight:bold;">Veg Kurkure Momos</span><br/>
+    <button class="cart-button">₹110</button>
+  </div>
+
+  <div class="item">
+    <span class="item-name" style="color:#007BFF; font-weight:bold;">Veg Steam Momos</span><br/>
+    <button class="cart-button">₹80</button>
+  </div>
+
+  <div class="item">
+    <span class="item-name" style="color:#007BFF; font-weight:bold;">Veg Tandoori Momos</span><br/>
+    <button class="cart-button">₹100</button>
+  </div>
+
+  <div class="item">
+    <span class="item-name" style="color:#007BFF; font-weight:bold;">Veg Fried Momos</span><br/>
+    <button class="cart-button">₹110</button>
+  </div>
+
+  <div class="item">
+    <span class="item-name" style="color:#007BFF; font-weight:bold;">Veg Afghani Momos</span><br/>
+    <button class="cart-button">₹120</button>
+  </div>
+
+  <div class="item">
+    <span class="item-name" style="color:#007BFF; font-weight:bold;">Veg Malai Momos</span><br/>
+    <button class="cart-button">₹120</button>
+  </div>
+
+  <div class="item">
+    <span class="item-name" style="color:#007BFF; font-weight:bold;">Veg Gravy Momos</span><br/>
+    <button class="cart-button">₹130</button>
+  </div>
+
+  <div class="item">
+    <span class="item-name" style="color:#007BFF; font-weight:bold;">Veg Chilli Momos</span><br/>
+    <button class="cart-button">₹150</button>
+  </div>
+</section>
+<!-- 🍛 Platters -->
+<section class="section" id="platters">
+  <h2 style="color:#c0392b; font-size: 24px; margin-top: 40px;">🍛 Platters</h2>
+  <div class="gallery" style="text-align: center; margin: 10px 0;">
+    <img src="https://i.ytimg.com/vi/Ykn22EkUlqg/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLAPMCGMrdISxQmdjiRBI-kgfNdOig" alt="Platters" style="width: 100%; max-width: 300px; border-radius: 8px;">
+  </div>
+
+  <div class="item">
+    <span class="item-name" style="color:#007BFF; font-weight:bold;">Tandoori Veg Platters</span><br/>
+    <button class="cart-button">₹350</button>
+  </div>
+
+  <div class="item">
+    <span class="item-name" style="color:#007BFF; font-weight:bold;">Malai Chaap (Half) + Peri Peri Soya Chaap (Half)</span><br/>
+    <button class="cart-button">₹279</button>
+  </div>
+
+  <div class="item">
+    <span class="item-name" style="color:#007BFF; font-weight:bold;">Lemon Chaap (Half) + Chatpati Chaap (Half)</span><br/>
+    <button class="cart-button">₹279</button>
+  </div>
+
+  <div class="item">
+    <span class="item-name" style="color:#007BFF; font-weight:bold;">Afghani Tandoori Chaap (Half) + Achari Chaap (Half)</span><br/>
+    <button class="cart-button">₹279</button>
+  </div>
+</section>
+<!-- 🥗 Veg Main Course -->
+<section class="section" id="veg-main-course">
+  <h2 style="color:#c0392b; font-size: 24px; margin-top: 40px;">🥗 Veg Main Course</h2>
+  <div class="gallery" style="text-align: center; margin: 10px 0;">
+    <img src="https://www.funfoodfrolic.com/wp-content/uploads/2022/08/Soya-Chaap-Blog.jpg" alt="Veg Main Course" style="width: 100%; max-width: 300px; border-radius: 8px;">
+  </div>
+
+  <div class="item"><span class="item-name">Tawa Chaap Masala</span><br/>
+    <button class="cart-button">Half ₹160</button><button class="cart-button">Full ₹230</button>
+  </div>
+
+  <div class="item"><span class="item-name">Tawa Mushroom Masala</span><br/>
+    <button class="cart-button">Half ₹160</button><button class="cart-button">Full ₹230</button>
+  </div>
+
+  <div class="item"><span class="item-name">Tawa Paneer Masala</span><br/>
+    <button class="cart-button">Half ₹160</button><button class="cart-button">Full ₹230</button>
+  </div>
+
+  <div class="item"><span class="item-name">Paneer Takatak</span><br/>
+    <button class="cart-button">Half ₹170</button><button class="cart-button">Full ₹240</button>
+  </div>
+
+  <div class="item"><span class="item-name">Butter Chaap</span><br/>
+    <button class="cart-button">Half ₹170</button><button class="cart-button">Full ₹240</button>
+  </div>
+
+  <div class="item"><span class="item-name">Shahi Paneer</span><br/>
+    <button class="cart-button">Half ₹120</button><button class="cart-button">Full ₹200</button>
+  </div>
+
+  <div class="item"><span class="item-name">Kadhai Chaap</span><br/>
+    <button class="cart-button">Half ₹120</button><button class="cart-button">Full ₹210</button>
+  </div>
+
+  <div class="item"><span class="item-name">Mix Veg</span><br/>
+    <button class="cart-button">Half ₹120</button><button class="cart-button">Full ₹190</button>
+  </div>
+
+  <div class="item"><span class="item-name">Kadhai Paneer</span><br/>
+    <button class="cart-button">Half ₹120</button><button class="cart-button">Full ₹200</button>
+  </div>
+
+  <div class="item"><span class="item-name">Paneer Butter Masala</span><br/>
+    <button class="cart-button">Half ₹140</button><button class="cart-button">Full ₹230</button>
+  </div>
+
+  <div class="item"><span class="item-name">Mushroom Do Pyaza</span><br/>
+    <button class="cart-button">₹240</button>
+  </div>
+
+  <div class="item"><span class="item-name">Matar Paneer</span><br/>
+    <button class="cart-button">Half ₹130</button><button class="cart-button">Full ₹220</button>
+  </div>
+
+  <div class="item"><span class="item-name">Paneer Lababdar</span><br/>
+    <button class="cart-button">Half ₹160</button><button class="cart-button">Full ₹250</button>
+  </div>
+
+  <div class="item"><span class="item-name">Tadka Dal Fry</span><br/>
+    <button class="cart-button">Half ₹120</button><button class="cart-button">Full ₹180</button>
+  </div>
+</section>
+<!-- 🍗 Non-Veg Main Course -->
+<section class="section" id="nonveg-main-course">
+  <h2 style="color:#c0392b; font-size: 24px; margin-top: 40px;">🍗 Non-Veg Main Course</h2>
+  <div class="gallery" style="text-align: center; margin: 10px 0;">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvKmpTL61f7e2AZl0dVAq8Hcner9dG_MvUZQ&s" alt="Non-Veg Main Course" style="width: 100%; max-width: 300px; border-radius: 8px;">
+  </div>
+
+  <div class="item"><span class="item-name">Chicken Utterly Butterly</span><br/>
+    <button class="cart-button">Half ₹350</button><button class="cart-button">Full ₹580</button>
+  </div>
+
+  <div class="item"><span class="item-name">Butter Chicken</span><br/>
+    <button class="cart-button">Qtr ₹220</button><button class="cart-button">Half ₹390</button><button class="cart-button">Full ₹650</button>
+  </div>
+
+  <div class="item"><span class="item-name">Boneless Butter Chicken</span><br/>
+    <button class="cart-button">Qtr ₹230</button><button class="cart-button">Half ₹430</button><button class="cart-button">Full ₹700</button>
+  </div>
+
+  <div class="item"><span class="item-name">Chicken Do Pyaza</span><br/>
+    <button class="cart-button">Half ₹390</button><button class="cart-button">Full ₹650</button>
+  </div>
+
+  <div class="item"><span class="item-name">Kadai Chicken</span><br/>
+    <button class="cart-button">Qtr ₹220</button><button class="cart-button">Half ₹390</button><button class="cart-button">Full ₹650</button>
+  </div>
+
+  <div class="item"><span class="item-name">Tawa Chicken</span><br/>
+    <button class="cart-button">Qtr ₹220</button><button class="cart-button">Half ₹420</button><button class="cart-button">Full ₹660</button>
+  </div>
+
+  <div class="item"><span class="item-name">Ghar Jaisa Chicken Curry</span><br/>
+    <button class="cart-button">Qtr ₹220</button><button class="cart-button">Half ₹370</button><button class="cart-button">Full ₹630</button>
+  </div>
+
+  <div class="item"><span class="item-name">Chicken Rara Punjabi KS Special</span><br/>
+    <button class="cart-button">Qtr ₹220</button><button class="cart-button">Half ₹450</button><button class="cart-button">Full ₹700</button>
+  </div>
+
+  <div class="item"><span class="item-name">Boti Chicken Masala</span><br/>
+    <button class="cart-button">Half ₹390</button><button class="cart-button">Full ₹650</button>
+  </div>
+
+  <div class="item"><span class="item-name">Chicken Malmal</span><br/>
+    <button class="cart-button">Half ₹440</button><button class="cart-button">Full ₹700</button>
+  </div>
+
+  <div class="item"><span class="item-name">Chicken Tikka Butter Masala</span><br/>
+    <button class="cart-button">Half ₹420</button><button class="cart-button">Full ₹720</button>
+  </div>
+
+  <div class="item"><span class="item-name">Egg Curry (4 pcs)</span><br/>
+    <button class="cart-button">₹250</button>
+  </div>
+
+  <div class="item"><span class="item-name">Chicken Seekh Masala (500 ml)</span><br/>
+    <button class="cart-button">₹260</button>
+  </div>
+</section>
+<!-- 🌯 Rocking Rolls -->
+<section class="section" id="rocking-rolls">
+  <h2 style="color:#c0392b; font-size: 24px; margin-top: 40px;">🌯 Rocking Rolls</h2>
+  <div class="gallery" style="text-align: center; margin: 10px 0;">
+    <img src="https://b.zmtcdn.com/data/dish_photos/583/6ad97ca0eaa80e2bb8fbc9fec2cc5583.jpeg" alt="Rolls" style="width: 100%; max-width: 280px; border-radius: 8px;">
+  </div>
+
+  <div class="item"><span class="item-name">Chicken Seekh Roll</span><br/>
+    <button class="cart-button">₹180</button>
+  </div>
+
+  <div class="item"><span class="item-name">Chicken Tikka Roll</span><br/>
+    <button class="cart-button">₹220</button>
+  </div>
+
+  <div class="item"><span class="item-name">Malai Chaap Roll</span><br/>
+    <button class="cart-button">Half ₹120</button>
+    <button class="cart-button">Full ₹190</button>
+  </div>
+
+  <div class="item"><span class="item-name">Chatpati Chaap Roll</span><br/>
+    <button class="cart-button">Half ₹120</button>
+    <button class="cart-button">Full ₹190</button>
+  </div>
+
+  <div class="item"><span class="item-name">Achari Chaap Roll</span><br/>
+    <button class="cart-button">Half ₹120</button>
+    <button class="cart-button">Full ₹190</button>
+  </div>
+
+  <div class="item"><span class="item-name">Afghani Chaap Roll</span><br/>
+    <button class="cart-button">Half ₹130</button>
+    <button class="cart-button">Full ₹220</button>
+  </div>
+
+  <div class="item"><span class="item-name">Lemon Chaap Roll</span><br/>
+    <button class="cart-button">Half ₹120</button>
+    <button class="cart-button">Full ₹190</button>
+  </div>
+
+  <div class="item"><span class="item-name">Mushroom Roll</span><br/>
+    <button class="cart-button">Half ₹140</button>
+    <button class="cart-button">Full ₹200</button>
+  </div>
+
+  <div class="item"><span class="item-name">Paneer Tikka Roll</span><br/>
+    <button class="cart-button">Half ₹120</button>
+    <button class="cart-button">Full ₹200</button>
+  </div>
+
+  <div class="item"><span class="item-name">Peri Peri Soya Chaap Roll</span><br/>
+    <button class="cart-button">Half ₹120</button>
+    <button class="cart-button">Full ₹190</button>
+  </div>
+
+  <div class="item"><span class="item-name">Peri Peri Paneer Tikka Roll</span><br/>
+    <button class="cart-button">Half ₹140</button>
+    <button class="cart-button">Full ₹200</button>
+  </div>
+</section>
+<!-- 🍝 Pasta K's Special -->
+<section class="section" id="pasta-special">
+  <h2 style="color:#c0392b; font-size: 24px; margin-top: 40px;">🍝 Pasta K's Special</h2>
+  <div class="gallery" style="text-align: center; margin: 10px 0;">
+    <img src="https://img.freepik.com/free-photo/penne-pasta-tomato-sauce-with-chicken-tomatoes-wooden-table_2829-19744.jpg" alt="Pasta" style="width: 100%; max-width: 280px; border-radius: 8px;">
+  </div>
+
+  <div class="item"><span class="item-name">Mix Pasta Mac & Cheese</span><br/>
+    <button class="cart-button">₹140</button>
+  </div>
+
+  <div class="item"><span class="item-name">Red Sauce Pasta Mac & Cheese</span><br/>
+    <button class="cart-button">₹140</button>
+  </div>
+
+  <div class="item"><span class="item-name">White Sauce Pasta Mac & Cheese</span><br/>
+    <button class="cart-button">₹140</button>
+  </div>
+
+  <div class="item"><span class="item-name">Chicken Mix Pasta Mac & Cheese</span><br/>
+    <button class="cart-button">₹180</button>
+  </div>
+
+  <div class="item"><span class="item-name">Chicken Red Sauce Pasta Mac & Cheese</span><br/>
+    <button class="cart-button">₹180</button>
+  </div>
+
+  <div class="item"><span class="item-name">Chicken White Sauce Pasta Mac & Cheese</span><br/>
+    <button class="cart-button">₹180</button>
+  </div>
+</section>
+<!-- 🥡 Chinese Section -->
+<section class="section" id="chinese-section">
+  <h2 style="color:#c0392b; font-size: 24px; margin-top: 40px;">🍜 Noodles</h2>
+  <div class="gallery" style="text-align: center; margin: 10px 0;">
+    <img src="https://img.freepik.com/free-photo/schezwan-noodles-vegetable-hakka-noodles-chow-mein-is-popular-indo-chinese-recipes-served-bowl-plate-with-wooden-chopsticks_466689-74628.jpg" alt="Noodles" style="width: 100%; max-width: 280px; border-radius: 8px;">
+  </div>
+
+  <div class="item"><span class="item-name">Chicken Noodles</span><br><button class="cart-button">₹180</button></div>
+  <div class="item"><span class="item-name">Chicken Hakka Noodles</span><br><button class="cart-button">₹200</button></div>
+  <div class="item"><span class="item-name">Chicken Schezwan Noodles</span><br><button class="cart-button">₹200</button></div>
+  <div class="item"><span class="item-name">Chicken Chilli Garlic Noodles</span><br><button class="cart-button">₹200</button></div>
+  <div class="item"><span class="item-name">Chicken Singapori Noodles</span><br><button class="cart-button">₹200</button></div>
+  <div class="item"><span class="item-name">Veg Noodles</span><br><button class="cart-button">₹120</button></div>
+  <div class="item"><span class="item-name">Veg Hakka Noodles</span><br><button class="cart-button">₹150</button></div>
+  <div class="item"><span class="item-name">Veg Schezwan Noodles</span><br><button class="cart-button">₹150</button></div>
+  <div class="item"><span class="item-name">Chilli Garlic Noodles</span><br><button class="cart-button">₹150</button></div>
+  <div class="item"><span class="item-name">Singapori Noodles</span><br><button class="cart-button">₹150</button></div>
+  <div class="item"><span class="item-name">Paneer Noodles</span><br><button class="cart-button">₹170</button></div>
+  <div class="item"><span class="item-name">Mushroom Noodles</span><br><button class="cart-button">₹170</button></div>
+  <div class="item"><span class="item-name">Egg Noodles</span><br><button class="cart-button">₹170</button></div>
+
+  <h2 style="color:#c0392b; font-size: 24px; margin-top: 40px;">🥢 Chinese Delights</h2>
+  <div class="gallery" style="text-align: center; margin: 10px 0;">
+    <img src="https://img.freepik.com/free-photo/chilli-paneer-dry-is-made-using-cottage-cheese-indo-chinese-food_466689-76947.jpg" alt="Chilli Paneer" style="width: 100%; max-width: 280px; border-radius: 8px;">
+  </div>
+
+  <div class="item"><span class="item-name">Chilli Chicken Dry (10 pcs)</span><br><button class="cart-button">₹250</button></div>
+  <div class="item"><span class="item-name">Chilli Chicken Gravy (10 pcs)</span><br><button class="cart-button">₹250</button></div>
+  <div class="item"><span class="item-name">Chicken Manchurian Dry (10 pcs)</span><br><button class="cart-button">₹250</button></div>
+  <div class="item"><span class="item-name">Chicken Manchurian Gravy (10 pcs)</span><br><button class="cart-button">₹250</button></div>
+  <div class="item"><span class="item-name">Crispy Chilli Honey Potato</span><br><button class="cart-button">₹140</button></div>
+  <div class="item"><span class="item-name">Chilli Paneer Gravy</span><br><button class="cart-button">₹220</button></div>
+  <div class="item"><span class="item-name">Chilli Paneer (Dry)</span><br><button class="cart-button">₹200</button></div>
+  <div class="item"><span class="item-name">Chilli Mushroom</span><br><button class="cart-button">₹190</button></div>
+  <div class="item"><span class="item-name">French Fries</span><br><button class="cart-button">₹100</button></div>
+  <div class="item"><span class="item-name">Chilli Gobi Dry</span><br><button class="cart-button">₹190</button></div>
+  <div class="item"><span class="item-name">Chilli Potato</span><br><button class="cart-button">₹130</button></div>
+</section>
+<!-- 🍞 Breads & 🍲 Biryani Section -->
+<section class="section" id="breads-biryani-section">
+  <h2 style="color:#c0392b; font-size: 24px; margin-top: 40px;">🍞 Best Of Indian Breads</h2>
+
+  <div class="item"><span class="item-name">Tandoori Roti</span><br><button class="cart-button">₹12</button></div>
+  <div class="item"><span class="item-name">Rumali Roti</span><br><button class="cart-button">₹10</button></div>
+  <div class="item"><span class="item-name">Butter Roti</span><br><button class="cart-button">₹15</button></div>
+  <div class="item"><span class="item-name">Laccha Paratha</span><br><button class="cart-button">₹25</button></div>
+  <div class="item"><span class="item-name">Plain Naan</span><br><button class="cart-button">₹30</button></div>
+  <div class="item"><span class="item-name">Butter Naan</span><br><button class="cart-button">₹40</button></div>
+  <div class="item"><span class="item-name">Onion Naan</span><br><button class="cart-button">₹50</button></div>
+  <div class="item"><span class="item-name">Stuffed Naan</span><br><button class="cart-button">₹60</button></div>
+  <div class="item"><span class="item-name">Garlic Naan</span><br><button class="cart-button">₹60</button></div>
+  <div class="item"><span class="item-name">Aloo Paratha</span><br><button class="cart-button">₹50</button></div>
+  <div class="item"><span class="item-name">Chicken Keema Naan</span><br><button class="cart-button">₹90</button></div>
+  <div class="item"><span class="item-name">Paneer Paratha</span><br><button class="cart-button">₹70</button></div>
+  <div class="item"><span class="item-name">Missi Roti</span><br><button class="cart-button">₹25</button></div>
+
+  <h2 style="color:#c0392b; font-size: 24px; margin-top: 40px;">🍲 Dum Biryani</h2>
+  <div class="gallery" style="text-align: center; margin: 10px 0;">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaeBlIywcv4RMaVlvzAk-ygkpjyiX0juwM6Q&s" alt="Biryani" style="width: 100%; max-width: 280px; border-radius: 8px;">
+  </div>
+
+  <div class="item"><span class="item-name">Hyderabadi Chicken Dum Biryani</span><br><button class="cart-button">₹249</button></div>
+  <div class="item"><span class="item-name">Chicken Seekh Dum Biryani</span><br><button class="cart-button">₹249</button></div>
+  <div class="item"><span class="item-name">Kolkatta Chicken Dum Biryani</span><br><button class="cart-button">₹299</button></div>
+  <div class="item"><span class="item-name">Hyderabadi Veg Dum Biryani</span><br><button class="cart-button">₹149</button></div>
+  <div class="item"><span class="item-name">Paneer Tikka Dum Biryani</span><br><button class="cart-button">₹199</button></div>
+  <div class="item"><span class="item-name">Egg Dum Biryani</span><br><button class="cart-button">₹199</button></div>
+  <div class="item"><span class="item-name">Mushroom Dum Biryani</span><br><button class="cart-button">₹199</button></div>
+  <div class="item"><span class="item-name">Soya Chaap Dum Biryani</span><br><button class="cart-button">₹190</button></div>
+</section>
+
+<!-- 🍚 Rice Section -->
+<section class="section" id="rice-section">
+  <h2 style="color:#c0392b; font-size: 24px; margin-top: 40px;">🍚 Rice</h2>
+
+  <div class="gallery" style="text-align: center; margin: 10px 0;">
+    <img src="https://www.pavaniskitchen.com/wp-content/uploads/2021/08/schezwan-veg-fried-rice-500x375.jpg" alt="Fried Rice" style="width: 100%; max-width: 280px; border-radius: 8px;">
+  </div>
+
+  <div class="item"><span class="item-name">Egg Fried Rice</span><br><button class="cart-button">₹170</button></div>
+  <div class="item"><span class="item-name">Veg Fried Rice</span><br><button class="cart-button">₹140</button></div>
+  <div class="item"><span class="item-name">Jeera Rice</span><br><button class="cart-button">₹130</button></div>
+  <div class="item"><span class="item-name">Steam Rice</span><br><button class="cart-button">₹120</button></div>
+  <div class="item"><span class="item-name">Veg Schezwan Rice</span><br><button class="cart-button">₹150</button></div>
+  <div class="item"><span class="item-name">Chicken Fried Rice</span><br><button class="cart-button">₹220</button></div>
+  <div class="item"><span class="item-name">Chicken Schezwan Rice</span><br><button class="cart-button">₹260</button></div>
+</section>
+<!-- 🥤 Soft Drinks Section -->
+<section class="section" id="soft-drinks-section">
+  <h2 style="color:#c0392b; font-size: 24px; margin-top: 40px;">🥤 Soft Drinks</h2>
+
+  <div class="item"><span class="item-name">Coke/Thums Up (Large)</span><br><button class="cart-button">₹40</button></div>
+  <div class="item"><span class="item-name">Coke/Thums Up (Small)</span><br><button class="cart-button">₹20</button></div>
+  <div class="item"><span class="item-name">Water Big</span><br><button class="cart-button">₹20</button></div>
+  <div class="item"><span class="item-name">Water Small</span><br><button class="cart-button">₹10</button></div>
+  <div class="item"><span class="item-name">Arora Lemon</span><br><button class="cart-button">₹10</button></div>
+</section>
+
+
+
+
+
 
 <footer>
   <button class="cart-button" onclick="showCheckoutForm()">🛒 Checkout (<span id="cartCount">0</span>)</button>
