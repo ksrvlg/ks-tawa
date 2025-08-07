@@ -618,8 +618,17 @@
         submitButton.disabled = true;
         submitButton.textContent = 'Placing Order...';
         
-        fetch(GOOGLE_SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(orderData) })
-        .then(() => {
+        fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            // mode: 'no-cors', // REMOVED THIS LINE
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(orderData)
+        })
+        .then(response => response.json()) // We can now properly read the response
+        .then(data => {
+            if (data.status !== 'success') {
+                throw new Error(data.message);
+            }
             alert(`✅ Thank you, ${name}! Your order has been placed successfully!`);
             cart = [];
             updateMainDisplay();
