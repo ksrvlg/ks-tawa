@@ -3,38 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  
-  <title>K's Tawa - Order Online</title>
-  
-  
-    <style>
+  <title>K's Tawa - Online Delivery</title>
+  <style>
     :root { --primary-color: #d35400; --accent-color: #ff9800; --green-color: #27ae60; --red-color: #e74c3c; --background-color: #ffffff; --text-color: #333; }
     html { scroll-behavior: smooth; }
-    
-    /* --- THIS IS THE CORRECTED BODY STYLE WITH BACKGROUND IMAGE --- */
-    body { 
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; 
-        margin: 0; 
-        color: var(--text-color); 
-        padding-top: 130px; 
-        padding-bottom: 90px;
-        background-image: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)), url('https://lh3.googleusercontent.com/tHEXO53lDMWp5DAV2aD9PprhZVZm7zDNvOaQnUEw4t5CwN70xPdj0BozneN1Sa4alO1vQaZ4fv4J9vEOhkz_E7di-uMRPRa5qaTnOPmoGQ=w256-rw');
-        background-attachment: fixed;
-        background-position: center center;
-        background-repeat: no-repeat;
-        background-size: contain; 
-    }
-
-    /* --- HEADER & NAVIGATION --- */
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; margin: 0; background: var(--background-color); color: var(--text-color); padding-top: 130px; padding-bottom: 90px; }
+    @keyframes flash-discount { 0%, 100% { background-color: var(--green-color); transform: scale(1); } 50% { background-color: #2ecc71; transform: scale(1.03); } }
+    @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
     header { background: var(--primary-color); color: white; text-align: center; position: fixed; top: 0; width: 100%; box-sizing: border-box; z-index: 1000; padding: 10px 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); display: flex; justify-content: center; align-items: center; height: 71px; }
     .header-logo { max-height: 50px; width: auto; }
     .header-logo + h1 { margin: 0 0 0 15px; font-size: 1.2em; }
     .category-nav { background: var(--primary-color); position: fixed; top: 71px; width: 100%; box-shadow: 0 2px 5px rgba(0,0,0,0.15); white-space: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; z-index: 999; }
     .category-nav a { display: inline-block; padding: 15px; color: white; text-decoration: none; font-weight: 600; font-size: 0.9em; }
-    .category-nav::-webkit-scrollbar { display: none; }
-    .category-nav { -ms-overflow-style: none; scrollbar-width: none; }
-
-    /* --- MENU LAYOUT & ITEMS --- */
     .menu-container { padding: 75px 15px 15px; }
     section { padding-top: 20px; }
     .main-category-title { font-size: 2em; color: var(--primary-color); border-bottom: 4px solid var(--primary-color); padding-bottom: 10px; margin-bottom: 25px; }
@@ -44,47 +24,36 @@
     .item-name { font-weight: 600; font-size: 1.1em; color: var(--text-color); }
     .item-price { font-size: 0.9em; color: #666; margin-top: 4px; }
     .add-item-btn-wrapper { width: 100px; text-align: center; }
-    .add-btn { background: #fff; color: var(--green-color); border: 2px solid var(--green-color); padding: 8px 25px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: background-color 0.2s, color 0.2s; }
-    .add-btn:hover { background-color: #f0fff0; }
+    .add-btn { background: #fff; color: var(--green-color); border: 2px solid var(--green-color); padding: 8px 25px; border-radius: 8px; font-weight: bold; cursor: pointer; }
     .quantity-control { display: flex; align-items: center; justify-content: space-between; border: 2px solid var(--green-color); border-radius: 8px; width: 100px; }
     .quantity-control button { background: none; border: none; color: var(--green-color); font-size: 1.5em; font-weight: bold; cursor: pointer; padding: 5px 12px; }
-    .quantity-control .quantity { color: var(--green-color); font-weight: bold; }
-
-    /* --- OPTIONS MODAL --- */
-    #optionsModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1001; background: rgba(0,0,0,0.6); }
-    .modal-dialog { position: absolute; bottom: 0; left: 0; width: 100%; background: #fff; border-radius: 20px 20px 0 0; box-sizing: border-box; max-height: 85vh; display: flex; flex-direction: column; animation: slideUp 0.3s ease-out; }
-    @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-    .modal-header { padding: 15px 20px; border-bottom: 1px solid #eee; }
-    .modal-header h2 { margin: 0; font-size: 1.4em; }
-    .modal-body { padding: 10px 20px; overflow-y: auto; }
-    .option-group h3 { font-size: 1.1em; margin: 20px 0 10px; }
-    .option-group .required-tag { font-size: 0.8em; color: var(--red-color); margin-left: 5px; font-weight: normal; }
-    .option-choice { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; }
-    .option-choice label { display: flex; align-items: center; gap: 10px; flex-grow: 1; }
-    .option-choice input { width: 22px; height: 22px; accent-color: var(--primary-color); }
-    .modal-footer { padding: 15px 20px; border-top: 1px solid #eee; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); }
-    .modal-add-btn { width: 100%; padding: 16px; font-size: 1.1em; font-weight: bold; color: white; background: var(--green-color); border: none; border-radius: 10px; cursor: pointer; }
-    .modal-add-btn:disabled { background-color: #95a5a6; cursor: not-allowed; }
-
-    /* --- FOOTER & CHECKOUT MODAL --- */
+    .discount-banner { display: none; background: var(--green-color); color: white; text-align: center; padding: 8px; font-weight: bold; animation: flash-discount 2s infinite; margin-bottom: 20px; border-radius: 8px;}
     footer { position: fixed; bottom: 0; width: 100%; background: white; padding: 10px; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); text-align: center;}
     .footer-cart-btn { display: none; width: 95%; max-width: 450px; margin: 0 auto; padding: 16px; font-size: 1.2em; color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; background-color: var(--green-color); }
-    #checkoutModal { display: none; position: fixed; z-index: 1002; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; }
+    #optionsModal, #checkoutModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1001; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; }
+    .modal-dialog { position: absolute; bottom: 0; left: 0; width: 100%; background: #fff; border-radius: 20px 20px 0 0; box-sizing: border-box; max-height: 85vh; display: flex; flex-direction: column; animation: slideUp 0.3s ease-out; }
     .checkout-modal-content { background: white; padding: 25px; border-radius: 12px; width: 90%; max-width: 400px; }
     .checkout-modal-content h2 { margin-top: 0; }
-    .checkout-modal-content ul { list-style-type: none; padding: 10px 0; max-height: 200px; overflow-y: auto; border-top: 1px solid #eee; border-bottom: 1px solid #eee; margin-bottom: 15px;}
-    .checkout-modal-content li { margin-bottom: 8px; font-size: 1.1em; }
-    .checkout-modal-content input { width: 100%; box-sizing: border-box; margin-bottom: 15px; padding: 14px; border: 1px solid #ccc; border-radius: 8px; font-size: 1.1em;}
-    .checkout-modal-content button { width: 100%; padding: 14px; border-radius: 8px; border: none; font-size: 1.1em; font-weight: bold; color: white; cursor: pointer; }
-    .place-order-btn { background-color: var(--green-color); margin-bottom: 10px; }
-    .cancel-btn { background-color: var(--red-color); }
+    .checkout-modal-content ul { list-style-type: none; padding: 10px 0; max-height: 150px; overflow-y: auto; }
+    .price-summary { border-top: 1px solid #eee; margin-top: 15px; padding-top: 15px; }
+    .price-line { display: flex; justify-content: space-between; margin-bottom: 8px; }
+    .price-line.total { font-weight: bold; font-size: 1.2em; }
+    .price-line .discount { color: var(--green-color); }
+    .checkout-modal-content input, .checkout-modal-content textarea { width: 100%; box-sizing: border-box; margin-bottom: 15px; padding: 14px; border: 1px solid #ccc; border-radius: 8px; font-size: 1.1em;}
+    .place-order-btn { background-color: var(--green-color); width: 100%; padding: 14px; border: none; border-radius: 8px; font-size: 1.1em; font-weight: bold; color: white; }
+    .place-order-btn:disabled { background-color: #95a5a6; cursor: not-allowed; }
+    .min-order-warning { color: var(--red-color); text-align: center; font-weight: bold; margin-top: 10px; }
   </style>
 </head>
 <body>
 
-<header><h1>K’s Tawa V/s Tandoor Junction</h1></header>
+<header>
+    <img src="https://lh3.googleusercontent.com/tHEXO53lDMWp5DAV2aD9PprhZVZm7zDNvOaQnUEw4t5CwN70xPdj0BozneN1Sa4alO1vQaZ4fv4J9vEOhkz_E7di-uMRPRa5qaTnOPmoGQ=w256-rw" alt="K's Tawa Logo" class="header-logo">
+    <h1>K’s Tawa V/s Tandoor Junction</h1>
+</header>
 <nav class="category-nav">
   <a href="#cat-starters">Starters</a>
+  <a href="#cat-platters">Platters & Combos</a>
   <a href="#cat-rolls">Rolls</a>
   <a href="#cat-main-course">Main Course</a>
   <a href="#cat-momos">Momos</a>
@@ -93,27 +62,25 @@
   <a href="#cat-drinks">Drinks</a>
 </nav>
 
-<div class="menu-container" id="menu-container">
-    <!-- Menu content will be dynamically generated here by JavaScript -->
-</div>
+<div class="menu-container" id="menu-container"></div>
 
-<footer>
-  <button id="footerCartBtn" class="footer-cart-btn" onclick="showCheckoutForm()">
-    View Cart
-  </button>
-</footer>
+<footer><button id="footerCartBtn" class="footer-cart-btn" onclick="showCheckoutForm()">View Cart</button></footer>
 
 <div id="checkoutModal">
   <div class="checkout-modal-content">
-    <h2>Confirm Your Order</h2>
-    <ul id="cartItemsList"></ul>
-    <h4>Total: ₹<span id="checkoutTotal">0.00</span></h4><hr/>
+    <h2>Enter Delivery Details</h2>
     <input type="text" id="customerName" placeholder="Full Name" required />
     <input type="tel" id="customerPhone" placeholder="Phone Number" required />
-    <div>
-      <button onclick="submitOrder()" id="submitBtn" class="place-order-btn">Place My Order</button>
-      <button onclick="document.getElementById('checkoutModal').style.display='none'" class="cancel-btn">Cancel</button>
+    <textarea id="customerAddress" placeholder="Complete Address (House No, Street, Landmark)" rows="3" required></textarea>
+    <h4>Order Summary:</h4>
+    <ul id="cartItemsList"></ul>
+    <div class="price-summary">
+        <div class="price-line"><span>Subtotal</span><span id="subtotalPrice">₹0.00</span></div>
+        <div class="price-line discount"><span>Discount (20%)</span><span id="discountAmount">- ₹0.00</span></div>
+        <hr><div class="price-line total"><span>To Pay</span><span id="checkoutTotal">₹0.00</span></div>
     </div>
+    <div id="minOrderWarning" class="min-order-warning" style="display: none;"></div>
+    <div><button onclick="submitOrder()" id="submitBtn" class="place-order-btn">Place Order</button></div>
   </div>
 </div>
 
@@ -128,14 +95,16 @@
 </div>
 
 <script>
+    const MINIMUM_ORDER_VALUE = 299;
+    const DISCOUNT_PERCENTAGE = 0.20;
     const menuData = {
         "cat-starters": {
             title: "Chef's Specials Tandoori Starters",
             subCategories: {
                 "veg-starters": {
-    title: "🔥 Tandoori Starters (Veg)",
-    items: [
-        { id: "achari-chaap", name: "Achari Chaap", price: 110, options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 110 }, { name: "Full", price: 180 }] }] },
+                    title: "🔥 Tandoori Starters (Veg)",
+                    items: [
+                        { id: "achari-chaap", name: "Achari Chaap", price: 110, options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 110 }, { name: "Full", price: 180 }] }] },
                         { id: "lemon-chaap", name: "Lemon Chaap", price: 110, options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 110 }, { name: "Full", price: 180 }] }] },
                         { id: "chatpati-chaap", name: "Chatpati Chaap", price: 110, options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 110 }, { name: "Full", price: 180 }] }] },
                         { id: "malai-chaap", name: "Malai Chaap", price: 110, options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 110 }, { name: "Full", price: 180 }] }] },
@@ -380,7 +349,6 @@
             const section = document.createElement('section');
             section.id = catId;
             section.innerHTML = `<h2 class="main-category-title">${category.title}</h2>`;
-
             if (category.subCategories) {
                 for (const subCatId in category.subCategories) {
                     const subCategory = category.subCategories[subCatId];
@@ -398,24 +366,14 @@
         const itemDiv = document.createElement('div');
         itemDiv.className = 'item';
         itemDiv.id = `item-${item.id}`;
-        
         const priceText = item.options ? `₹${item.price} onwards` : `₹${item.price}`;
-        
-        itemDiv.innerHTML = `
-            <div class="item-info">
-                <div class="item-name">${item.name}</div>
-                <div class="item-price">${priceText}</div>
-            </div>
-            <div class="add-item-btn-wrapper"></div>
-        `;
-        
+        itemDiv.innerHTML = `<div class="item-info"><div class="item-name">${item.name}</div><div class="item-price">${priceText}</div></div><div class="add-item-btn-wrapper"></div>`;
         const wrapper = itemDiv.querySelector('.add-item-btn-wrapper');
         const addButton = document.createElement('button');
         addButton.className = 'add-btn';
         addButton.textContent = 'ADD';
         addButton.onclick = () => item.options ? showOptionsModal(item) : addItem(item.id, item.name, item.price);
         wrapper.appendChild(addButton);
-        
         return itemDiv;
     }
 
@@ -424,87 +382,52 @@
         document.getElementById('modalItemName').textContent = currentModalItem.name;
         const modalBody = document.getElementById('modalBody');
         modalBody.innerHTML = '';
-
-        currentModalItem.options.forEach(group => {
+        (item.options || []).forEach(group => {
             const groupDiv = document.createElement('div');
             groupDiv.className = 'option-group';
             const requiredTag = group.required ? '<span class="required-tag">REQUIRED</span>' : '';
             groupDiv.innerHTML = `<h3>${group.group}${requiredTag}</h3>`;
-            
             group.choices.forEach((choice, index) => {
                 const isChecked = group.type === 'radio' && index === 0 ? 'checked' : '';
                 const choiceId = `${group.group.replace(/\s+/g, '-')}-${index}`;
-                
-                groupDiv.innerHTML += `
-                    <div class="option-choice">
-                        <label for="${choiceId}">
-                            <input type="${group.type}" id="${choiceId}" name="${group.group}" 
-                                   value="${choice.price}" data-name="${choice.name}" 
-                                   onchange="updateModalPrice()" ${isChecked}>
-                            <span>${choice.name}</span>
-                        </label>
-                        <span>₹${choice.price}</span>
-                    </div>
-                `;
+                groupDiv.innerHTML += `<div class="option-choice"><label for="${choiceId}"><input type="${group.type}" id="${choiceId}" name="${group.group}" value="${choice.price}" data-name="${choice.name}" onchange="updateModalPrice()" ${isChecked}><span>${choice.name}</span></label><span>₹${choice.price}</span></div>`;
             });
             modalBody.appendChild(groupDiv);
         });
-
         updateModalPrice();
         document.getElementById('optionsModal').style.display = 'block';
     }
 
     function updateModalPrice() {
-        let total = 0;
-        let isRequiredMet = true;
-        
-        currentModalItem.options.forEach(group => {
-            const checkedInput = document.querySelector(`#modalBody input[name="${group.group}"]:checked`);
-            if (group.required && !checkedInput) {
-                isRequiredMet = false;
-            }
+        let total = 0; let isRequiredMet = true;
+        (currentModalItem.options || []).forEach(group => {
+            if (group.required && !document.querySelector(`#modalBody input[name="${group.group}"]:checked`)) { isRequiredMet = false; }
         });
-        
-        document.querySelectorAll('#modalBody input:checked').forEach(input => {
-            total += parseFloat(input.value);
-        });
-
+        document.querySelectorAll('#modalBody input:checked').forEach(input => { total += parseFloat(input.value); });
         const addButton = document.getElementById('modalAddItemBtn');
         addButton.textContent = `Add Item - ₹${total.toFixed(2)}`;
         addButton.disabled = !isRequiredMet;
     }
     
     document.getElementById('modalAddItemBtn').onclick = function() {
-        let finalPrice = 0;
-        let nameParts = [currentModalItem.name];
-        let idParts = [currentModalItem.id];
-        
+        let finalPrice = 0; let nameParts = [currentModalItem.name]; let idParts = [currentModalItem.id];
         document.querySelectorAll('#modalBody input:checked').forEach(input => {
             finalPrice += parseFloat(input.value);
             nameParts.push(`(${input.dataset.name})`);
-            idParts.push(input.dataset.name.toLowerCase().replace(/ /g, '-'));
+            idParts.push(input.dataset.name.toLowerCase().replace(/\s+/g, '-'));
         });
-
         const finalName = nameParts.join(' ');
         const finalId = idParts.join('_');
-
         addItem(finalId, finalName, finalPrice);
         document.getElementById('optionsModal').style.display = 'none';
     };
     
-    document.getElementById('optionsModal').onclick = function(event) {
-        if (event.target.id === 'optionsModal') {
-            event.target.style.display = 'none';
-        }
-    };
+    document.getElementById('optionsModal').onclick = function(event) { if (event.target.id === 'optionsModal') { event.target.style.display = 'none'; } };
     
     function addItem(id, name, price) {
         const existingItem = cart.find(item => item.id === id);
-        if (existingItem) {
-            existingItem.quantity++;
-        } else {
-            cart.push({ id, name, price, quantity: 1, baseId: id.split('_')[0] });
-        }
+        if (existingItem) { existingItem.quantity++; } 
+        else { cart.push({ id, name, price, quantity: 1, baseId: id.split('_')[0] }); }
         updateMainDisplay();
     }
 
@@ -512,135 +435,91 @@
         const itemIndex = cart.findIndex(item => item.id === id);
         if (itemIndex > -1) {
             cart[itemIndex].quantity--;
-            if (cart[itemIndex].quantity === 0) {
-                cart.splice(itemIndex, 1);
-            }
+            if (cart[itemIndex].quantity === 0) { cart.splice(itemIndex, 1); }
         }
         updateMainDisplay();
     }
 
     function updateMainDisplay() {
-        const itemBaseIdCounts = cart.reduce((acc, item) => {
-            acc[item.baseId] = (acc[item.baseId] || 0) + item.quantity;
-            return acc;
-        }, {});
-
+        const itemBaseIdCounts = cart.reduce((acc, item) => { acc[item.baseId] = (acc[item.baseId] || 0) + item.quantity; return acc; }, {});
         document.querySelectorAll('.add-item-btn-wrapper').forEach(wrapper => {
-            const itemDiv = wrapper.closest('.item');
-            const baseId = itemDiv.id.replace('item-', '');
+            const itemDiv = wrapper.closest('.item'); if(!itemDiv) return; const baseId = itemDiv.id.replace('item-', '');
             const totalQty = itemBaseIdCounts[baseId] || 0;
-            
-            if (totalQty > 0) {
-                wrapper.innerHTML = `
-                    <div class="quantity-control">
-                        <button onclick="removeLastAddedItem('${baseId}')">-</button>
-                        <span class="quantity">${totalQty}</span>
-                        <button onclick="reopenOptionsFor('${baseId}')">+</button>
-                    </div>
-                `;
-            } else {
-                const originalItem = findMenuItemById(baseId);
-                wrapper.innerHTML = `<button class="add-btn">ADD</button>`;
-                wrapper.querySelector('.add-btn').onclick = () => originalItem.options ? showOptionsModal(originalItem) : addItem(originalItem.id, originalItem.name, originalItem.price);
-            }
+            if (totalQty > 0) { wrapper.innerHTML = `<div class="quantity-control"><button onclick="removeLastAddedItem('${baseId}')">-</button><span class="quantity">${totalQty}</span><button onclick="reopenOptionsFor('${baseId}')">+</button></div>`; } 
+            else { const originalItem = findMenuItemById(baseId); wrapper.innerHTML = `<button class="add-btn">ADD</button>`; if(originalItem){ wrapper.querySelector('.add-btn').onclick = () => originalItem.options ? showOptionsModal(originalItem) : addItem(originalItem.id, originalItem.name, originalItem.price); } }
         });
-        
-        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-        const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0); const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
         const footerBtn = document.getElementById('footerCartBtn');
-        
-        if (totalItems > 0) {
-            footerBtn.style.display = 'block';
-            footerBtn.textContent = `View Cart (${totalItems}) - ₹${totalPrice.toFixed(2)}`;
-        } else {
-            footerBtn.style.display = 'none';
-        }
+        if (totalItems > 0) { footerBtn.style.display = 'block'; footerBtn.innerHTML = `View Cart (${totalItems}) &nbsp;&nbsp;&nbsp; ₹${totalPrice.toFixed(2)}`; } 
+        else { footerBtn.style.display = 'none'; }
+        let discountBanner = document.getElementById('discount-banner');
+        if (totalPrice >= MINIMUM_ORDER_VALUE) {
+            if (!discountBanner) { discountBanner = document.createElement('div'); discountBanner.id = 'discount-banner'; discountBanner.className = 'discount-banner'; discountBanner.textContent = '🎉 FLAT 20% DISCOUNT UNLOCKED! 🎉'; document.querySelector('.menu-container').prepend(discountBanner); }
+            discountBanner.style.display = 'block';
+        } else { if (discountBanner) discountBanner.style.display = 'none'; }
     }
     
     function removeLastAddedItem(baseId) {
-        for (let i = cart.length - 1; i >= 0; i--) {
-            if (cart[i].baseId === baseId) {
-                removeItem(cart[i].id);
-                break;
-            }
-        }
+        for (let i = cart.length - 1; i >= 0; i--) { if (cart[i].baseId === baseId) { removeItem(cart[i].id); break; } }
     }
 
     function reopenOptionsFor(baseId) {
         const originalItem = findMenuItemById(baseId);
-        if (originalItem && originalItem.options) {
-            showOptionsModal(originalItem);
-        } else if (originalItem) {
-            addItem(originalItem.id, originalItem.name, originalItem.price);
-        }
+        if (originalItem && originalItem.options) { showOptionsModal(originalItem); } 
+        else if (originalItem) { addItem(originalItem.id, originalItem.name, originalItem.price); }
     }
 
     function findMenuItemById(id) {
         for (const catId in menuData) {
             const category = menuData[catId];
             if (category.subCategories) {
-                for (const subCatId in category.subCategories) {
-                    const found = category.subCategories[subCatId].items.find(item => item.id === id);
-                    if (found) return found;
-                }
-            } else {
-                const found = category.items.find(item => item.id === id);
-                if (found) return found;
-            }
+                for (const subCatId in category.subCategories) { const found = category.subCategories[subCatId].items.find(item => item.id === id); if (found) return found; }
+            } else { const found = category.items.find(item => item.id === id); if (found) return found; }
         }
         return null;
     }
 
     function showCheckoutForm() {
         if (cart.length === 0) return;
-        const cartItemsList = document.getElementById("cartItemsList");
-        cartItemsList.innerHTML = '';
-        const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-        cart.forEach(item => {
-            const listItem = document.createElement('li');
-            listItem.textContent = `${item.quantity} x ${item.name}`;
-            cartItemsList.appendChild(listItem);
-        });
-        document.getElementById("checkoutTotal").innerText = totalPrice.toFixed(2);
+        const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        const discount = subtotal >= MINIMUM_ORDER_VALUE ? subtotal * DISCOUNT_PERCENTAGE : 0;
+        const total = subtotal - discount;
+        document.getElementById("subtotalPrice").textContent = `₹${subtotal.toFixed(2)}`;
+        document.getElementById("discountAmount").textContent = `- ₹${discount.toFixed(2)}`;
+        document.getElementById("checkoutTotal").textContent = `₹${total.toFixed(2)}`;
+        const warningEl = document.getElementById("minOrderWarning"); const submitBtn = document.getElementById("submitBtn");
+        if (subtotal < MINIMUM_ORDER_VALUE) { warningEl.textContent = `Minimum order is ₹${MINIMUM_ORDER_VALUE}`; warningEl.style.display = 'block'; submitBtn.disabled = true; } 
+        else { warningEl.style.display = 'none'; submitBtn.disabled = false; }
+        const cartItemsList = document.getElementById("cartItemsList"); cartItemsList.innerHTML = '';
+        cart.forEach(item => { const listItem = document.createElement('li'); listItem.textContent = `${item.quantity} x ${item.name}`; cartItemsList.appendChild(listItem); });
         document.getElementById("checkoutModal").style.display = "flex";
     }
 
     function submitOrder() {
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby8V2NU-OynIYNUGsB96iMrqkB2YK7bvhxM0AxXXXJetkZrnKu3GjrIBur0miAmgE-gGA/exec";
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzg3NWQgCkAwmzKd4YbrxX0rPLf19as6SUJCv4hL9zwfykiY9KJ_n-t6vsT0DFs27nHYg/exec";
         const name = document.getElementById("customerName").value.trim();
         const phone = document.getElementById("customerPhone").value.trim();
-        if (!name || !phone) { alert("Please fill in your full name and phone number."); return; }
-
-        const itemsForBackend = cart.map(item => ({ name: `${item.quantity} x ${item.name}`, price: item.price * item.quantity }));
-        const orderData = { name, phone, items: itemsForBackend, totalAmount: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0), timestamp: new Date().toISOString() };
-        
+        const address = document.getElementById("customerAddress").value.trim();
+        if (!name || !phone || !address) { alert("Please fill in your name, phone number, and complete address."); return; }
+        const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        if (subtotal < MINIMUM_ORDER_VALUE) { alert(`Minimum order is ₹${MINIMUM_ORDER_VALUE}.`); return; }
+        const discount = subtotal >= MINIMUM_ORDER_VALUE ? subtotal * DISCOUNT_PERCENTAGE : 0;
+        const finalTotal = subtotal - discount;
+        const orderData = { name: `${name} (Delivery)`, phone, address, items: cart.map(item => ({ name: `${item.quantity} x ${item.name}` })), totalAmount: finalTotal, subtotal, discount, timestamp: new Date().toISOString() };
         const submitButton = document.getElementById('submitBtn');
-        submitButton.disabled = true;
-        submitButton.textContent = 'Placing Order...';
-        
-        fetch(GOOGLE_SCRIPT_URL, {
-            method: 'POST',
-            // mode: 'no-cors', // REMOVED THIS LINE
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(orderData)
-        })
-        .then(response => response.json()) // We can now properly read the response
+        submitButton.disabled = true; submitButton.textContent = 'Placing Order...';
+        fetch(GOOGLE_SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(orderData) })
+        .then(response => response.json())
         .then(data => {
-            if (data.status !== 'success') {
-                throw new Error(data.message);
-            }
+            if (data.status !== 'success') { throw new Error(data.message || 'The script reported an error.'); }
             alert(`✅ Thank you, ${name}! Your order has been placed successfully!`);
             cart = [];
             updateMainDisplay();
-            document.getElementById('customerName').value = '';
-            document.getElementById('customerPhone').value = '';
+            document.getElementById('customerName').value = ''; document.getElementById('customerPhone').value = ''; document.getElementById('customerAddress').value = '';
             document.getElementById("checkoutModal").style.display = "none";
         })
-        .catch(error => console.error("Error placing order:", error))
-        .finally(() => {
-            submitButton.disabled = false;
-            submitButton.textContent = 'Place My Order';
-        });
+        .catch(error => { console.error("Error placing order:", error); alert("❌ A critical error occurred. Could not place your order."); })
+        .finally(() => { submitButton.disabled = false; submitButton.textContent = 'Place My Order'; });
     }
 
     document.addEventListener('DOMContentLoaded', () => {
