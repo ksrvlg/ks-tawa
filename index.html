@@ -3,79 +3,29 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  
-  <title>K's Tawa - Order Online</title>
-  
-  
-    <style>
-    :root { --primary-color: #d35400; --accent-color: #ff9800; --green-color: #27ae60; --red-color: #e74c3c; --background-color: #ffffff; --text-color: #333; }
-    html { scroll-behavior: smooth; }
-    
-    /* --- THIS IS THE CORRECTED BODY STYLE WITH BACKGROUND IMAGE --- */
-    body { 
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; 
-        margin: 0; 
-        color: var(--text-color); 
-        padding-top: 130px; 
-        padding-bottom: 90px;
-        background-image: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)), url('https://lh3.googleusercontent.com/tHEXO53lDMWp5DAV2aD9PprhZVZm7zDNvOaQnUEw4t5CwN70xPdj0BozneN1Sa4alO1vQaZ4fv4J9vEOhkz_E7di-uMRPRa5qaTnOPmoGQ=w256-rw');
-        background-attachment: fixed;
-        background-position: center center;
-        background-repeat: no-repeat;
-        background-size: contain; 
-    }
-
-    /* --- HEADER & NAVIGATION --- */
-    header { background: var(--primary-color); color: white; text-align: center; position: fixed; top: 0; width: 100%; box-sizing: border-box; z-index: 1000; padding: 10px 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); display: flex; justify-content: center; align-items: center; height: 71px; }
-    .header-logo { max-height: 50px; width: auto; }
-    .header-logo + h1 { margin: 0 0 0 15px; font-size: 1.2em; }
-    .category-nav { background: var(--primary-color); position: fixed; top: 71px; width: 100%; box-shadow: 0 2px 5px rgba(0,0,0,0.15); white-space: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; z-index: 999; }
-    .category-nav a { display: inline-block; padding: 15px; color: white; text-decoration: none; font-weight: 600; font-size: 0.9em; }
-    .category-nav::-webkit-scrollbar { display: none; }
-    .category-nav { -ms-overflow-style: none; scrollbar-width: none; }
-
-    /* --- MENU LAYOUT & ITEMS --- */
-    .menu-container { padding: 75px 15px 15px; }
-    section { padding-top: 20px; }
-    .main-category-title { font-size: 2em; color: var(--primary-color); border-bottom: 4px solid var(--primary-color); padding-bottom: 10px; margin-bottom: 25px; }
-    .sub-category-title { font-size: 1.4em; background-color: #f9f9f9; padding: 10px 15px; margin-top: 30px; margin-bottom: 15px; border-left: 5px solid var(--accent-color); border-radius: 6px; }
-    .item { display: flex; justify-content: space-between; align-items: center; padding: 18px 5px; border-bottom: 1px solid #e0e0e0; }
-    .item-info { flex-grow: 1; padding-right: 15px; }
-    .item-name { font-weight: 600; font-size: 1.1em; color: var(--text-color); }
-    .item-price { font-size: 0.9em; color: #666; margin-top: 4px; }
-    .add-item-btn-wrapper { width: 100px; text-align: center; }
-    .add-btn { background: #fff; color: var(--green-color); border: 2px solid var(--green-color); padding: 8px 25px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: background-color 0.2s, color 0.2s; }
-    .add-btn:hover { background-color: #f0fff0; }
-    .quantity-control { display: flex; align-items: center; justify-content: space-between; border: 2px solid var(--green-color); border-radius: 8px; width: 100px; }
-    .quantity-control button { background: none; border: none; color: var(--green-color); font-size: 1.5em; font-weight: bold; cursor: pointer; padding: 5px 12px; }
-    .quantity-control .quantity { color: var(--green-color); font-weight: bold; }
-
-    /* --- OPTIONS MODAL --- */
-    #optionsModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1001; background: rgba(0,0,0,0.6); }
-    .modal-dialog { position: absolute; bottom: 0; left: 0; width: 100%; background: #fff; border-radius: 20px 20px 0 0; box-sizing: border-box; max-height: 85vh; display: flex; flex-direction: column; animation: slideUp 0.3s ease-out; }
-    @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-    .modal-header { padding: 15px 20px; border-bottom: 1px solid #eee; }
-    .modal-header h2 { margin: 0; font-size: 1.4em; }
-    .modal-body { padding: 10px 20px; overflow-y: auto; }
-    .option-group h3 { font-size: 1.1em; margin: 20px 0 10px; }
-    .option-group .required-tag { font-size: 0.8em; color: var(--red-color); margin-left: 5px; font-weight: normal; }
-    .option-choice { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; }
-    .option-choice label { display: flex; align-items: center; gap: 10px; flex-grow: 1; }
-    .option-choice input { width: 22px; height: 22px; accent-color: var(--primary-color); }
-    .modal-footer { padding: 15px 20px; border-top: 1px solid #eee; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); }
-    .modal-add-btn { width: 100%; padding: 16px; font-size: 1.1em; font-weight: bold; color: white; background: var(--green-color); border: none; border-radius: 10px; cursor: pointer; }
-    .modal-add-btn:disabled { background-color: #95a5a6; cursor: not-allowed; }
-
-    /* --- FOOTER & CHECKOUT MODAL --- */
-    footer { position: fixed; bottom: 0; width: 100%; background: white; padding: 10px; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); text-align: center;}
-    .footer-cart-btn { display: none; width: 95%; max-width: 450px; margin: 0 auto; padding: 16px; font-size: 1.2em; color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; background-color: var(--green-color); }
-    #checkoutModal { display: none; position: fixed; z-index: 1002; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; }
-    .checkout-modal-content { background: white; padding: 25px; border-radius: 12px; width: 90%; max-width: 400px; }
-    .checkout-modal-content h2 { margin-top: 0; }
-    .checkout-modal-content ul { list-style-type: none; padding: 10px 0; max-height: 200px; overflow-y: auto; border-top: 1px solid #eee; border-bottom: 1px solid #eee; margin-bottom: 15px;}
-    .checkout-modal-content li { margin-bottom: 8px; font-size: 1.1em; }
-    .checkout-modal-content input { width: 100%; box-sizing: border-box; margin-bottom: 15px; padding: 14px; border: 1px solid #ccc; border-radius: 8px; font-size: 1.1em;}
-    .checkout-modal-content button { width: 100%; padding: 14px; border-radius: 8px; border: none; font-size: 1.1em; font-weight: bold; color: white; cursor: pointer; }
+  <title>K's Tawa - In-House Ordering</title>
+  <style>
+    :root { --primary-color: #d35400; --green-color: #27ae60; --red-color: #e74c3c; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; margin: 0; background: #fdfdfd; color: #333; padding-bottom: 90px; }
+    header { background: var(--primary-color); color: white; padding: 15px; text-align: center; position: sticky; top: 0; z-index: 100; }
+    header h1 { margin: 0; font-size: 1.4em; }
+    footer { background: var(--primary-color); color: white; padding: 10px; text-align: center; position: fixed; bottom: 0; width: 100%; box-sizing: border-box; }
+    .menu-container { padding: 20px; }
+    h2 { font-size: 1.5em; color: var(--primary-color); }
+    .item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #e0e0e0; }
+    .item-name { font-weight: 500; font-size: 1.1em; flex-grow: 1; padding-right: 10px; }
+    .controls { display: flex; align-items: center; gap: 10px; }
+    .quantity { font-weight: bold; font-size: 1.2em; min-width: 20px; text-align: center; }
+    .add-btn, .remove-btn { font-size: 1.5em; font-weight: bold; line-height: 1; padding: 6px 12px; border: none; border-radius: 6px; color: white; cursor: pointer; }
+    .add-btn { background-color: var(--green-color); }
+    .remove-btn { background-color: var(--red-color); }
+    .footer-cart-btn { width: 95%; max-width: 450px; padding: 15px; font-size: 1.2em; background-color: var(--green-color); color: white; border: none; border-radius: 10px; cursor: pointer; }
+    #checkoutModal { display: none; position: fixed; z-index: 1000; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; }
+    .modal-content { background: white; padding: 25px; border-radius: 12px; width: 90%; max-width: 400px; }
+    .modal-content h2 { margin-top: 0; }
+    .modal-content ul { list-style-type: none; padding: 10px 0; max-height: 200px; overflow-y: auto; border-top: 1px solid #eee; border-bottom: 1px solid #eee; margin: 15px 0;}
+    .modal-content input { width: 100%; box-sizing: border-box; margin-bottom: 15px; padding: 14px; border: 1px solid #ccc; border-radius: 8px; font-size: 1.1em;}
+    .modal-content button { width: 100%; padding: 14px; border-radius: 8px; border: none; font-size: 1.1em; font-weight: bold; color: white; cursor: pointer; }
     .place-order-btn { background-color: var(--green-color); margin-bottom: 10px; }
     .cancel-btn { background-color: var(--red-color); }
   </style>
@@ -83,561 +33,182 @@
 <body>
 
 <header><h1>K’s Tawa V/s Tandoor Junction</h1></header>
-<nav class="category-nav">
-  <a href="#cat-starters">Starters</a>
-  <a href="#cat-rolls">Rolls</a>
-  <a href="#cat-main-course">Main Course</a>
-  <a href="#cat-momos">Momos</a>
-  <a href="#cat-breads-biryani">Breads & Biryani</a>
-  <a href="#cat-chinese-pasta">Chinese & Pasta</a>
-  <a href="#cat-drinks">Drinks</a>
-</nav>
 
-<div class="menu-container" id="menu-container">
-    <!-- Menu content will be dynamically generated here by JavaScript -->
+<div class="menu-container">
+  
+  <section id="tandoori-veg">
+    <h2>🔥 Tandoori Starters (Veg)</h2>
+    <div class="item"><span class="item-name">Achari Chaap (Half)</span><div class="controls"><button class="remove-btn" onclick="removeItem('acha-chap-h')">-</button><span class="quantity" id="qty-acha-chap-h">0</span><button class="add-btn" onclick="addItem('acha-chap-h', 'Achari Chaap (Half)', 110)">+</button></div></div>
+    <div class="item"><span class="item-name">Achari Chaap (Full)</span><div class="controls"><button class="remove-btn" onclick="removeItem('acha-chap-f')">-</button><span class="quantity" id="qty-acha-chap-f">0</span><button class="add-btn" onclick="addItem('acha-chap-f', 'Achari Chaap (Full)', 180)">+</button></div></div>
+    <div class="item"><span class="item-name">Lemon Chaap (Half)</span><div class="controls"><button class="remove-btn" onclick="removeItem('lemo-chap-h')">-</button><span class="quantity" id="qty-lemo-chap-h">0</span><button class="add-btn" onclick="addItem('lemo-chap-h', 'Lemon Chaap (Half)', 110)">+</button></div></div>
+    <div class="item"><span class="item-name">Lemon Chaap (Full)</span><div class="controls"><button class="remove-btn" onclick="removeItem('lemo-chap-f')">-</button><span class="quantity" id="qty-lemo-chap-f">0</span><button class="add-btn" onclick="addItem('lemo-chap-f', 'Lemon Chaap (Full)', 180)">+</button></div></div>
+    <div class="item"><span class="item-name">Chatpati Chaap (Half)</span><div class="controls"><button class="remove-btn" onclick="removeItem('chat-chap-h')">-</button><span class="quantity" id="qty-chat-chap-h">0</span><button class="add-btn" onclick="addItem('chat-chap-h', 'Chatpati Chaap (Half)', 110)">+</button></div></div>
+    <div class="item"><span class="item-name">Chatpati Chaap (Full)</span><div class="controls"><button class="remove-btn" onclick="removeItem('chat-chap-f')">-</button><span class="quantity" id="qty-chat-chap-f">0</span><button class="add-btn" onclick="addItem('chat-chap-f', 'Chatpati Chaap (Full)', 180)">+</button></div></div>
+    <div class="item"><span class="item-name">Malai Chaap (Half)</span><div class="controls"><button class="remove-btn" onclick="removeItem('mala-chap-h')">-</button><span class="quantity" id="qty-mala-chap-h">0</span><button class="add-btn" onclick="addItem('mala-chap-h', 'Malai Chaap (Half)', 110)">+</button></div></div>
+    <div class="item"><span class="item-name">Malai Chaap (Full)</span><div class="controls"><button class="remove-btn" onclick="removeItem('mala-chap-f')">-</button><span class="quantity" id="qty-mala-chap-f">0</span><button class="add-btn" onclick="addItem('mala-chap-f', 'Malai Chaap (Full)', 180)">+</button></div></div>
+    <div class="item"><span class="item-name">Paneer Tikka (Half)</span><div class="controls"><button class="remove-btn" onclick="removeItem('pane-tikk-h')">-</button><span class="quantity" id="qty-pane-tikk-h">0</span><button class="add-btn" onclick="addItem('pane-tikk-h', 'Paneer Tikka (Half)', 120)">+</button></div></div>
+    <div class="item"><span class="item-name">Paneer Tikka (Full)</span><div class="controls"><button class="remove-btn" onclick="removeItem('pane-tikk-f')">-</button><span class="quantity" id="qty-pane-tikk-f">0</span><button class="add-btn" onclick="addItem('pane-tikk-f', 'Paneer Tikka (Full)', 200)">+</button></div></div>
+    <div class="item"><span class="item-name">Paneer Malai Tikka (Half)</span><div class="controls"><button class="remove-btn" onclick="removeItem('panemala-tikk-h')">-</button><span class="quantity" id="qty-panemala-tikk-h">0</span><button class="add-btn" onclick="addItem('panemala-tikk-h', 'Paneer Malai Tikka (Half)', 140)">+</button></div></div>
+    <div class="item"><span class="item-name">Paneer Malai Tikka (Full)</span><div class="controls"><button class="remove-btn" onclick="removeItem('panemala-tikk-f')">-</button><span class="quantity" id="qty-panemala-tikk-f">0</span><button class="add-btn" onclick="addItem('panemala-tikk-f', 'Paneer Malai Tikka (Full)', 240)">+</button></div></div>
+    <div class="item"><span class="item-name">Paneer Achari Tikka (Half)</span><div class="controls"><button class="remove-btn" onclick="removeItem('paneacha-tikk-h')">-</button><span class="quantity" id="qty-paneacha-tikk-h">0</span><button class="add-btn" onclick="addItem('paneacha-tikk-h', 'Paneer Achari Tikka (Half)', 120)">+</button></div></div>
+    <div class="item"><span class="item-name">Paneer Achari Tikka (Full)</span><div class="controls"><button class="remove-btn" onclick="removeItem('paneacha-tikk-f')">-</button><span class="quantity" id="qty-paneacha-tikk-f">0</span><button class="add-btn" onclick="addItem('paneacha-tikk-f', 'Paneer Achari Tikka (Full)', 200)">+</button></div></div>
+    <div class="item"><span class="item-name">Peri Peri Soya Chaap (Half)</span><div class="controls"><button class="remove-btn" onclick="removeItem('peri-soya-h')">-</button><span class="quantity" id="qty-peri-soya-h">0</span><button class="add-btn" onclick="addItem('peri-soya-h', 'Peri Peri Soya Chaap (Half)', 110)">+</button></div></div>
+    <div class="item"><span class="item-name">Peri Peri Soya Chaap (Full)</span><div class="controls"><button class="remove-btn" onclick="removeItem('peri-soya-f')">-</button><span class="quantity" id="qty-peri-soya-f">0</span><button class="add-btn" onclick="addItem('peri-soya-f', 'Peri Peri Soya Chaap (Full)', 180)">+</button></div></div>
+    <div class="item"><span class="item-name">Peri Peri Paneer Tikka (Half)</span><div class="controls"><button class="remove-btn" onclick="removeItem('peri-pane-h')">-</button><span class="quantity" id="qty-peri-pane-h">0</span><button class="add-btn" onclick="addItem('peri-pane-h', 'Peri Peri Paneer Tikka (Half)', 120)">+</button></div></div>
+    <div class="item"><span class="item-name">Peri Peri Paneer Tikka (Full)</span><div class="controls"><button class="remove-btn" onclick="removeItem('peri-pane-f')">-</button><span class="quantity" id="qty-peri-pane-f">0</span><button class="add-btn" onclick="addItem('peri-pane-f', 'Peri Peri Paneer Tikka (Full)', 200)">+</button></div></div>
+    <div class="item"><span class="item-name">Mushroom Tikka (Half)</span><div class="controls"><button class="remove-btn" onclick="removeItem('mush-tikk-h')">-</button><span class="quantity" id="qty-mush-tikk-h">0</span><button class="add-btn" onclick="addItem('mush-tikk-h', 'Mushroom Tikka (Half)', 120)">+</button></div></div>
+    <div class="item"><span class="item-name">Mushroom Tikka (Full)</span><div class="controls"><button class="remove-btn" onclick="removeItem('mush-tikk-f')">-</button><span class="quantity" id="qty-mush-tikk-f">0</span><button class="add-btn" onclick="addItem('mush-tikk-f', 'Mushroom Tikka (Full)', 200)">+</button></div></div>
+    <div class="item"><span class="item-name">Afghani Tandoori Chaap (Half)</span><div class="controls"><button class="remove-btn" onclick="removeItem('afgh-chap-h')">-</button><span class="quantity" id="qty-afgh-chap-h">0</span><button class="add-btn" onclick="addItem('afgh-chap-h', 'Afghani Tandoori Chaap (Half)', 140)">+</button></div></div>
+    <div class="item"><span class="item-name">Afghani Tandoori Chaap (Full)</span><div class="controls"><button class="remove-btn" onclick="removeItem('afgh-chap-f')">-</button><span class="quantity" id="qty-afgh-chap-f">0</span><button class="add-btn" onclick="addItem('afgh-chap-f', 'Afghani Tandoori Chaap (Full)', 220)">+</button></div></div>
+  </section>
+
+  <section id="tandoori-nonveg">
+    <h2>🔥 Tandoori Starters (Non-Veg)</h2>
+    <div class="item"><span class="item-name">Bhatti Murg (4 pcs)</span><div class="controls"><button class="remove-btn" onclick="removeItem('bhat-murg-4')">-</button><span class="quantity" id="qty-bhat-murg-4">0</span><button class="add-btn" onclick="addItem('bhat-murg-4', 'Bhatti Murg (4 pcs)', 260)">+</button></div></div>
+    <div class="item"><span class="item-name">Bhatti Murg (8 pcs)</span><div class="controls"><button class="remove-btn" onclick="removeItem('bhat-murg-8')">-</button><span class="quantity" id="qty-bhat-murg-8">0</span><button class="add-btn" onclick="addItem('bhat-murg-8', 'Bhatti Murg (8 pcs)', 480)">+</button></div></div>
+    <div class="item"><span class="item-name">Tandoori Chicken (4 pcs)</span><div class="controls"><button class="remove-btn" onclick="removeItem('tand-chic-4')">-</button><span class="quantity" id="qty-tand-chic-4">0</span><button class="add-btn" onclick="addItem('tand-chic-4', 'Tandoori Chicken (4 pcs)', 260)">+</button></div></div>
+    <div class="item"><span class="item-name">Tandoori Chicken (8 pcs)</span><div class="controls"><button class="remove-btn" onclick="removeItem('tand-chic-8')">-</button><span class="quantity" id="qty-tand-chic-8">0</span><button class="add-btn" onclick="addItem('tand-chic-8', 'Tandoori Chicken (8 pcs)', 480)">+</button></div></div>
+    <div class="item"><span class="item-name">Chicken Tikka (8 pcs)</span><div class="controls"><button class="remove-btn" onclick="removeItem('chic-tikk-8')">-</button><span class="quantity" id="qty-chic-tikk-8">0</span><button class="add-btn" onclick="addItem('chic-tikk-8', 'Chicken Tikka (8 pcs)', 300)">+</button></div></div>
+    <div class="item"><span class="item-name">Chicken Seekh (2 pcs)</span><div class="controls"><button class="remove-btn" onclick="removeItem('chic-seek-2')">-</button><span class="quantity" id="qty-chic-seek-2">0</span><button class="add-btn" onclick="addItem('chic-seek-2', 'Chicken Seekh (2 pcs)', 180)">+</button></div></div>
+  </section>
+  
+  <section id="paneer-momos"><h2>🥟 Paneer Momos (10 pcs)</h2>
+    <div class="item"><span class="item-name">Paneer Kurkure Momos</span><div class="controls"><button class="remove-btn" onclick="removeItem('pane-kurk-momo')">-</button><span class="quantity" id="qty-pane-kurk-momo">0</span><button class="add-btn" onclick="addItem('pane-kurk-momo', 'Paneer Kurkure Momos', 140)">+</button></div></div>
+    <div class="item"><span class="item-name">Paneer Steam Momos</span><div class="controls"><button class="remove-btn" onclick="removeItem('pane-stea-momo')">-</button><span class="quantity" id="qty-pane-stea-momo">0</span><button class="add-btn" onclick="addItem('pane-stea-momo', 'Paneer Steam Momos', 120)">+</button></div></div>
+    <div class="item"><span class="item-name">Paneer Fried Momos</span><div class="controls"><button class="remove-btn" onclick="removeItem('pane-frie-momo')">-</button><span class="quantity" id="qty-pane-frie-momo">0</span><button class="add-btn" onclick="addItem('pane-frie-momo', 'Paneer Fried Momos', 140)">+</button></div></div>
+    <div class="item"><span class="item-name">Paneer Afghani Momos</span><div class="controls"><button class="remove-btn" onclick="removeItem('pane-afgh-momo')">-</button><span class="quantity" id="qty-pane-afgh-momo">0</span><button class="add-btn" onclick="addItem('pane-afgh-momo', 'Paneer Afghani Momos', 180)">+</button></div></div>
+    <div class="item"><span class="item-name">Paneer Malai Momos</span><div class="controls"><button class="remove-btn" onclick="removeItem('pane-mala-momo')">-</button><span class="quantity" id="qty-pane-mala-momo">0</span><button class="add-btn" onclick="addItem('pane-mala-momo', 'Paneer Malai Momos', 180)">+</button></div></div>
+    <div class="item"><span class="item-name">Paneer Gravy Momos</span><div class="controls"><button class="remove-btn" onclick="removeItem('pane-grav-momo')">-</button><span class="quantity" id="qty-pane-grav-momo">0</span><button class="add-btn" onclick="addItem('pane-grav-momo', 'Paneer Gravy Momos', 200)">+</button></div></div>
+    <div class="item"><span class="item-name">Paneer Chilli Momos</span><div class="controls"><button class="remove-btn" onclick="removeItem('pane-chil-momo')">-</button><span class="quantity" id="qty-pane-chil-momo">0</span><button class="add-btn" onclick="addItem('pane-chil-momo', 'Paneer Chilli Momos', 220)">+</button></div></div>
+  </section>
+  
+  <section id="veg-momos"><h2>🥟 Veg Momos (10 pcs)</h2>
+    <div class="item"><span class="item-name">Veg Kurkure Momos</span><div class="controls"><button class="remove-btn" onclick="removeItem('veg-kurk-momo')">-</button><span class="quantity" id="qty-veg-kurk-momo">0</span><button class="add-btn" onclick="addItem('veg-kurk-momo', 'Veg Kurkure Momos', 110)">+</button></div></div>
+    <div class="item"><span class="item-name">Veg Steam Momos</span><div class="controls"><button class="remove-btn" onclick="removeItem('veg-stea-momo')">-</button><span class="quantity" id="qty-veg-stea-momo">0</span><button class="add-btn" onclick="addItem('veg-stea-momo', 'Veg Steam Momos', 80)">+</button></div></div>
+    <div class="item"><span class="item-name">Veg Tandoori Momos</span><div class="controls"><button class="remove-btn" onclick="removeItem('veg-tand-momo')">-</button><span class="quantity" id="qty-veg-tand-momo">0</span><button class="add-btn" onclick="addItem('veg-tand-momo', 'Veg Tandoori Momos', 100)">+</button></div></div>
+    <div class="item"><span class="item-name">Veg Fried Momos</span><div class="controls"><button class="remove-btn" onclick="removeItem('veg-frie-momo')">-</button><span class="quantity" id="qty-veg-frie-momo">0</span><button class="add-btn" onclick="addItem('veg-frie-momo', 'Veg Fried Momos', 110)">+</button></div></div>
+    <div class="item"><span class="item-name">Veg Afghani Momos</span><div class="controls"><button class="remove-btn" onclick="removeItem('veg-afgh-momo')">-</button><span class="quantity" id="qty-veg-afgh-momo">0</span><button class="add-btn" onclick="addItem('veg-afgh-momo', 'Veg Afghani Momos', 120)">+</button></div></div>
+    <div class="item"><span class="item-name">Veg Malai Momos</span><div class="controls"><button class="remove-btn" onclick="removeItem('veg-mala-momo')">-</button><span class="quantity" id="qty-veg-mala-momo">0</span><button class="add-btn" onclick="addItem('veg-mala-momo', 'Veg Malai Momos', 120)">+</button></div></div>
+    <div class="item"><span class="item-name">Veg Gravy Momos</span><div class="controls"><button class="remove-btn" onclick="removeItem('veg-grav-momo')">-</button><span class="quantity" id="qty-veg-grav-momo">0</span><button class="add-btn" onclick="addItem('veg-grav-momo', 'Veg Gravy Momos', 130)">+</button></div></div>
+    <div class="item"><span class="item-name">Veg Chilli Momos</span><div class="controls"><button class="remove-btn" onclick="removeItem('veg-chil-momo')">-</button><span class="quantity" id="qty-veg-chil-momo">0</span><button class="add-btn" onclick="addItem('veg-chil-momo', 'Veg Chilli Momos', 150)">+</button></div></div>
+  </section>
+
 </div>
 
 <footer>
-  <button id="footerCartBtn" class="footer-cart-btn" onclick="showCheckoutForm()">
-    View Cart
+  <button class="footer-cart-btn" onclick="showCheckoutForm()">
+    View Cart (<span id="cartItemCount">0</span>) | Total: ₹<span id="cartTotalPrice">0.00</span>
   </button>
 </footer>
 
 <div id="checkoutModal">
-  <div class="checkout-modal-content">
-    <h2>Confirm Your Order</h2>
+  <div class="modal-content">
+    <h2>Enter Customer Details</h2>
+    <input type="text" id="customerName" placeholder="Full Name or Table No." required />
+    <input type="tel" id="customerPhone" placeholder="Phone Number (Optional)" />
+    <h4>Order Summary:</h4>
     <ul id="cartItemsList"></ul>
-    <h4>Total: ₹<span id="checkoutTotal">0.00</span></h4><hr/>
-    <input type="text" id="customerName" placeholder="Full Name" required />
-    <input type="tel" id="customerPhone" placeholder="Phone Number" required />
+    <h4>Total: ₹<span id="checkoutTotal">0.00</span></h4>
     <div>
-      <button onclick="submitOrder()" id="submitBtn" class="place-order-btn">Place My Order</button>
+      <button onclick="submitOrder()" id="submitBtn" class="place-order-btn">Place Order</button>
       <button onclick="document.getElementById('checkoutModal').style.display='none'" class="cancel-btn">Cancel</button>
     </div>
   </div>
 </div>
 
-<div id="optionsModal">
-  <div class="modal-dialog">
-    <div class="modal-header"><h2 id="modalItemName"></h2></div>
-    <div class="modal-body" id="modalBody"></div>
-    <div class="modal-footer">
-      <button id="modalAddItemBtn" class="modal-add-btn">Add item - ₹0</button>
-    </div>
-  </div>
-</div>
-
 <script>
-    const menuData = {
-        "cat-starters": {
-            title: "Chef's Specials Tandoori Starters",
-            subCategories: {
-                "veg-starters": {
-    title: "🔥 Tandoori Starters (Veg)",
-    items: [
-        { id: "achari-chaap", name: "Achari Chaap", price: 110, options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 110 }, { name: "Full", price: 180 }] }] },
-                        { id: "lemon-chaap", name: "Lemon Chaap", price: 110, options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 110 }, { name: "Full", price: 180 }] }] },
-                        { id: "chatpati-chaap", name: "Chatpati Chaap", price: 110, options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 110 }, { name: "Full", price: 180 }] }] },
-                        { id: "malai-chaap", name: "Malai Chaap", price: 110, options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 110 }, { name: "Full", price: 180 }] }] },
-                        { id: "paneer-tikka", name: "Paneer Tikka", price: 120, options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 120 }, { name: "Full", price: 200 }] }] },
-                        { id: "paneer-malai-tikka", name: "Paneer Malai Tikka", price: 140, options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 140 }, { name: "Full", price: 240 }] }] },
-                        { id: "paneer-achari-tikka", name: "Paneer Achari Tikka", price: 120, options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 120 }, { name: "Full", price: 200 }] }] },
-                        { id: "peri-peri-soya-chaap", name: "Peri Peri Soya Chaap", price: 110, options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 110 }, { name: "Full", price: 180 }] }] },
-                        { id: "peri-peri-paneer-tikka", name: "Peri Peri Paneer Tikka", price: 120, options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 120 }, { name: "Full", price: 200 }] }] },
-                        { id: "mushroom-tikka", name: "Mushroom Tikka", price: 120, options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 120 }, { name: "Full", price: 200 }] }] },
-                        { id: "afghani-tandoori-chaap", name: "Afghani Tandoori Chaap", price: 140, options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 140 }, { name: "Full", price: 220 }] }] }
-                    ]
-                },
-                "non-veg-starters": {
-                    title: "🔥 Tandoori Starters (Non-Veg)",
-                    items: [
-                        { id: "bhatti-murg", name: "Bhatti Murg", price: 260, options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "4 pcs", price: 260 }, { name: "8 pcs", price: 480 }] }] },
-                        { id: "tandoori-chicken", name: "Tandoori Chicken", price: 260, options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "4 pcs", price: 260 }, { name: "8 pcs", price: 480 }] }] },
-                        { id: "chicken-tikka", name: "Chicken Tikka (8 pcs)", price: 300 },
-                        { id: "chicken-seekh", name: "Chicken Seekh (2 pcs)", price: 180 }
-                    ]
-                }
-            }
-        },
-        "cat-platters": {
-            title: "Platters & Meal Combos",
-            items: [
-                { id: "tandoori-veg-platter", name: "Tandoori Veg Platters", price: 350 },
-                { id: "malai-peri-combo", name: "Malai Chaap (Half) + Peri Peri Soya Chaap (Half)", price: 279 },
-                { id: "lemon-chatpati-combo", name: "Lemon Chaap (Half) + Chatpati Chaap (Half)", price: 279 },
-                { id: "afghani-achari-combo", name: "Afghani Tandoori Chaap (Half) + Achari Chaap (Half)", price: 279 }
-            ]
-        },
-        "cat-rolls": {
-            title: "Rocking Rolls",
-            items: [
-                { id: "chicken-seekh-roll", name: "Chicken Seekh Roll", price: 180 },
-                { id: "chicken-tikka-roll", name: "Chicken Tikka Roll", price: 220 },
-                { id: "malai-chaap-roll", name: "Malai Chaap Roll", price: 120, options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 120 }, { name: "Full", price: 190 }] }] },
-                { id: "chatpati-chaap-roll", name: "Chatpati Chaap Roll", price: 120, options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 120 }, { name: "Full", price: 190 }] }] },
-                { id: "achari-chaap-roll", name: "Achari Chaap Roll", price: 120, options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 120 }, { name: "Full", price: 190 }] }] },
-                { id: "afghani-chaap-roll", name: "Afghani Chaap Roll", price: 130, options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 130 }, { name: "Full", price: 220 }] }] },
-                { id: "lemon-chaap-roll", name: "Lemon Chaap Roll", price: 120, options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 120 }, { name: "Full", price: 190 }] }] },
-                { id: "mushroom-roll", name: "Mushroom Roll", price: 140, options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 140 }, { name: "Full", price: 200 }] }] },
-                { id: "paneer-tikka-roll", name: "Paneer Tikka Roll", price: 120, options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 120 }, { name: "Full", price: 200 }] }] },
-                { id: "peri-peri-soya-roll", name: "Peri Peri Soya Chaap Roll", price: 120, options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 120 }, { name: "Full", price: 190 }] }] },
-                { id: "peri-peri-paneer-roll", name: "Peri Peri Paneer Tikka Roll", price: 140, options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 140 }, { name: "Full", price: 200 }] }] },
-            ]
-        },
-        "cat-main-course": {
-            title: "Main Course",
-            subCategories: {
-                "veg-main": {
-                    title: "🥗 Veg Main Course",
-                    items: [
-                        { id: "tawa-chaap-masala", name: "Tawa Chaap Masala", price: 160, options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 160 }, { name: "Full", price: 230 }] }] },
-                        { id: "tawa-mushroom-masala", name: "Tawa Mushroom Masala", price: 160, options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 160 }, { name: "Full", price: 230 }] }] },
-                        { id: "tawa-paneer-masala", name: "Tawa Paneer Masala", price: 160, options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 160 }, { name: "Full", price: 230 }] }] },
-                        { id: "paneer-takatak", name: "Paneer Takatak", price: 170, options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 170 }, { name: "Full", price: 240 }] }] },
-                        { id: "butter-chaap", name: "Butter Chaap", price: 170, options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 170 }, { name: "Full", price: 240 }] }] },
-                        { id: "shahi-paneer", name: "Shahi Paneer", price: 120, options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 120 }, { name: "Full", price: 200 }] }] },
-                        { id: "kadhai-chaap", name: "Kadhai Chaap", price: 120, options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 120 }, { name: "Full", price: 210 }] }] },
-                        { id: "mix-veg", name: "Mix Veg", price: 120, options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 120 }, { name: "Full", price: 190 }] }] },
-                        { id: "kadhai-paneer", name: "Kadhai Paneer", price: 120, options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 120 }, { name: "Full", price: 200 }] }] },
-                        { id: "paneer-butter-masala", name: "Paneer Butter Masala", price: 140, options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 140 }, { name: "Full", price: 230 }] }] },
-                        { id: "mushroom-do-pyaza", name: "Mushroom Do Pyaza", price: 240 },
-                        { id: "matar-paneer", name: "Matar Paneer", price: 130, options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 130 }, { name: "Full", price: 220 }] }] },
-                        { id: "paneer-lababdar", name: "Paneer Lababdar", price: 160, options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 160 }, { name: "Full", price: 250 }] }] },
-                        { id: "tadka-dal-fry", name: "Tadka Dal Fry", price: 120, options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 120 }, { name: "Full", price: 180 }] }] }
-                    ]
-                },
-                "non-veg-main": {
-                    title: "🍗 Non-Veg Main Course",
-                    items: [
-                        { id: "chicken-utterly-butterly", name: "Chicken Utterly Butterly", price: 350, options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 350 }, { name: "Full", price: 580 }] }] },
-                        { id: "butter-chicken", name: "Butter Chicken", price: 220, options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Qtr", price: 220 }, { name: "Half", price: 390 }, { name: "Full", price: 650 }] }] },
-                        { id: "boneless-butter-chicken", name: "Boneless Butter Chicken", price: 230, options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Qtr", price: 230 }, { name: "Half", price: 430 }, { name: "Full", price: 700 }] }] },
-                        { id: "chicken-do-pyaza", name: "Chicken Do Pyaza", price: 390, options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 390 }, { name: "Full", price: 650 }] }] },
-                        { id: "kadai-chicken", name: "Kadai Chicken", price: 220, options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Qtr", price: 220 }, { name: "Half", price: 390 }, { name: "Full", price: 650 }] }] },
-                        { id: "tawa-chicken", name: "Tawa Chicken", price: 220, options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Qtr", price: 220 }, { name: "Half", price: 420 }, { name: "Full", price: 660 }] }] },
-                        { id: "ghar-jaisa-chicken", name: "Ghar Jaisa Chicken Curry", price: 220, options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Qtr", price: 220 }, { name: "Half", price: 370 }, { name: "Full", price: 630 }] }] },
-                        { id: "chicken-rara-punjabi", name: "Chicken Rara Punjabi KS Special", price: 220, options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Qtr", price: 220 }, { name: "Half", price: 450 }, { name: "Full", price: 700 }] }] },
-                        { id: "boti-chicken-masala", name: "Boti Chicken Masala", price: 390, options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 390 }, { name: "Full", price: 650 }] }] },
-                        { id: "chicken-malmal", name: "Chicken Malmal", price: 440, options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 440 }, { name: "Full", price: 700 }] }] },
-                        { id: "chicken-tikka-butter-masala", name: "Chicken Tikka Butter Masala", price: 420, options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 420 }, { name: "Full", price: 720 }] }] },
-                        { id: "egg-curry", name: "Egg Curry (4 pcs)", price: 250 },
-                        { id: "chicken-seekh-masala", name: "Chicken Seekh Masala (500 ml)", price: 260 }
-                    ]
-                }
-            }
-        },
-        "cat-momos": {
-            title: "Momos",
-            subCategories: {
-                "paneer-momos": {
-                    title: "🥟 Paneer Momos (10 pcs)",
-                    items: [
-                        { id: "paneer-kurkure-momos", name: "Paneer Kurkure Momos", price: 140 },
-                        { id: "paneer-steam-momos", name: "Paneer Steam Momos", price: 120 },
-                        { id: "paneer-fried-momos", name: "Paneer Fried Momos", price: 140 },
-                        { id: "paneer-afghani-momos", name: "Paneer Afghani Momos", price: 180 },
-                        { id: "paneer-malai-momos", name: "Paneer Malai Momos", price: 180 },
-                        { id: "paneer-gravy-momos", name: "Paneer Gravy Momos", price: 200 },
-                        { id: "paneer-chilli-momos", name: "Paneer Chilli Momos", price: 220 }
-                    ]
-                },
-                "veg-momos": {
-                    title: "🥟 Veg Momos (10 pcs)",
-                    items: [
-                        { id: "veg-kurkure-momos", name: "Veg Kurkure Momos", price: 110 },
-                        { id: "veg-steam-momos", name: "Veg Steam Momos", price: 80 },
-                        { id: "veg-tandoori-momos", name: "Veg Tandoori Momos", price: 100 },
-                        { id: "veg-fried-momos", name: "Veg Fried Momos", price: 110 },
-                        { id: "veg-afghani-momos", name: "Veg Afghani Momos", price: 120 },
-                        { id: "veg-malai-momos", name: "Veg Malai Momos", price: 120 },
-                        { id: "veg-gravy-momos", name: "Veg Gravy Momos", price: 130 },
-                        { id: "veg-chilli-momos", name: "Veg Chilli Momos", price: 150 }
-                    ]
-                }
-            }
-        },
-        "cat-breads-biryani": {
-            title: "Breads, Biryani & Rice",
-            subCategories: {
-                "breads": {
-                    title: "🍞 Best Of Indian Breads",
-                    items: [
-                        { id: "tandoori-roti", name: "Tandoori Roti", price: 12 },
-                        { id: "rumali-roti", name: "Rumali Roti", price: 10 },
-                        { id: "butter-roti", name: "Butter Roti", price: 15 },
-                        { id: "laccha-paratha", name: "Laccha Paratha", price: 25 },
-                        { id: "plain-naan", name: "Plain Naan", price: 30 },
-                        { id: "butter-naan", name: "Butter Naan", price: 40 },
-                        { id: "onion-naan", name: "Onion Naan", price: 50 },
-                        { id: "stuffed-naan", name: "Stuffed Naan", price: 60 },
-                        { id: "garlic-naan", name: "Garlic Naan", price: 60 },
-                        { id: "aloo-paratha", name: "Aloo Paratha", price: 50 },
-                        { id: "chicken-keema-naan", name: "Chicken Keema Naan", price: 90 },
-                        { id: "paneer-paratha", name: "Paneer Paratha", price: 70 },
-                        { id: "missi-roti", name: "Missi Roti", price: 25 }
-                    ]
-                },
-                "biryani": {
-                    title: "🍲 Dum Biryani",
-                    items: [
-                        { id: "hyderabadi-chicken-biryani", name: "Hyderabadi Chicken Dum Biryani", price: 249 },
-                        { id: "chicken-seekh-biryani", name: "Chicken Seekh Dum Biryani", price: 249 },
-                        { id: "kolkatta-chicken-biryani", name: "Kolkatta Chicken Dum Biryani", price: 299 },
-                        { id: "hyderabadi-veg-biryani", name: "Hyderabadi Veg Dum Biryani", price: 149 },
-                        { id: "paneer-tikka-biryani", name: "Paneer Tikka Dum Biryani", price: 199 },
-                        { id: "egg-biryani", name: "Egg Dum Biryani", price: 199 },
-                        { id: "mushroom-biryani", name: "Mushroom Dum Biryani", price: 199 },
-                        { id: "soya-chaap-biryani", name: "Soya Chaap Dum Biryani", price: 190 }
-                    ]
-                },
-                "rice": {
-                    title: "🍚 Rice",
-                    items: [
-                        { id: "egg-fried-rice", name: "Egg Fried Rice", price: 170 },
-                        { id: "veg-fried-rice", name: "Veg Fried Rice", price: 140 },
-                        { id: "jeera-rice", name: "Jeera Rice", price: 130 },
-                        { id: "steam-rice", name: "Steam Rice", price: 120 },
-                        { id: "veg-schezwan-rice", name: "Veg Schezwan Rice", price: 150 },
-                        { id: "chicken-fried-rice", name: "Chicken Fried Rice", price: 220 },
-                        { id: "chicken-schezwan-rice", name: "Chicken Schezwan Rice", price: 260 }
-                    ]
-                }
-            }
-        },
-        "cat-chinese-pasta": {
-            title: "Chinese, Noodles & Pasta",
-            subCategories: {
-                "noodles": {
-                    title: "🍜 Noodles",
-                    items: [
-                        { id: "chicken-noodles", name: "Chicken Noodles", price: 180 },
-                        { id: "chicken-hakka-noodles", name: "Chicken Hakka Noodles", price: 200 },
-                        { id: "chicken-schezwan-noodles", name: "Chicken Schezwan Noodles", price: 200 },
-                        { id: "chicken-chilli-garlic-noodles", name: "Chicken Chilli Garlic Noodles", price: 200 },
-                        { id: "chicken-singapori-noodles", name: "Chicken Singapori Noodles", price: 200 },
-                        { id: "veg-noodles", name: "Veg Noodles", price: 120 },
-                        { id: "veg-hakka-noodles", name: "Veg Hakka Noodles", price: 150 },
-                        { id: "veg-schezwan-noodles", name: "Veg Schezwan Noodles", price: 150 },
-                        { id: "chilli-garlic-noodles", name: "Chilli Garlic Noodles", price: 150 },
-                        { id: "singapori-noodles", name: "Singapori Noodles", price: 150 },
-                        { id: "paneer-noodles", name: "Paneer Noodles", price: 170 },
-                        { id: "mushroom-noodles", name: "Mushroom Noodles", price: 170 },
-                        { id: "egg-noodles", name: "Egg Noodles", price: 170 }
-                    ]
-                },
-                "chinese-delights": {
-                    title: "🥢 Chinese Delights",
-                    items: [
-                        { id: "chilli-chicken-dry", name: "Chilli Chicken Dry (10 pcs)", price: 250 },
-                        { id: "chilli-chicken-gravy", name: "Chilli Chicken Gravy (10 pcs)", price: 250 },
-                        { id: "chicken-manchurian-dry", name: "Chicken Manchurian Dry (10 pcs)", price: 250 },
-                        { id: "chicken-manchurian-gravy", name: "Chicken Manchurian Gravy (10 pcs)", price: 250 },
-                        { id: "veg-manchurian-dry", name: "Veg Manchurian Dry", price: 180 },
-                        { id: "veg-manchurian-gravy", name: "Veg Manchurian Gravy", price: 200 },
-                        { id: "crispy-chilli-honey-potato", name: "Crispy Chilli Honey Potato", price: 140 },
-                        { id: "chilli-paneer-gravy", name: "Chilli Paneer Gravy", price: 220 },
-                        { id: "chilli-paneer-dry", name: "Chilli Paneer (Dry)", price: 200 },
-                        { id: "chilli-mushroom", name: "Chilli Mushroom", price: 190 },
-                        { id: "french-fries", name: "French Fries", price: 100 },
-                        { id: "chilli-gobi-dry", name: "Chilli Gobi Dry", price: 190 },
-                        { id: "chilli-potato", name: "Chilli Potato", price: 130 }
-                    ]
-                },
-                "pasta": {
-                    title: "🍝 Pasta K's Special",
-                    items: [
-                        { id: "mix-pasta", name: "Mix Pasta Mac & Cheese", price: 140 },
-                        { id: "red-sauce-pasta", name: "Red Sauce Pasta Mac & Cheese", price: 140 },
-                        { id: "white-sauce-pasta", name: "White Sauce Pasta Mac & Cheese", price: 140 },
-                        { id: "chicken-mix-pasta", name: "Chicken Mix Pasta Mac & Cheese", price: 180 },
-                        { id: "chicken-red-sauce-pasta", name: "Chicken Red Sauce Pasta Mac & Cheese", price: 180 },
-                        { id: "chicken-white-sauce-pasta", name: "Chicken White Sauce Pasta Mac & Cheese", price: 180 }
-                    ]
-                }
-            }
-        },
-        "cat-drinks": {
-            title: "Soft Drinks",
-            items: [
-                { id: "coke-large", name: "Coke/Thums Up (Large)", price: 40 },
-                { id: "coke-small", name: "Coke/Thums Up (Small)", price: 20 },
-                { id: "water-big", name: "Water Big", price: 20 },
-                { id: "water-small", name: "Water Small", price: 10 },
-                { id: "arora-lemon", name: "Arora Lemon", price: 10 }
-            ]
-        }
-    };
-    
     let cart = [];
-    let currentModalItem = {};
-
-    function generateMenu() {
-        const container = document.getElementById('menu-container');
-        if (!container) return;
-        container.innerHTML = '';
-        for (const catId in menuData) {
-            const category = menuData[catId];
-            const section = document.createElement('section');
-            section.id = catId;
-            section.innerHTML = `<h2 class="main-category-title">${category.title}</h2>`;
-
-            if (category.subCategories) {
-                for (const subCatId in category.subCategories) {
-                    const subCategory = category.subCategories[subCatId];
-                    section.innerHTML += `<h3 class="sub-category-title">${subCategory.title}</h3>`;
-                    subCategory.items.forEach(item => section.appendChild(createItemElement(item)));
-                }
-            } else {
-                category.items.forEach(item => section.appendChild(createItemElement(item)));
-            }
-            container.appendChild(section);
-        }
-    }
-
-    function createItemElement(item) {
-        const itemDiv = document.createElement('div');
-        itemDiv.className = 'item';
-        itemDiv.id = `item-${item.id}`;
-        
-        const priceText = item.options ? `₹${item.price} onwards` : `₹${item.price}`;
-        
-        itemDiv.innerHTML = `
-            <div class="item-info">
-                <div class="item-name">${item.name}</div>
-                <div class="item-price">${priceText}</div>
-            </div>
-            <div class="add-item-btn-wrapper"></div>
-        `;
-        
-        const wrapper = itemDiv.querySelector('.add-item-btn-wrapper');
-        const addButton = document.createElement('button');
-        addButton.className = 'add-btn';
-        addButton.textContent = 'ADD';
-        addButton.onclick = () => item.options ? showOptionsModal(item) : addItem(item.id, item.name, item.price);
-        wrapper.appendChild(addButton);
-        
-        return itemDiv;
-    }
-
-    function showOptionsModal(item) {
-        currentModalItem = item;
-        document.getElementById('modalItemName').textContent = currentModalItem.name;
-        const modalBody = document.getElementById('modalBody');
-        modalBody.innerHTML = '';
-
-        currentModalItem.options.forEach(group => {
-            const groupDiv = document.createElement('div');
-            groupDiv.className = 'option-group';
-            const requiredTag = group.required ? '<span class="required-tag">REQUIRED</span>' : '';
-            groupDiv.innerHTML = `<h3>${group.group}${requiredTag}</h3>`;
-            
-            group.choices.forEach((choice, index) => {
-                const isChecked = group.type === 'radio' && index === 0 ? 'checked' : '';
-                const choiceId = `${group.group.replace(/\s+/g, '-')}-${index}`;
-                
-                groupDiv.innerHTML += `
-                    <div class="option-choice">
-                        <label for="${choiceId}">
-                            <input type="${group.type}" id="${choiceId}" name="${group.group}" 
-                                   value="${choice.price}" data-name="${choice.name}" 
-                                   onchange="updateModalPrice()" ${isChecked}>
-                            <span>${choice.name}</span>
-                        </label>
-                        <span>₹${choice.price}</span>
-                    </div>
-                `;
-            });
-            modalBody.appendChild(groupDiv);
-        });
-
-        updateModalPrice();
-        document.getElementById('optionsModal').style.display = 'block';
-    }
-
-    function updateModalPrice() {
-        let total = 0;
-        let isRequiredMet = true;
-        
-        currentModalItem.options.forEach(group => {
-            const checkedInput = document.querySelector(`#modalBody input[name="${group.group}"]:checked`);
-            if (group.required && !checkedInput) {
-                isRequiredMet = false;
-            }
-        });
-        
-        document.querySelectorAll('#modalBody input:checked').forEach(input => {
-            total += parseFloat(input.value);
-        });
-
-        const addButton = document.getElementById('modalAddItemBtn');
-        addButton.textContent = `Add Item - ₹${total.toFixed(2)}`;
-        addButton.disabled = !isRequiredMet;
-    }
-    
-    document.getElementById('modalAddItemBtn').onclick = function() {
-        let finalPrice = 0;
-        let nameParts = [currentModalItem.name];
-        let idParts = [currentModalItem.id];
-        
-        document.querySelectorAll('#modalBody input:checked').forEach(input => {
-            finalPrice += parseFloat(input.value);
-            nameParts.push(`(${input.dataset.name})`);
-            idParts.push(input.dataset.name.toLowerCase().replace(/ /g, '-'));
-        });
-
-        const finalName = nameParts.join(' ');
-        const finalId = idParts.join('_');
-
-        addItem(finalId, finalName, finalPrice);
-        document.getElementById('optionsModal').style.display = 'none';
-    };
-    
-    document.getElementById('optionsModal').onclick = function(event) {
-        if (event.target.id === 'optionsModal') {
-            event.target.style.display = 'none';
-        }
-    };
     
     function addItem(id, name, price) {
         const existingItem = cart.find(item => item.id === id);
-        if (existingItem) {
-            existingItem.quantity++;
-        } else {
-            cart.push({ id, name, price, quantity: 1, baseId: id.split('_')[0] });
-        }
-        updateMainDisplay();
+        if (existingItem) { existingItem.quantity++; } 
+        else { cart.push({ id, name, price, quantity: 1 }); }
+        updateDisplays();
     }
 
     function removeItem(id) {
         const itemIndex = cart.findIndex(item => item.id === id);
         if (itemIndex > -1) {
-            cart[itemIndex].quantity--;
-            if (cart[itemIndex].quantity === 0) {
-                cart.splice(itemIndex, 1);
-            }
+            const item = cart[itemIndex];
+            item.quantity--;
+            if (item.quantity === 0) { cart.splice(itemIndex, 1); }
         }
-        updateMainDisplay();
+        updateDisplays();
     }
 
-    function updateMainDisplay() {
-        const itemBaseIdCounts = cart.reduce((acc, item) => {
-            acc[item.baseId] = (acc[item.baseId] || 0) + item.quantity;
-            return acc;
-        }, {});
-
-        document.querySelectorAll('.add-item-btn-wrapper').forEach(wrapper => {
-            const itemDiv = wrapper.closest('.item');
-            const baseId = itemDiv.id.replace('item-', '');
-            const totalQty = itemBaseIdCounts[baseId] || 0;
-            
-            if (totalQty > 0) {
-                wrapper.innerHTML = `
-                    <div class="quantity-control">
-                        <button onclick="removeLastAddedItem('${baseId}')">-</button>
-                        <span class="quantity">${totalQty}</span>
-                        <button onclick="reopenOptionsFor('${baseId}')">+</button>
-                    </div>
-                `;
-            } else {
-                const originalItem = findMenuItemById(baseId);
-                wrapper.innerHTML = `<button class="add-btn">ADD</button>`;
-                wrapper.querySelector('.add-btn').onclick = () => originalItem.options ? showOptionsModal(originalItem) : addItem(originalItem.id, originalItem.name, originalItem.price);
-            }
+    function updateDisplays() {
+        document.querySelectorAll('.quantity').forEach(qtyElement => {
+            const id = qtyElement.id.replace('qty-', '');
+            const cartItem = cart.find(item => item.id === id);
+            qtyElement.textContent = cartItem ? cartItem.quantity : '0';
         });
-        
         const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
         const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-        const footerBtn = document.getElementById('footerCartBtn');
-        
-        if (totalItems > 0) {
-            footerBtn.style.display = 'block';
-            footerBtn.textContent = `View Cart (${totalItems}) - ₹${totalPrice.toFixed(2)}`;
-        } else {
-            footerBtn.style.display = 'none';
-        }
+        document.getElementById("cartItemCount").innerText = totalItems;
+        document.getElementById("cartTotalPrice").innerText = totalPrice.toFixed(2);
     }
     
-    function removeLastAddedItem(baseId) {
-        for (let i = cart.length - 1; i >= 0; i--) {
-            if (cart[i].baseId === baseId) {
-                removeItem(cart[i].id);
-                break;
-            }
-        }
-    }
-
-    function reopenOptionsFor(baseId) {
-        const originalItem = findMenuItemById(baseId);
-        if (originalItem && originalItem.options) {
-            showOptionsModal(originalItem);
-        } else if (originalItem) {
-            addItem(originalItem.id, originalItem.name, originalItem.price);
-        }
-    }
-
-    function findMenuItemById(id) {
-        for (const catId in menuData) {
-            const category = menuData[catId];
-            if (category.subCategories) {
-                for (const subCatId in category.subCategories) {
-                    const found = category.subCategories[subCatId].items.find(item => item.id === id);
-                    if (found) return found;
-                }
-            } else {
-                const found = category.items.find(item => item.id === id);
-                if (found) return found;
-            }
-        }
-        return null;
-    }
-
     function showCheckoutForm() {
-        if (cart.length === 0) return;
+        if (cart.length === 0) { alert("Cart is empty!"); return; }
         const cartItemsList = document.getElementById("cartItemsList");
         cartItemsList.innerHTML = '';
-        const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        let total = 0;
         cart.forEach(item => {
             const listItem = document.createElement('li');
-            listItem.textContent = `${item.quantity} x ${item.name}`;
+            listItem.textContent = `${item.quantity} x ${item.name} - ₹${(item.price * item.quantity).toFixed(2)}`;
             cartItemsList.appendChild(listItem);
+            total += item.price * item.quantity;
         });
-        document.getElementById("checkoutTotal").innerText = totalPrice.toFixed(2);
+        document.getElementById("checkoutTotal").innerText = total.toFixed(2);
         document.getElementById("checkoutModal").style.display = "flex";
     }
 
     function submitOrder() {
+        // IMPORTANT: Replace this with your ORIGINAL in-house Google Script URL that does NOT require an address
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzvvtmV_2QpOzcOhvBoMCQBXQ3knIWppsVAeyGL8B1at3F9fToMlFePNJU85UD2DCRWHQ/exec";
+        
         const name = document.getElementById("customerName").value.trim();
         const phone = document.getElementById("customerPhone").value.trim();
-        if (!name || !phone) { alert("Please fill in your full name and phone number."); return; }
-
-        const itemsForBackend = cart.map(item => ({ name: `${item.quantity} x ${item.name}`, price: item.price * item.quantity }));
-        const orderData = { name, phone, items: itemsForBackend, totalAmount: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0), timestamp: new Date().toISOString() };
+        if (!name) { alert("Please enter a Name or Table Number."); return; }
+        
+        const itemsForBackend = cart.map(item => ({ name: `${item.quantity} x ${item.name}` }));
+        const orderData = { 
+            name: `${name} (In-House)`,
+            phone, 
+            items: itemsForBackend, 
+            totalAmount: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0), 
+            timestamp: new Date().toISOString() 
+        };
         
         const submitButton = document.getElementById('submitBtn');
         submitButton.disabled = true;
         submitButton.textContent = 'Placing Order...';
         
-        fetch(GOOGLE_SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(orderData) })
+        fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors', // In-house might need no-cors depending on the script version
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(orderData)
+        })
         .then(() => {
-            alert(`✅ Thank you, ${name}! Your order has been placed successfully!`);
+            alert(`✅ Order for ${name} placed successfully!`);
             cart = [];
-            updateMainDisplay();
+            updateDisplays();
             document.getElementById('customerName').value = '';
             document.getElementById('customerPhone').value = '';
             document.getElementById("checkoutModal").style.display = "none";
         })
-        .catch(error => console.error("Error placing order:", error))
+        .catch(error => {
+            console.error("Error placing order:", error);
+            alert("❌ Could not place order.");
+        })
         .finally(() => {
             submitButton.disabled = false;
-            submitButton.textContent = 'Place My Order';
+            submitButton.textContent = 'Place Order';
         });
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-        generateMenu();
-        updateMainDisplay();
-    });
+    document.addEventListener('DOMContentLoaded', updateDisplays);
 </script>
 
 </body>
