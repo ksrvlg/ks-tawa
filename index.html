@@ -21,8 +21,6 @@
     .category-nav { background: white; position: fixed; top: 95px; width: 100%; box-shadow: 0 2px 5px rgba(0,0,0,0.1); white-space: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; z-index: 999; border-bottom: 1px solid #eee; }
     .category-nav a { display: inline-block; padding: 15px; color: var(--text-color); text-decoration: none; font-weight: 600; font-size: 0.9em; border-bottom: 3px solid transparent; transition: all 0.2s; }
     .category-nav a.active, .category-nav a:hover { border-bottom-color: var(--primary-color); color: var(--primary-color); }
-    .category-nav::-webkit-scrollbar { display: none; }
-    .category-nav { -ms-overflow-style: none; scrollbar-width: none; }
     .menu-container { padding: 75px 15px 15px; }
     section { padding-top: 20px; }
     .main-category-title { font-size: 1.8em; color: var(--text-color); border-bottom: 4px solid var(--primary-color); padding-bottom: 10px; margin-bottom: 25px; }
@@ -44,30 +42,24 @@
     .footer-cart-btn { display: none; width: 95%; max-width: 450px; margin: 0 auto; padding: 16px; font-size: 1.2em; color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; background-color: var(--green-color); }
     #optionsModal, #checkoutModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1001; background: rgba(0,0,0,0.6); align-items: center; justify-content: center; }
     .modal-dialog { position: absolute; bottom: 0; left: 0; width: 100%; background: #fff; border-radius: 20px 20px 0 0; box-sizing: border-box; max-height: 85vh; display: flex; flex-direction: column; animation: slideUp 0.3s ease-out; }
-    .modal-header { padding: 15px 20px; border-bottom: 1px solid #eee; }
-    .modal-header h2 { margin: 0; font-size: 1.4em; }
+    .modal-header { padding: 15px 20px; border-bottom: 1px solid #eee; } .modal-header h2 { margin: 0; font-size: 1.4em; }
     .modal-body { padding: 10px 20px; overflow-y: auto; }
-    .option-group h3 { font-size: 1.1em; margin: 20px 0 10px; }
-    .option-group .required-tag { font-size: 0.8em; color: var(--red-color); margin-left: 5px; }
-    .option-choice { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; }
-    .option-choice label { display: flex; align-items: center; gap: 10px; flex-grow: 1; }
-    .option-choice input { width: 22px; height: 22px; accent-color: var(--primary-color); }
-    .modal-footer { padding: 15px 20px; border-top: 1px solid #eee; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); }
-    .modal-add-btn { width: 100%; padding: 16px; font-size: 1.1em; font-weight: bold; color: white; background: var(--green-color); border: none; border-radius: 10px; cursor: pointer; }
-    .modal-add-btn:disabled { background-color: #95a5a6; }
+    .option-group h3 { font-size: 1.1em; margin: 20px 0 10px; } .option-choice { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; }
+    .modal-footer { padding: 15px 20px; border-top: 1px solid #eee; } .modal-add-btn { width: 100%; padding: 16px; font-size: 1.1em; font-weight: bold; color: white; background: var(--green-color); border: none; border-radius: 10px; cursor: pointer; }
     .checkout-modal-content { background: white; padding: 25px; border-radius: 12px; width: 90%; max-width: 400px; }
     .checkout-modal-content h2 { margin-top: 0; }
     .checkout-modal-content ul { list-style-type: none; padding: 10px 0; max-height: 150px; overflow-y: auto; }
     .price-summary { border-top: 1px solid #eee; margin-top: 15px; padding-top: 15px; }
-    .price-line { display: flex; justify-content: space-between; margin-bottom: 8px; }
     .price-line.total { font-weight: bold; font-size: 1.2em; }
-    .checkout-modal-content input { width: 100%; box-sizing: border-box; margin-bottom: 15px; padding: 14px; border: 1px solid #ccc; border-radius: 8px; font-size: 1.1em;}
+    .checkout-modal-content input[type="text"], .checkout-modal-content input[type="tel"] { width: 100%; box-sizing: border-box; margin-bottom: 15px; padding: 14px; border: 1px solid #ccc; border-radius: 8px; font-size: 1.1em;}
     .place-order-btn { background-color: var(--green-color); width: 100%; padding: 14px; border: none; border-radius: 8px; font-size: 1.1em; font-weight: bold; color: white; }
-    .place-order-btn:disabled { background-color: #95a5a6; cursor: not-allowed; }
+    .order-type-selector { margin-bottom: 20px; padding: 10px; border: 1px solid #ccc; border-radius: 8px; }
+    .order-type-selector legend { font-weight: bold; padding: 0 5px; margin-left: 10px; }
+    .order-type-options { display: flex; justify-content: space-around; padding-top: 10px; }
+    .order-type-options label { font-size: 1.1em; }
   </style>
 </head>
 <body>
-
 <header>
     <div class="header-content">
         <img src="https://lh3.googleusercontent.com/tHEXO53lDMWp5DAV2aD9PprhZVZm7zDNvOaQnUEw4t5CwN70xPdj0BozneN1Sa4alO1vQaZ4fv4J9vEOhkz_E7di-uMRPRa5qaTnOPmoGQ=w256-rw" alt="K's Tawa Logo" class="header-logo">
@@ -81,27 +73,29 @@
     </div>
 </header>
 <nav class="category-nav" id="category-nav"></nav>
-
 <div class="menu-container" id="menu-container"></div>
-
-<footer>
-  <button id="footerCartBtn" class="footer-cart-btn" onclick="showCheckoutForm()">
-    View Cart
-  </button>
-</footer>
+<footer><button id="footerCartBtn" class="footer-cart-btn" onclick="showCheckoutForm()">View Cart</button></footer>
 
 <div id="checkoutModal">
   <div class="checkout-modal-content">
-    <h2>Enter Takeaway Details</h2>
+    <h2>Enter Order Details</h2>
     <input type="text" id="customerName" placeholder="Full Name" required />
     <input type="tel" id="customerPhone" placeholder="Phone Number" required />
+    
+    <fieldset class="order-type-selector">
+        <legend>Order Type</legend>
+        <div class="order-type-options">
+            <label><input type="radio" name="orderType" value="Takeaway" checked> Takeaway</label>
+            <label><input type="radio" name="orderType" value="Dine-in"> Dine-in</label>
+        </div>
+    </fieldset>
+    
     <h4>Order Summary:</h4>
     <ul id="cartItemsList"></ul>
     <div class="price-summary">
         <hr>
         <div class="price-line total">
-            <span>Total To Pay</span>
-            <span id="checkoutTotal">₹0.00</span>
+            <span>Total To Pay</span><span id="checkoutTotal">₹0.00</span>
         </div>
     </div>
     <div><button onclick="submitOrder()" id="submitBtn" class="place-order-btn">Place Order</button></div>
@@ -112,252 +106,12 @@
   <div class="modal-dialog">
     <div class="modal-header"><h2 id="modalItemName"></h2></div>
     <div class="modal-body" id="modalBody"></div>
-    <div class="modal-footer">
-      <button id="modalAddItemBtn" class="modal-add-btn">Add item - ₹0</button>
-    </div>
+    <div class="modal-footer"><button id="modalAddItemBtn" class="modal-add-btn">Add item - ₹0</button></div>
   </div>
 </div>
 
 <script>
-    const menuData = {
-        "cat-starters": {
-            title: "Chef's Specials Tandoori Starters",
-            subCategories: {
-                "veg-starters": {
-                    title: "🔥 Tandoori Starters (Veg)",
-                    items: [
-                        { id: "achari-chaap", name: "Achari Chaap", price: 110, isVeg: true, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnOQ3dq-ZmXSnjRbvKNBzckbr8HOF7SEAhdA&s?q=80&w=800&auto=format&fit=crop', options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 110 }, { name: "Full", price: 180 }] }] },
-                        { id: "lemon-chaap", name: "Lemon Chaap", price: 110, isVeg: true, image: 'https://shoopy.b-cdn.net/273385/1704634679406_SKU-2916_0.jpg?format=webp?q=80&w=800&auto=format&fit=crop', options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 110 }, { name: "Full", price: 180 }] }] },
-                        { id: "chatpati-chaap", name: "Chatpati Chaap", price: 110, isVeg: true, image: 'https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/426cfdb867684e57e63f1e0cd784d174?q=80&w=800&auto=format&fit=crop', options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 110 }, { name: "Full", price: 180 }] }] },
-                        { id: "malai-chaap", name: "Malai Chaap", price: 110, isVeg: true, image: 'https://nishamadhulika.com/imgpst/featured/soya_chaap_white_gravy.jpg?q=80&w=800&auto=format&fit=crop', options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 110 }, { name: "Full", price: 180 }] }] },
-                        { id: "paneer-tikka", name: "Paneer Tikka", price: 120, isVeg: true, image: 'https://www.cookwithkushi.com/wp-content/uploads/2023/02/tandoori_paneer_tikka_restaurant_style.jpg?q=80&w=800&auto=format&fit=crop', options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 120 }, { name: "Full", price: 200 }] }] },
-                        { id: "paneer-malai-tikka", name: "Paneer Malai Tikka", price: 140, isVeg: true, image: 'https://i.ytimg.com/vi/Oy3YX7OTVqI/maxresdefault.jpg?q=80&w=800&auto=format&fit=crop', options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 140 }, { name: "Full", price: 240 }] }] },
-                        { id: "paneer-achari-tikka", name: "Paneer Achari Tikka", price: 120, isVeg: true, image: 'https://img-global.cpcdn.com/recipes/ac467aeb4ef8bc02/1200x630cq70/photo.jpg?q=80&w=800&auto=format&fit=crop', options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 120 }, { name: "Full", price: 200 }] }] },
-                        { id: "peri-peri-soya-chaap", name: "Peri Peri Soya Chaap", price: 110, isVeg: true, image: 'https://b.zmtcdn.com/data/dish_photos/2c3/63e6728d7ba3c1577efcbce416a2a2c3.jpg?q=80&w=800&auto=format&fit=crop', options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 110 }, { name: "Full", price: 180 }] }] },
-                        { id: "peri-peri-paneer-tikka", name: "Peri Peri Paneer Tikka", price: 120, isVeg: true, image: 'https://ministryofcurry.com/wp-content/uploads/2021/01/Paneer-Tikka_-2-1.jpg?q=80&w=800&auto=format&fit=crop', options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 120 }, { name: "Full", price: 200 }] }] },
-                        { id: "mushroom-tikka", name: "Mushroom Tikka", price: 120, isVeg: true, image: 'https://derafarms.com/cdn/shop/files/deraproducts-2024-06-06T165222.981.png?v=1719207378?q=80&w=800&auto=format&fit=crop', options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 120 }, { name: "Full", price: 200 }] }] },
-                        { id: "afghani-tandoori-chaap", name: "Afghani Tandoori Chaap", price: 140, isVeg: true, image: 'https://orders.popskitchen.in/storage/2024/09/image-362.png?q=80&w=800&auto=format&fit=crop', options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 140 }, { name: "Full", price: 220 }] }] }
-                    ]
-                },
-                "non-veg-starters": {
-                    title: "🔥 Tandoori Starters (Non-Veg)",
-                    items: [
-                        { id: "bhatti-murg", name: "Bhatti Murg", price: 260, isVeg: false, image: 'https://skyviewbyempyrean.com/wp-content/uploads/2022/04/chefs-speciality-scaled.jpg?q=80&w=800&auto=format&fit=crop', options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "4 pcs", price: 260 }, { name: "8 pcs", price: 480 }] }] },
-                        { id: "tandoori-chicken", name: "Tandoori Chicken", price: 260, isVeg: false, image: 'https://static01.nyt.com/images/2024/05/16/multimedia/fs-tandoori-chicken-hmjq/fs-tandoori-chicken-hmjq-videoSixteenByNineJumbo1600.jpg?q=80&w=800&auto=format&fit=crop', options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "4 pcs", price: 260 }, { name: "8 pcs", price: 480 }] }] },
-                        { id: "chicken-tikka", name: "Chicken Tikka (8 pcs)", price: 300, isVeg: false, image: 'https://c.ndtvimg.com/2021-03/t1s4kbv8_tikka_625x300_04_March_21.jpg?q=80&w=800&auto=format&fit=crop' },
-                        { id: "chicken-seekh", name: "Chicken Seekh (2 pcs)", price: 180, isVeg: false, image: 'https://vaya.in/recipes/wp-content/uploads/2019/01/Chicken-Seekh-Kabab.jpg?q=80&w=800&auto=format&fit=crop' }
-                    ]
-                }
-            }
-        },
-        "cat-platters": {
-            title: "Platters & Meal Combos",
-            items: [
-                { id: "tandoori-veg-platter", name: "Tandoori Veg Platters", price: 350, isVeg: true, image: 'https://thesaffronhouse.ca/wp-content/uploads/2023/11/non-veg-platter-1.jpg?q=80&w=800&auto=format&fit=crop' },
-                { id: "malai-peri-combo", name: "Malai Chaap (Half) + Peri Peri Soya Chaap (Half)", price: 279, isVeg: true, image: 'https://images.unsplash.com/photo-1628209888795-a5089ac3e0f0?q=80&w=800&auto=format&fit=crop' },
-                { id: "lemon-chatpati-combo", name: "Lemon Chaap (Half) + Chatpati Chaap (Half)", price: 279, isVeg: true, image: 'https://images.unsplash.com/photo-1625944228741-cf3ab592b868?q=80&w=800&auto=format&fit=crop' },
-                { id: "afghani-achari-combo", name: "Afghani Tandoori Chaap (Half) + Achari Chaap (Half)", price: 279, isVeg: true, image: 'https://images.unsplash.com/photo-1628209888795-a5089ac3e0f0?q=80&w=800&auto=format&fit=crop' }
-            ]
-        },
-        "cat-rolls": {
-            title: "Rocking Rolls",
-            items: [
-                { id: "chicken-seekh-roll", name: "Chicken Seekh Roll", price: 180, isVeg: false, image: 'https://images.unsplash.com/photo-1625220194771-4c9c22116279?q=80&w=800&auto=format&fit=crop' },
-                { id: "chicken-tikka-roll", name: "Chicken Tikka Roll", price: 220, isVeg: false, image: 'https://images.unsplash.com/photo-1627460340336-6211134a4505?q=80&w=800&auto=format&fit=crop' },
-                { id: "malai-chaap-roll", name: "Malai Chaap Roll", price: 120, isVeg: true, image: 'https://plus.unsplash.com/premium_photo-1695299444434-297d2b9326e7?q=80&w=800&auto=format&fit=crop', options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 120 }, { name: "Full", price: 190 }] }] },
-                { id: "chatpati-chaap-roll", name: "Chatpati Chaap Roll", price: 120, isVeg: true, image: 'https://plus.unsplash.com/premium_photo-1695299444434-297d2b9326e7?q=80&w=800&auto=format&fit=crop', options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 120 }, { name: "Full", price: 190 }] }] },
-                { id: "achari-chaap-roll", name: "Achari Chaap Roll", price: 120, isVeg: true, image: 'https://plus.unsplash.com/premium_photo-1695299444434-297d2b9326e7?q=80&w=800&auto=format&fit=crop', options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 120 }, { name: "Full", price: 190 }] }] },
-                { id: "afghani-chaap-roll", name: "Afghani Chaap Roll", price: 130, isVeg: true, image: 'https://plus.unsplash.com/premium_photo-1695299444434-297d2b9326e7?q=80&w=800&auto=format&fit=crop', options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 130 }, { name: "Full", price: 220 }] }] },
-                { id: "lemon-chaap-roll", name: "Lemon Chaap Roll", price: 120, isVeg: true, image: 'https://plus.unsplash.com/premium_photo-1695299444434-297d2b9326e7?q=80&w=800&auto=format&fit=crop', options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 120 }, { name: "Full", price: 190 }] }] },
-                { id: "mushroom-roll", name: "Mushroom Roll", price: 140, isVeg: true, image: 'https://images.unsplash.com/photo-1604329268241-55820871b7b7?q=80&w=800&auto=format&fit=crop', options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 140 }, { name: "Full", price: 200 }] }] },
-                { id: "paneer-tikka-roll", name: "Paneer Tikka Roll", price: 120, isVeg: true, image: 'https://images.unsplash.com/photo-1615478503562-ec2d82e85b8a?q=80&w=800&auto=format&fit=crop', options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 120 }, { name: "Full", price: 200 }] }] },
-                { id: "peri-peri-soya-roll", name: "Peri Peri Soya Chaap Roll", price: 120, isVeg: true, image: 'https://plus.unsplash.com/premium_photo-1695299444434-297d2b9326e7?q=80&w=800&auto=format&fit=crop', options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 120 }, { name: "Full", price: 190 }] }] },
-                { id: "peri-peri-paneer-roll", name: "Peri Peri Paneer Tikka Roll", price: 140, isVeg: true, image: 'https://images.unsplash.com/photo-1615478503562-ec2d82e85b8a?q=80&w=800&auto=format&fit=crop', options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 140 }, { name: "Full", price: 200 }] }] },
-            ]
-        },
-        "cat-main-course": {
-            title: "Main Course",
-            subCategories: {
-                "veg-main": {
-                    title: "🥗 Veg Main Course",
-                    items: [
-                        { id: "tawa-chaap-masala", name: "Tawa Chaap Masala", price: 160, isVeg: true, image: 'https://plus.unsplash.com/premium_photo-1668618296839-a782c57c61f0?q=80&w=800&auto=format&fit=crop', options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 160 }, { name: "Full", price: 230 }] }] },
-                        { id: "tawa-mushroom-masala", name: "Tawa Mushroom Masala", price: 160, isVeg: true, image: 'https://images.unsplash.com/photo-1594041682319-56a0229c1b26?q=80&w=800&auto=format&fit=crop', options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 160 }, { name: "Full", price: 230 }] }] },
-                        { id: "tawa-paneer-masala", name: "Tawa Paneer Masala", price: 160, isVeg: true, image: 'https://images.unsplash.com/photo-1668618224539-36c531a6a683?q=80&w=800&auto=format&fit=crop', options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 160 }, { name: "Full", price: 230 }] }] },
-                        { id: "paneer-takatak", name: "Paneer Takatak", price: 170, isVeg: true, image: 'https://plus.unsplash.com/premium_photo-1695299444434-297d2b9326e7?q=80&w=800&auto=format&fit=crop', options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 170 }, { name: "Full", price: 240 }] }] },
-                        { id: "butter-chaap", name: "Butter Chaap", price: 170, isVeg: true, image: 'https://plus.unsplash.com/premium_photo-1668618296839-a782c57c61f0?q=80&w=800&auto=format&fit=crop', options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 170 }, { name: "Full", price: 240 }] }] },
-                        { id: "shahi-paneer", name: "Shahi Paneer", price: 120, isVeg: true, image: 'https://images.unsplash.com/photo-1565557623262-b27e25248540?q=80&w=800&auto=format&fit=crop', options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 120 }, { name: "Full", price: 200 }] }] },
-                        { id: "kadhai-chaap", name: "Kadhai Chaap", price: 120, isVeg: true, image: 'https://plus.unsplash.com/premium_photo-1668618296839-a782c57c61f0?q=80&w=800&auto=format&fit=crop', options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 120 }, { name: "Full", price: 210 }] }] },
-                        { id: "mix-veg", name: "Mix Veg", price: 120, isVeg: true, image: 'https://images.unsplash.com/photo-1533089860892-a7c6f0a485d8?q=80&w=800&auto=format&fit=crop', options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 120 }, { name: "Full", price: 190 }] }] },
-                        { id: "kadhai-paneer", name: "Kadhai Paneer", price: 120, isVeg: true, image: 'https://images.unsplash.com/photo-1574484284002-952d92456975?q=80&w=800&auto=format&fit=crop', options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 120 }, { name: "Full", price: 200 }] }] },
-                        { id: "paneer-butter-masala", name: "Paneer Butter Masala", price: 140, isVeg: true, image: 'https://images.unsplash.com/photo-1589647363585-f4a7d38779df?q=80&w=800&auto=format&fit=crop', options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 140 }, { name: "Full", price: 230 }] }] },
-                        { id: "mushroom-do-pyaza", name: "Mushroom Do Pyaza", price: 240, isVeg: true, image: 'https://images.unsplash.com/photo-1594041682319-56a0229c1b26?q=80&w=800&auto=format&fit=crop' },
-                        { id: "matar-paneer", name: "Matar Paneer", price: 130, isVeg: true, image: 'https://images.unsplash.com/photo-1563379926898-05f4575a45d8?q=80&w=800&auto=format&fit=crop', options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 130 }, { name: "Full", price: 220 }] }] },
-                        { id: "paneer-lababdar", name: "Paneer Lababdar", price: 160, isVeg: true, image: 'https://plus.unsplash.com/premium_photo-1695299444434-297d2b9326e7?q=80&w=800&auto=format&fit=crop', options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 160 }, { name: "Full", price: 250 }] }] },
-                        { id: "tadka-dal-fry", name: "Tadka Dal Fry", price: 120, isVeg: true, image: 'https://images.unsplash.com/photo-1609560140263-14a775a27814?q=80&w=800&auto=format&fit=crop', options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 120 }, { name: "Full", price: 180 }] }] }
-                    ]
-                },
-                "non-veg-main": {
-                    title: "🍗 Non-Veg Main Course",
-                    items: [
-                        { id: "chicken-utterly-butterly", name: "Chicken Utterly Butterly", price: 350, isVeg: false, image: 'https://images.unsplash.com/photo-1604128699120-80213a1d9494?q=80&w=800&auto=format&fit=crop', options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 350 }, { name: "Full", price: 580 }] }] },
-                        { id: "butter-chicken", name: "Butter Chicken", price: 220, isVeg: false, image: 'https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?q=80&w=800&auto=format&fit=crop', options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Qtr", price: 220 }, { name: "Half", price: 390 }, { name: "Full", price: 650 }] }] },
-                        { id: "boneless-butter-chicken", name: "Boneless Butter Chicken", price: 230, isVeg: false, image: 'https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?q=80&w=800&auto=format&fit=crop', options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Qtr", price: 230 }, { name: "Half", price: 430 }, { name: "Full", price: 700 }] }] },
-                        { id: "chicken-do-pyaza", name: "Chicken Do Pyaza", price: 390, isVeg: false, image: 'https://images.unsplash.com/photo-1604128699120-80213a1d9494?q=80&w=800&auto=format&fit=crop', options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 390 }, { name: "Full", price: 650 }] }] },
-                        { id: "kadai-chicken", name: "Kadai Chicken", price: 220, isVeg: false, image: 'https://images.unsplash.com/photo-1598515214211-89d3c7373058?q=80&w=800&auto=format&fit=crop', options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Qtr", price: 220 }, { name: "Half", price: 390 }, { name: "Full", price: 650 }] }] },
-                        { id: "tawa-chicken", name: "Tawa Chicken", price: 220, isVeg: false, image: 'https://images.unsplash.com/photo-1610057099443-fde8ce495cb5?q=80&w=800&auto=format&fit=crop', options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Qtr", price: 220 }, { name: "Half", price: 420 }, { name: "Full", price: 660 }] }] },
-                        { id: "ghar-jaisa-chicken", name: "Ghar Jaisa Chicken Curry", price: 220, isVeg: false, image: 'https://images.unsplash.com/photo-1574484284002-952d92456975?q=80&w=800&auto=format&fit=crop', options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Qtr", price: 220 }, { name: "Half", price: 370 }, { name: "Full", price: 630 }] }] },
-                        { id: "chicken-rara-punjabi", name: "Chicken Rara Punjabi KS Special", price: 220, isVeg: false, image: 'https://images.unsplash.com/photo-1598515214211-89d3c7373058?q=80&w=800&auto=format&fit=crop', options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Qtr", price: 220 }, { name: "Half", price: 450 }, { name: "Full", price: 700 }] }] },
-                        { id: "boti-chicken-masala", name: "Boti Chicken Masala", price: 390, isVeg: false, image: 'https://images.unsplash.com/photo-1626082933429-01c05c312c3a?q=80&w=800&auto=format&fit=crop', options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 390 }, { name: "Full", price: 650 }] }] },
-                        { id: "chicken-malmal", name: "Chicken Malmal", price: 440, isVeg: false, image: 'https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?q=80&w=800&auto=format&fit=crop', options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 440 }, { name: "Full", price: 700 }] }] },
-                        { id: "chicken-tikka-butter-masala", name: "Chicken Tikka Butter Masala", price: 420, isVeg: false, image: 'https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?q=80&w=800&auto=format&fit=crop', options: [{ group: "Size", type: "radio", required: true, choices: [{ name: "Half", price: 420 }, { name: "Full", price: 720 }] }] },
-                        { id: "egg-curry", name: "Egg Curry (4 pcs)", price: 250, isVeg: false, image: 'https://images.unsplash.com/photo-1585237625149-231570726a4f?q=80&w=800&auto=format&fit=crop' },
-                        { id: "chicken-seekh-masala", name: "Chicken Seekh Masala (500 ml)", price: 260, isVeg: false, image: 'https://images.unsplash.com/photo-1625943555419-56a81f6526a0?q=80&w=800&auto=format&fit=crop' }
-                    ]
-                }
-            }
-        },
-        "cat-momos": {
-            title: "Momos",
-            subCategories: {
-                "paneer-momos": {
-                    title: "🥟 Paneer Momos (10 pcs)",
-                    items: [
-                        { id: "paneer-kurkure-momos", name: "Paneer Kurkure Momos", price: 140, isVeg: true, image: 'https://images.unsplash.com/photo-1642821374521-3d5f3a3a4185?q=80&w=800&auto=format&fit=crop' },
-                        { id: "paneer-steam-momos", name: "Paneer Steam Momos", price: 120, isVeg: true, image: 'https://images.unsplash.com/photo-1582879313824-c027111b156b?q=80&w=800&auto=format&fit=crop' },
-                        { id: "paneer-fried-momos", name: "Paneer Fried Momos", price: 140, isVeg: true, image: 'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?q=80&w=800&auto=format&fit=crop' },
-                        { id: "paneer-afghani-momos", name: "Paneer Afghani Momos", price: 180, isVeg: true, image: 'https://plus.unsplash.com/premium_photo-1695299444434-297d2b9326e7?q=80&w=800&auto=format&fit=crop' },
-                        { id: "paneer-malai-momos", name: "Paneer Malai Momos", price: 180, isVeg: true, image: 'https://plus.unsplash.com/premium_photo-1695299444434-297d2b9326e7?q=80&w=800&auto=format&fit=crop' },
-                        { id: "paneer-gravy-momos", name: "Paneer Gravy Momos", price: 200, isVeg: true, image: 'https://images.unsplash.com/photo-1642821374521-3d5f3a3a4185?q=80&w=800&auto=format&fit=crop' },
-                        { id: "paneer-chilli-momos", name: "Paneer Chilli Momos", price: 220, isVeg: true, image: 'https://images.unsplash.com/photo-1642821374521-3d5f3a3a4185?q=80&w=800&auto=format&fit=crop' }
-                    ]
-                },
-                "veg-momos": {
-                    title: "🥟 Veg Momos (10 pcs)",
-                    items: [
-                        { id: "veg-kurkure-momos", name: "Veg Kurkure Momos", price: 110, isVeg: true, image: 'https://images.unsplash.com/photo-1642821374521-3d5f3a3a4185?q=80&w=800&auto=format&fit=crop' },
-                        { id: "veg-steam-momos", name: "Veg Steam Momos", price: 80, isVeg: true, image: 'https://images.unsplash.com/photo-1582879313824-c027111b156b?q=80&w=800&auto=format&fit=crop' },
-                        { id: "veg-tandoori-momos", name: "Veg Tandoori Momos", price: 100, isVeg: true, image: 'https://plus.unsplash.com/premium_photo-1695299444434-297d2b9326e7?q=80&w=800&auto=format&fit=crop' },
-                        { id: "veg-fried-momos", name: "Veg Fried Momos", price: 110, isVeg: true, image: 'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?q=80&w=800&auto=format&fit=crop' },
-                        { id: "veg-afghani-momos", name: "Veg Afghani Momos", price: 120, isVeg: true, image: 'https://plus.unsplash.com/premium_photo-1695299444434-297d2b9326e7?q=80&w=800&auto=format&fit=crop' },
-                        { id: "veg-malai-momos", name: "Veg Malai Momos", price: 120, isVeg: true, image: 'https://plus.unsplash.com/premium_photo-1695299444434-297d2b9326e7?q=80&w=800&auto=format&fit=crop' },
-                        { id: "veg-gravy-momos", name: "Veg Gravy Momos", price: 130, isVeg: true, image: 'https://images.unsplash.com/photo-1642821374521-3d5f3a3a4185?q=80&w=800&auto=format&fit=crop' },
-                        { id: "veg-chilli-momos", name: "Veg Chilli Momos", price: 150, isVeg: true, image: 'https://images.unsplash.com/photo-1642821374521-3d5f3a3a4185?q=80&w=800&auto=format&fit=crop' }
-                    ]
-                }
-            }
-        },
-        "cat-breads-biryani": {
-            title: "Breads, Biryani & Rice",
-            subCategories: {
-                "breads": {
-                    title: "🍞 Best Of Indian Breads",
-                    items: [
-                        { id: "tandoori-roti", name: "Tandoori Roti", price: 12, isVeg: true, image: 'https://images.unsplash.com/photo-1626202243224-b42162c62524?q=80&w=800&auto=format&fit=crop' },
-                        { id: "rumali-roti", name: "Rumali Roti", price: 10, isVeg: true, image: 'https://plus.unsplash.com/premium_photo-1695299444434-297d2b9326e7?q=80&w=800&auto=format&fit=crop' },
-                        { id: "butter-roti", name: "Butter Roti", price: 15, isVeg: true, image: 'https://images.unsplash.com/photo-1626202243224-b42162c62524?q=80&w=800&auto=format&fit=crop' },
-                        { id: "laccha-paratha", name: "Laccha Paratha", price: 25, isVeg: true, image: 'https://images.unsplash.com/photo-1604329268241-55820871b7b7?q=80&w=800&auto=format&fit=crop' },
-                        { id: "plain-naan", name: "Plain Naan", price: 30, isVeg: true, image: 'https://images.unsplash.com/photo-1626700051175-681901309327?q=80&w=800&auto=format&fit=crop' },
-                        { id: "butter-naan", name: "Butter Naan", price: 40, isVeg: true, image: 'https://images.unsplash.com/photo-1626700051175-681901309327?q=80&w=800&auto=format&fit=crop' },
-                        { id: "onion-naan", name: "Onion Naan", price: 50, isVeg: true, image: 'https://images.unsplash.com/photo-1626700051175-681901309327?q=80&w=800&auto=format&fit=crop' },
-                        { id: "stuffed-naan", name: "Stuffed Naan", price: 60, isVeg: true, image: 'https://images.unsplash.com/photo-1604329268241-55820871b7b7?q=80&w=800&auto=format&fit=crop' },
-                        { id: "garlic-naan", name: "Garlic Naan", price: 60, isVeg: true, image: 'https://images.unsplash.com/photo-1626700051175-681901309327?q=80&w=800&auto=format&fit=crop' },
-                        { id: "aloo-paratha", name: "Aloo Paratha", price: 50, isVeg: true, image: 'https://images.unsplash.com/photo-1604329268241-55820871b7b7?q=80&w=800&auto=format&fit=crop' },
-                        { id: "chicken-keema-naan", name: "Chicken Keema Naan", price: 90, isVeg: false, image: 'https://images.unsplash.com/photo-1626700051175-681901309327?q=80&w=800&auto=format&fit=crop' },
-                        { id: "paneer-paratha", name: "Paneer Paratha", price: 70, isVeg: true, image: 'https://images.unsplash.com/photo-1604329268241-55820871b7b7?q=80&w=800&auto=format&fit=crop' },
-                        { id: "missi-roti", name: "Missi Roti", price: 25, isVeg: true, image: 'https://images.unsplash.com/photo-1626202243224-b42162c62524?q=80&w=800&auto=format&fit=crop' }
-                    ]
-                },
-                "biryani": {
-                    title: "🍲 Dum Biryani",
-                    items: [
-                        { id: "hyderabadi-chicken-biryani", name: "Hyderabadi Chicken Dum Biryani", price: 249, isVeg: false, image: 'https://images.unsplash.com/photo-1589304242440-69a4731a547a?q=80&w=800&auto=format&fit=crop' },
-                        { id: "chicken-seekh-biryani", name: "Chicken Seekh Dum Biryani", price: 249, isVeg: false, image: 'https://images.unsplash.com/photo-1589304242440-69a4731a547a?q=80&w=800&auto=format&fit=crop' },
-                        { id: "kolkatta-chicken-biryani", name: "Kolkatta Chicken Dum Biryani", price: 299, isVeg: false, image: 'https://images.unsplash.com/photo-1589304242440-69a4731a547a?q=80&w=800&auto=format&fit=crop' },
-                        { id: "hyderabadi-veg-biryani", name: "Hyderabadi Veg Dum Biryani", price: 149, isVeg: true, image: 'https://images.unsplash.com/photo-1630409347829-95993b18e47f?q=80&w=800&auto=format&fit=crop' },
-                        { id: "paneer-tikka-biryani", name: "Paneer Tikka Dum Biryani", price: 199, isVeg: true, image: 'https://images.unsplash.com/photo-1630409347829-95993b18e47f?q=80&w=800&auto=format&fit=crop' },
-                        { id: "egg-biryani", name: "Egg Dum Biryani", price: 199, isVeg: false, image: 'https://images.unsplash.com/photo-1630409347829-95993b18e47f?q=80&w=800&auto=format&fit=crop' },
-                        { id: "mushroom-biryani", name: "Mushroom Dum Biryani", price: 199, isVeg: true, image: 'https://images.unsplash.com/photo-1630409347829-95993b18e47f?q=80&w=800&auto=format&fit=crop' },
-                        { id: "soya-chaap-biryani", name: "Soya Chaap Dum Biryani", price: 190, isVeg: true, image: 'https://images.unsplash.com/photo-1630409347829-95993b18e47f?q=80&w=800&auto=format&fit=crop' }
-                    ]
-                },
-                "rice": {
-                    title: "🍚 Rice",
-                    items: [
-                        { id: "egg-fried-rice", name: "Egg Fried Rice", price: 170, isVeg: false, image: 'https://images.unsplash.com/photo-1582576161399-23d357d38e07?q=80&w=800&auto=format&fit=crop' },
-                        { id: "veg-fried-rice", name: "Veg Fried Rice", price: 140, isVeg: true, image: 'https://images.unsplash.com/photo-1582576161399-23d357d38e07?q=80&w=800&auto=format&fit=crop' },
-                        { id: "jeera-rice", name: "Jeera Rice", price: 130, isVeg: true, image: 'https://images.unsplash.com/photo-1626700051175-681901309327?q=80&w=800&auto=format&fit=crop' },
-                        { id: "steam-rice", name: "Steam Rice", price: 120, isVeg: true, image: 'https://images.unsplash.com/photo-1536304993881-ff6e9eefa2a6?q=80&w=800&auto=format&fit=crop' },
-                        { id: "veg-schezwan-rice", name: "Veg Schezwan Rice", price: 150, isVeg: true, image: 'https://images.unsplash.com/photo-1582576161399-23d357d38e07?q=80&w=800&auto=format&fit=crop' },
-                        { id: "chicken-fried-rice", name: "Chicken Fried Rice", price: 220, isVeg: false, image: 'https://images.unsplash.com/photo-1582576161399-23d357d38e07?q=80&w=800&auto=format&fit=crop' },
-                        { id: "chicken-schezwan-rice", name: "Chicken Schezwan Rice", price: 260, isVeg: false, image: 'https://images.unsplash.com/photo-1582576161399-23d357d38e07?q=80&w=800&auto=format&fit=crop' }
-                    ]
-                }
-            }
-        },
-        "cat-chinese-pasta": {
-            title: "Chinese, Noodles & Pasta",
-            subCategories: {
-                "noodles": {
-                    title: "🍜 Noodles",
-                    items: [
-                        { id: "chicken-noodles", name: "Chicken Noodles", price: 180, isVeg: false, image: 'https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=800&auto=format&fit=crop' },
-                        { id: "chicken-hakka-noodles", name: "Chicken Hakka Noodles", price: 200, isVeg: false, image: 'https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=800&auto=format&fit=crop' },
-                        { id: "chicken-schezwan-noodles", name: "Chicken Schezwan Noodles", price: 200, isVeg: false, image: 'https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=800&auto=format&fit=crop' },
-                        { id: "chicken-chilli-garlic-noodles", name: "Chicken Chilli Garlic Noodles", price: 200, isVeg: false, image: 'https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=800&auto=format&fit=crop' },
-                        { id: "chicken-singapori-noodles", name: "Chicken Singapori Noodles", price: 200, isVeg: false, image: 'https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=800&auto=format&fit=crop' },
-                        { id: "veg-noodles", name: "Veg Noodles", price: 120, isVeg: true, image: 'https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=800&auto=format&fit=crop' },
-                        { id: "veg-hakka-noodles", name: "Veg Hakka Noodles", price: 150, isVeg: true, image: 'https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=800&auto=format&fit=crop' },
-                        { id: "veg-schezwan-noodles", name: "Veg Schezwan Noodles", price: 150, isVeg: true, image: 'https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=800&auto=format&fit=crop' },
-                        { id: "chilli-garlic-noodles", name: "Chilli Garlic Noodles", price: 150, isVeg: true, image: 'https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=800&auto=format&fit=crop' },
-                        { id: "singapori-noodles", name: "Singapori Noodles", price: 150, isVeg: true, image: 'https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=800&auto=format&fit=crop' },
-                        { id: "paneer-noodles", name: "Paneer Noodles", price: 170, isVeg: true, image: 'https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=800&auto=format&fit=crop' },
-                        { id: "mushroom-noodles", name: "Mushroom Noodles", price: 170, isVeg: true, image: 'https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=800&auto=format&fit=crop' },
-                        { id: "egg-noodles", name: "Egg Noodles", price: 170, isVeg: false, image: 'https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=800&auto=format&fit=crop' }
-                    ]
-                },
-                "chinese-delights": {
-                    title: "🥢 Chinese Delights",
-                    items: [
-                        { id: "chilli-chicken-dry", name: "Chilli Chicken Dry (10 pcs)", price: 250, isVeg: false, image: 'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?q=80&w=800&auto=format&fit=crop' },
-                        { id: "chilli-chicken-gravy", name: "Chilli Chicken Gravy (10 pcs)", price: 250, isVeg: false, image: 'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?q=80&w=800&auto=format&fit=crop' },
-                        { id: "chicken-manchurian-dry", name: "Chicken Manchurian Dry (10 pcs)", price: 250, isVeg: false, image: 'https://images.unsplash.com/photo-1658463878411-2a21e9a26374?q=80&w=800&auto=format&fit=crop' },
-                        { id: "chicken-manchurian-gravy", name: "Chicken Manchurian Gravy (10 pcs)", price: 250, isVeg: false, image: 'https://images.unsplash.com/photo-1658463878411-2a21e9a26374?q=80&w=800&auto=format&fit=crop' },
-                        { id: "veg-manchurian-dry", name: "Veg Manchurian Dry", price: 180, isVeg: true, image: 'https://images.unsplash.com/photo-1658463878411-2a21e9a26374?q=80&w=800&auto=format&fit=crop' },
-                        { id: "veg-manchurian-gravy", name: "Veg Manchurian Gravy", price: 200, isVeg: true, image: 'https://images.unsplash.com/photo-1658463878411-2a21e9a26374?q=80&w=800&auto=format&fit=crop' },
-                        { id: "crispy-chilli-honey-potato", name: "Crispy Chilli Honey Potato", price: 140, isVeg: true, image: 'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?q=80&w=800&auto=format&fit=crop' },
-                        { id: "chilli-paneer-gravy", name: "Chilli Paneer Gravy", price: 220, isVeg: true, image: 'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?q=80&w=800&auto=format&fit=crop' },
-                        { id: "chilli-paneer-dry", name: "Chilli Paneer (Dry)", price: 200, isVeg: true, image: 'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?q=80&w=800&auto=format&fit=crop' },
-                        { id: "chilli-mushroom", name: "Chilli Mushroom", price: 190, isVeg: true, image: 'https://images.unsplash.com/photo-1594041682319-56a0229c1b26?q=80&w=800&auto=format&fit=crop' },
-                        { id: "french-fries", name: "French Fries", price: 100, isVeg: true, image: 'https://images.unsplash.com/photo-1585109649234-36a9239233f0?q=80&w=800&auto=format&fit=crop' },
-                        { id: "chilli-gobi-dry", name: "Chilli Gobi Dry", price: 190, isVeg: true, image: 'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?q=80&w=800&auto=format&fit=crop' },
-                        { id: "chilli-potato", name: "Chilli Potato", price: 130, isVeg: true, image: 'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?q=80&w=800&auto=format&fit=crop' }
-                    ]
-                },
-                "pasta": {
-                    title: "🍝 Pasta K's Special",
-                    items: [
-                        { id: "mix-pasta", name: "Mix Pasta Mac & Cheese", price: 140, isVeg: true, image: 'https://images.unsplash.com/photo-1551183053-bf91a1d81141?q=80&w=800&auto=format&fit=crop' },
-                        { id: "red-sauce-pasta", name: "Red Sauce Pasta Mac & Cheese", price: 140, isVeg: true, image: 'https://images.unsplash.com/photo-1551183053-bf91a1d81141?q=80&w=800&auto=format&fit=crop' },
-                        { id: "white-sauce-pasta", name: "White Sauce Pasta Mac & Cheese", price: 140, isVeg: true, image: 'https://images.unsplash.com/photo-1551183053-bf91a1d81141?q=80&w=800&auto=format&fit=crop' },
-                        { id: "chicken-mix-pasta", name: "Chicken Mix Pasta Mac & Cheese", price: 180, isVeg: false, image: 'https://images.unsplash.com/photo-1551183053-bf91a1d81141?q=80&w=800&auto=format&fit=crop' },
-                        { id: "chicken-red-sauce-pasta", name: "Chicken Red Sauce Pasta Mac & Cheese", price: 180, isVeg: false, image: 'https://images.unsplash.com/photo-1551183053-bf91a1d81141?q=80&w=800&auto=format&fit=crop' },
-                        { id: "chicken-white-sauce-pasta", name: "Chicken White Sauce Pasta Mac & Cheese", price: 180, isVeg: false, image: 'https://images.unsplash.com/photo-1551183053-bf91a1d81141?q=80&w=800&auto=format&fit=crop' }
-                    ]
-                }
-            }
-        },
-        "cat-drinks": {
-            title: "Soft Drinks",
-            items: [
-                { id: "coke-large", name: "Coke/Thums Up (Large)", price: 40, isVeg: true, image: 'https://images.unsplash.com/photo-1622483767028-3f66f32a64ba?q=80&w=800&auto=format&fit=crop' },
-                { id: "coke-small", name: "Coke/Thums Up (Small)", price: 20, isVeg: true, image: 'https://images.unsplash.com/photo-1622483767028-3f66f32a64ba?q=80&w=800&auto=format&fit=crop' },
-                { id: "water-big", name: "Water Big", price: 20, isVeg: true, image: 'https://images.unsplash.com/photo-1553531384-411a247ccd73?q=80&w=800&auto=format&fit=crop' },
-                { id: "water-small", name: "Water Small", price: 10, isVeg: true, image: 'https://images.unsplash.com/photo-1553531384-411a247ccd73?q=80&w=800&auto=format&fit=crop' },
-                { id: "arora-lemon", name: "Arora Lemon", price: 10, isVeg: true, image: 'https://images.unsplash.com/photo-1600788907416-92a39d48124b?q=80&w=800&auto=format&fit=crop' }
-            ]
-        }
-    };
+    const menuData = {"cat-starters":{title:"Chef's Specials Tandoori Starters",subCategories:{"veg-starters":{title:"🔥 Tandoori Starters (Veg)",items:[{id:"achari-chaap",name:"Achari Chaap",price:110,isVeg:!0,image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnOQ3dq-ZmXSnjRbvKNBzckbr8HOF7SEAhdA&s?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:110},{name:"Full",price:180}]}]},{id:"lemon-chaap",name:"Lemon Chaap",price:110,isVeg:!0,image:"https://shoopy.b-cdn.net/273385/1704634679406_SKU-2916_0.jpg?format=webp?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:110},{name:"Full",price:180}]}]},{id:"chatpati-chaap",name:"Chatpati Chaap",price:110,isVeg:!0,image:"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/426cfdb867684e57e63f1e0cd784d174?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:110},{name:"Full",price:180}]}]},{id:"malai-chaap",name:"Malai Chaap",price:110,isVeg:!0,image:"https://nishamadhulika.com/imgpst/featured/soya_chaap_white_gravy.jpg?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:110},{name:"Full",price:180}]}]},{id:"paneer-tikka",name:"Paneer Tikka",price:120,isVeg:!0,image:"https://www.cookwithkushi.com/wp-content/uploads/2023/02/tandoori_paneer_tikka_restaurant_style.jpg?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:120},{name:"Full",price:200}]}]},{id:"paneer-malai-tikka",name:"Paneer Malai Tikka",price:140,isVeg:!0,image:"https://i.ytimg.com/vi/Oy3YX7OTVqI/maxresdefault.jpg?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:140},{name:"Full",price:240}]}]},{id:"paneer-achari-tikka",name:"Paneer Achari Tikka",price:120,isVeg:!0,image:"https://img-global.cpcdn.com/recipes/ac467aeb4ef8bc02/1200x630cq70/photo.jpg?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:120},{name:"Full",price:200}]}]},{id:"peri-peri-soya-chaap",name:"Peri Peri Soya Chaap",price:110,isVeg:!0,image:"https://b.zmtcdn.com/data/dish_photos/2c3/63e6728d7ba3c1577efcbce416a2a2c3.jpg?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:110},{name:"Full",price:180}]}]},{id:"peri-peri-paneer-tikka",name:"Peri Peri Paneer Tikka",price:120,isVeg:!0,image:"https://ministryofcurry.com/wp-content/uploads/2021/01/Paneer-Tikka_-2-1.jpg?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:120},{name:"Full",price:200}]}]},{id:"mushroom-tikka",name:"Mushroom Tikka",price:120,isVeg:!0,image:"https://derafarms.com/cdn/shop/files/deraproducts-2024-06-06T165222.981.png?v=1719207378?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:120},{name:"Full",price:200}]}]},{id:"afghani-tandoori-chaap",name:"Afghani Tandoori Chaap",price:140,isVeg:!0,image:"https://orders.popskitchen.in/storage/2024/09/image-362.png?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:140},{name:"Full",price:220}]}]}]},"non-veg-starters":{title:"🔥 Tandoori Starters (Non-Veg)",items:[{id:"bhatti-murg",name:"Bhatti Murg",price:260,isVeg:!1,image:"https://skyviewbyempyrean.com/wp-content/uploads/2022/04/chefs-speciality-scaled.jpg?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"4 pcs",price:260},{name:"8 pcs",price:480}]}]},{id:"tandoori-chicken",name:"Tandoori Chicken",price:260,isVeg:!1,image:"https://static01.nyt.com/images/2024/05/16/multimedia/fs-tandoori-chicken-hmjq/fs-tandoori-chicken-hmjq-videoSixteenByNineJumbo1600.jpg?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"4 pcs",price:260},{name:"8 pcs",price:480}]}]},{id:"chicken-tikka",name:"Chicken Tikka (8 pcs)",price:300,isVeg:!1,image:"https://c.ndtvimg.com/2021-03/t1s4kbv8_tikka_625x300_04_March_21.jpg?q=80&w=800&auto=format&fit=crop"},{id:"chicken-seekh",name:"Chicken Seekh (2 pcs)",price:180,isVeg:!1,image:"https://vaya.in/recipes/wp-content/uploads/2019/01/Chicken-Seekh-Kabab.jpg?q=80&w=800&auto=format&fit=crop"}]}}},"cat-platters":{title:"Platters & Meal Combos",items:[{id:"tandoori-veg-platter",name:"Tandoori Veg Platters",price:350,isVeg:!0,image:"https://thesaffronhouse.ca/wp-content/uploads/2023/11/non-veg-platter-1.jpg?q=80&w=800&auto=format&fit=crop"},{id:"malai-peri-combo",name:"Malai Chaap (Half) + Peri Peri Soya Chaap (Half)",price:279,isVeg:!0,image:"https://images.unsplash.com/photo-1628209888795-a5089ac3e0f0?q=80&w=800&auto=format&fit=crop"},{id:"lemon-chatpati-combo",name:"Lemon Chaap (Half) + Chatpati Chaap (Half)",price:279,isVeg:!0,image:"https://images.unsplash.com/photo-1625944228741-cf3ab592b868?q=80&w=800&auto=format&fit=crop"},{id:"afghani-achari-combo",name:"Afghani Tandoori Chaap (Half) + Achari Chaap (Half)",price:279,isVeg:!0,image:"https://images.unsplash.com/photo-1628209888795-a5089ac3e0f0?q=80&w=800&auto=format&fit=crop"}]},"cat-rolls":{title:"Rocking Rolls",items:[{id:"chicken-seekh-roll",name:"Chicken Seekh Roll",price:180,isVeg:!1,image:"https://images.unsplash.com/photo-1625220194771-4c9c22116279?q=80&w=800&auto=format&fit=crop"},{id:"chicken-tikka-roll",name:"Chicken Tikka Roll",price:220,isVeg:!1,image:"https://images.unsplash.com/photo-1627460340336-6211134a4505?q=80&w=800&auto=format&fit=crop"},{id:"malai-chaap-roll",name:"Malai Chaap Roll",price:120,isVeg:!0,image:"https://plus.unsplash.com/premium_photo-1695299444434-297d2b9326e7?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:120},{name:"Full",price:190}]}]},{id:"chatpati-chaap-roll",name:"Chatpati Chaap Roll",price:120,isVeg:!0,image:"https://plus.unsplash.com/premium_photo-1695299444434-297d2b9326e7?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:120},{name:"Full",price:190}]}]},{id:"achari-chaap-roll",name:"Achari Chaap Roll",price:120,isVeg:!0,image:"https://plus.unsplash.com/premium_photo-1695299444434-297d2b9326e7?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:120},{name:"Full",price:190}]}]},{id:"afghani-chaap-roll",name:"Afghani Chaap Roll",price:130,isVeg:!0,image:"https://plus.unsplash.com/premium_photo-1695299444434-297d2b9326e7?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:130},{name:"Full",price:220}]}]},{id:"lemon-chaap-roll",name:"Lemon Chaap Roll",price:120,isVeg:!0,image:"https://plus.unsplash.com/premium_photo-1695299444434-297d2b9326e7?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:120},{name:"Full",price:190}]}]},{id:"mushroom-roll",name:"Mushroom Roll",price:140,isVeg:!0,image:"https://images.unsplash.com/photo-1604329268241-55820871b7b7?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:140},{name:"Full",price:200}]}]},{id:"paneer-tikka-roll",name:"Paneer Tikka Roll",price:120,isVeg:!0,image:"https://images.unsplash.com/photo-1615478503562-ec2d82e85b8a?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:120},{name:"Full",price:200}]}]},{id:"peri-peri-soya-roll",name:"Peri Peri Soya Chaap Roll",price:120,isVeg:!0,image:"https://plus.unsplash.com/premium_photo-1695299444434-297d2b9326e7?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:120},{name:"Full",price:190}]}]},{id:"peri-peri-paneer-roll",name:"Peri Peri Paneer Tikka Roll",price:140,isVeg:!0,image:"https://images.unsplash.com/photo-1615478503562-ec2d82e85b8a?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:140},{name:"Full",price:200}]}]}]},"cat-main-course":{title:"Main Course",subCategories:{"veg-main":{title:"🥗 Veg Main Course",items:[{id:"tawa-chaap-masala",name:"Tawa Chaap Masala",price:160,isVeg:!0,image:"https://plus.unsplash.com/premium_photo-1668618296839-a782c57c61f0?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:160},{name:"Full",price:230}]}]},{id:"tawa-mushroom-masala",name:"Tawa Mushroom Masala",price:160,isVeg:!0,image:"https://images.unsplash.com/photo-1594041682319-56a0229c1b26?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:160},{name:"Full",price:230}]}]},{id:"tawa-paneer-masala",name:"Tawa Paneer Masala",price:160,isVeg:!0,image:"https://images.unsplash.com/photo-1668618224539-36c531a6a683?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:160},{name:"Full",price:230}]}]},{id:"paneer-takatak",name:"Paneer Takatak",price:170,isVeg:!0,image:"https://plus.unsplash.com/premium_photo-1695299444434-297d2b9326e7?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:170},{name:"Full",price:240}]}]},{id:"butter-chaap",name:"Butter Chaap",price:170,isVeg:!0,image:"https://plus.unsplash.com/premium_photo-1668618296839-a782c57c61f0?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:170},{name:"Full",price:240}]}]},{id:"shahi-paneer",name:"Shahi Paneer",price:120,isVeg:!0,image:"https://images.unsplash.com/photo-1565557623262-b27e25248540?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:120},{name:"Full",price:200}]}]},{id:"kadhai-chaap",name:"Kadhai Chaap",price:120,isVeg:!0,image:"https://plus.unsplash.com/premium_photo-1668618296839-a782c57c61f0?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:120},{name:"Full",price:210}]}]},{id:"mix-veg",name:"Mix Veg",price:120,isVeg:!0,image:"https://images.unsplash.com/photo-1533089860892-a7c6f0a485d8?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:120},{name:"Full",price:190}]}]},{id:"kadhai-paneer",name:"Kadhai Paneer",price:120,isVeg:!0,image:"https://images.unsplash.com/photo-1574484284002-952d92456975?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:120},{name:"Full",price:200}]}]},{id:"paneer-butter-masala",name:"Paneer Butter Masala",price:140,isVeg:!0,image:"https://images.unsplash.com/photo-1589647363585-f4a7d38779df?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:140},{name:"Full",price:230}]}]},{id:"mushroom-do-pyaza",name:"Mushroom Do Pyaza",price:240,isVeg:!0,image:"https://images.unsplash.com/photo-1594041682319-56a0229c1b26?q=80&w=800&auto=format&fit=crop"},{id:"matar-paneer",name:"Matar Paneer",price:130,isVeg:!0,image:"https://images.unsplash.com/photo-1563379926898-05f4575a45d8?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:130},{name:"Full",price:220}]}]},{id:"paneer-lababdar",name:"Paneer Lababdar",price:160,isVeg:!0,image:"https://plus.unsplash.com/premium_photo-1695299444434-297d2b9326e7?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:160},{name:"Full",price:250}]}]},{id:"tadka-dal-fry",name:"Tadka Dal Fry",price:120,isVeg:!0,image:"https://images.unsplash.com/photo-1609560140263-14a775a27814?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:120},{name:"Full",price:180}]}]}]},"non-veg-main":{title:"🍗 Non-Veg Main Course",items:[{id:"chicken-utterly-butterly",name:"Chicken Utterly Butterly",price:350,isVeg:!1,image:"https://images.unsplash.com/photo-1604128699120-80213a1d9494?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:350},{name:"Full",price:580}]}]},{id:"butter-chicken",name:"Butter Chicken",price:220,isVeg:!1,image:"https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Qtr",price:220},{name:"Half",price:390},{name:"Full",price:650}]}]},{id:"boneless-butter-chicken",name:"Boneless Butter Chicken",price:230,isVeg:!1,image:"https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Qtr",price:230},{name:"Half",price:430},{name:"Full",price:700}]}]},{id:"chicken-do-pyaza",name:"Chicken Do Pyaza",price:390,isVeg:!1,image:"https://images.unsplash.com/photo-1604128699120-80213a1d9494?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:390},{name:"Full",price:650}]}]},{id:"kadai-chicken",name:"Kadai Chicken",price:220,isVeg:!1,image:"https://images.unsplash.com/photo-1598515214211-89d3c7373058?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Qtr",price:220},{name:"Half",price:390},{name:"Full",price:650}]}]},{id:"tawa-chicken",name:"Tawa Chicken",price:220,isVeg:!1,image:"https://images.unsplash.com/photo-1610057099443-fde8ce495cb5?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Qtr",price:220},{name:"Half",price:420},{name:"Full",price:660}]}]},{id:"ghar-jaisa-chicken",name:"Ghar Jaisa Chicken Curry",price:220,isVeg:!1,image:"https://images.unsplash.com/photo-1574484284002-952d92456975?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Qtr",price:220},{name:"Half",price:370},{name:"Full",price:630}]}]},{id:"chicken-rara-punjabi",name:"Chicken Rara Punjabi KS Special",price:220,isVeg:!1,image:"https://images.unsplash.com/photo-1598515214211-89d3c7373058?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Qtr",price:220},{name:"Half",price:450},{name:"Full",price:700}]}]},{id:"boti-chicken-masala",name:"Boti Chicken Masala",price:390,isVeg:!1,image:"https://images.unsplash.com/photo-1626082933429-01c05c312c3a?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:390},{name:"Full",price:650}]}]},{id:"chicken-malmal",name:"Chicken Malmal",price:440,isVeg:!1,image:"https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:440},{name:"Full",price:700}]}]},{id:"chicken-tikka-butter-masala",name:"Chicken Tikka Butter Masala",price:420,isVeg:!1,image:"https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:420},{name:"Full",price:720}]}]},{id:"egg-curry",name:"Egg Curry (4 pcs)",price:250,isVeg:!1,image:"https://images.unsplash.com/photo-1585237625149-231570726a4f?q=80&w=800&auto=format&fit=crop"},{id:"chicken-seekh-masala",name:"Chicken Seekh Masala (500 ml)",price:260,isVeg:!1,image:"https://images.unsplash.com/photo-1625943555419-56a81f6526a0?q=80&w=800&auto=format&fit=crop"}]}}},"cat-momos":{title:"Momos",subCategories:{"paneer-momos":{title:"🥟 Paneer Momos (10 pcs)",items:[{id:"paneer-kurkure-momos",name:"Paneer Kurkure Momos",price:140,isVeg:!0,image:"https://images.unsplash.com/photo-1642821374521-3d5f3a3a4185?q=80&w=800&auto=format&fit=crop"},{id:"paneer-steam-momos",name:"Paneer Steam Momos",price:120,isVeg:!0,image:"https://images.unsplash.com/photo-1582879313824-c027111b156b?q=80&w=800&auto=format&fit=crop"},{id:"paneer-fried-momos",name:"Paneer Fried Momos",price:140,isVeg:!0,image:"https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?q=80&w=800&auto=format&fit=crop"},{id:"paneer-afghani-momos",name:"Paneer Afghani Momos",price:180,isVeg:!0,image:"https://plus.unsplash.com/premium_photo-1695299444434-297d2b9326e7?q=80&w=800&auto=format&fit=crop"},{id:"paneer-malai-momos",name:"Paneer Malai Momos",price:180,isVeg:!0,image:"https://plus.unsplash.com/premium_photo-1695299444434-297d2b9326e7?q=80&w=800&auto=format&fit=crop"},{id:"paneer-gravy-momos",name:"Paneer Gravy Momos",price:200,isVeg:!0,image:"https://images.unsplash.com/photo-1642821374521-3d5f3a3a4185?q=80&w=800&auto=format&fit=crop"},{id:"paneer-chilli-momos",name:"Paneer Chilli Momos",price:220,isVeg:!0,image:"https://images.unsplash.com/photo-1642821374521-3d5f3a3a4185?q=80&w=800&auto=format&fit=crop"}]},"veg-momos":{title:"🥟 Veg Momos (10 pcs)",items:[{id:"veg-kurkure-momos",name:"Veg Kurkure Momos",price:110,isVeg:!0,image:"https://images.unsplash.com/photo-1642821374521-3d5f3a3a4185?q=80&w=800&auto=format&fit=crop"},{id:"veg-steam-momos",name:"Veg Steam Momos",price:80,isVeg:!0,image:"https://images.unsplash.com/photo-1582879313824-c027111b156b?q=80&w=800&auto=format&fit=crop"},{id:"veg-tandoori-momos",name:"Veg Tandoori Momos",price:100,isVeg:!0,image:"https://plus.unsplash.com/premium_photo-1695299444434-297d2b9326e7?q=80&w=800&auto=format&fit=crop"},{id:"veg-fried-momos",name:"Veg Fried Momos",price:110,isVeg:!0,image:"https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?q=80&w=800&auto=format&fit=crop"},{id:"veg-afghani-momos",name:"Veg Afghani Momos",price:120,isVeg:!0,image:"https://plus.unsplash.com/premium_photo-1695299444434-297d2b9326e7?q=80&w=800&auto=format&fit=crop"},{id:"veg-malai-momos",name:"Veg Malai Momos",price:120,isVeg:!0,image:"https://plus.unsplash.com/premium_photo-1695299444434-297d2b9326e7?q=80&w=800&auto=format&fit=crop"},{id:"veg-gravy-momos",name:"Veg Gravy Momos",price:130,isVeg:!0,image:"https://images.unsplash.com/photo-1642821374521-3d5f3a3a4185?q=80&w=800&auto=format&fit=crop"},{id:"veg-chilli-momos",name:"Veg Chilli Momos",price:150,isVeg:!0,image:"https://images.unsplash.com/photo-1642821374521-3d5f3a3a4185?q=80&w=800&auto=format&fit=crop"}]}}},"cat-breads-biryani":{title:"Breads, Biryani & Rice",subCategories:{"breads":{title:"🍞 Best Of Indian Breads",items:[{id:"tandoori-roti",name:"Tandoori Roti",price:12,isVeg:!0,image:"https://images.unsplash.com/photo-1626202243224-b42162c62524?q=80&w=800&auto=format&fit=crop"},{id:"rumali-roti",name:"Rumali Roti",price:10,isVeg:!0,image:"https://plus.unsplash.com/premium_photo-1695299444434-297d2b9326e7?q=80&w=800&auto=format&fit=crop"},{id:"butter-roti",name:"Butter Roti",price:15,isVeg:!0,image:"https://images.unsplash.com/photo-1626202243224-b42162c62524?q=80&w=800&auto=format&fit=crop"},{id:"laccha-paratha",name:"Laccha Paratha",price:25,isVeg:!0,image:"https://images.unsplash.com/photo-1604329268241-55820871b7b7?q=80&w=800&auto=format&fit=crop"},{id:"plain-naan",name:"Plain Naan",price:30,isVeg:!0,image:"https://images.unsplash.com/photo-1626700051175-681901309327?q=80&w=800&auto=format&fit=crop"},{id:"butter-naan",name:"Butter Naan",price:40,isVeg:!0,image:"https://images.unsplash.com/photo-1626700051175-681901309327?q=80&w=800&auto=format&fit=crop"},{id:"onion-naan",name:"Onion Naan",price:50,isVeg:!0,image:"https://images.unsplash.com/photo-1626700051175-681901309327?q=80&w=800&auto=format&fit=crop"},{id:"stuffed-naan",name:"Stuffed Naan",price:60,isVeg:!0,image:"https://images.unsplash.com/photo-1604329268241-55820871b7b7?q=80&w=800&auto=format&fit=crop"},{id:"garlic-naan",name:"Garlic Naan",price:60,isVeg:!0,image:"https://images.unsplash.com/photo-1626700051175-681901309327?q=80&w=800&auto=format&fit=crop"},{id:"aloo-paratha",name:"Aloo Paratha",price:50,isVeg:!0,image:"https://images.unsplash.com/photo-1604329268241-55820871b7b7?q=80&w=800&auto=format&fit=crop"},{id:"chicken-keema-naan",name:"Chicken Keema Naan",price:90,isVeg:!1,image:"https://images.unsplash.com/photo-1626700051175-681901309327?q=80&w=800&auto=format&fit=crop"},{id:"paneer-paratha",name:"Paneer Paratha",price:70,isVeg:!0,image:"https://images.unsplash.com/photo-1604329268241-55820871b7b7?q=80&w=800&auto=format&fit=crop"},{id:"missi-roti",name:"Missi Roti",price:25,isVeg:!0,image:"https://images.unsplash.com/photo-1626202243224-b42162c62524?q=80&w=800&auto=format&fit=crop"}]},"biryani":{title:"🍲 Dum Biryani",items:[{id:"hyderabadi-chicken-biryani",name:"Hyderabadi Chicken Dum Biryani",price:249,isVeg:!1,image:"https://images.unsplash.com/photo-1589304242440-69a4731a547a?q=80&w=800&auto=format&fit=crop"},{id:"chicken-seekh-biryani",name:"Chicken Seekh Dum Biryani",price:249,isVeg:!1,image:"https://images.unsplash.com/photo-1589304242440-69a4731a547a?q=80&w=800&auto=format&fit=crop"},{id:"kolkatta-chicken-biryani",name:"Kolkatta Chicken Dum Biryani",price:299,isVeg:!1,image:"https://images.unsplash.com/photo-1589304242440-69a4731a547a?q=80&w=800&auto=format&fit=crop"},{id:"hyderabadi-veg-biryani",name:"Hyderabadi Veg Dum Biryani",price:149,isVeg:!0,image:"https://images.unsplash.com/photo-1630409347829-95993b18e47f?q=80&w=800&auto=format&fit=crop"},{id:"paneer-tikka-biryani",name:"Paneer Tikka Dum Biryani",price:199,isVeg:!0,image:"https://images.unsplash.com/photo-1630409347829-95993b18e47f?q=80&w=800&auto=format&fit=crop"},{id:"egg-biryani",name:"Egg Dum Biryani",price:199,isVeg:!1,image:"https://images.unsplash.com/photo-1630409347829-95993b18e47f?q=80&w=800&auto=format&fit=crop"},{id:"mushroom-biryani",name:"Mushroom Dum Biryani",price:199,isVeg:!0,image:"https://images.unsplash.com/photo-1630409347829-95993b18e47f?q=80&w=800&auto=format&fit=crop"},{id:"soya-chaap-biryani",name:"Soya Chaap Dum Biryani",price:190,isVeg:!0,image:"https://images.unsplash.com/photo-1630409347829-95993b18e47f?q=80&w=800&auto=format&fit=crop"}]},"rice":{title:"🍚 Rice",items:[{id:"egg-fried-rice",name:"Egg Fried Rice",price:170,isVeg:!1,image:"https://images.unsplash.com/photo-1582576161399-23d357d38e07?q=80&w=800&auto=format&fit=crop"},{id:"veg-fried-rice",name:"Veg Fried Rice",price:140,isVeg:!0,image:"https://images.unsplash.com/photo-1582576161399-23d357d38e07?q=80&w=800&auto=format&fit=crop"},{id:"jeera-rice",name:"Jeera Rice",price:130,isVeg:!0,image:"https://images.unsplash.com/photo-1626700051175-681901309327?q=80&w=800&auto=format&fit=crop"},{id:"steam-rice",name:"Steam Rice",price:120,isVeg:!0,image:"https://images.unsplash.com/photo-1536304993881-ff6e9eefa2a6?q=80&w=800&auto=format&fit=crop"},{id:"veg-schezwan-rice",name:"Veg Schezwan Rice",price:150,isVeg:!0,image:"https://images.unsplash.com/photo-1582576161399-23d357d38e07?q=80&w=800&auto=format&fit=crop"},{id:"chicken-fried-rice",name:"Chicken Fried Rice",price:220,isVeg:!1,image:"https://images.unsplash.com/photo-1582576161399-23d357d38e07?q=80&w=800&auto=format&fit=crop"},{id:"chicken-schezwan-rice",name:"Chicken Schezwan Rice",price:260,isVeg:!1,image:"https://images.unsplash.com/photo-1582576161399-23d357d38e07?q=80&w=800&auto=format&fit=crop"}]}}},"cat-chinese-pasta":{title:"Chinese, Noodles & Pasta",subCategories:{"noodles":{title:"🍜 Noodles",items:[{id:"chicken-noodles",name:"Chicken Noodles",price:180,isVeg:!1,image:"https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=800&auto=format&fit=crop"},{id:"chicken-hakka-noodles",name:"Chicken Hakka Noodles",price:200,isVeg:!1,image:"https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=800&auto=format&fit=crop"},{id:"chicken-schezwan-noodles",name:"Chicken Schezwan Noodles",price:200,isVeg:!1,image:"https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=800&auto=format&fit=crop"},{id:"chicken-chilli-garlic-noodles",name:"Chicken Chilli Garlic Noodles",price:200,isVeg:!1,image:"https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=800&auto=format&fit=crop"},{id:"chicken-singapori-noodles",name:"Chicken Singapori Noodles",price:200,isVeg:!1,image:"https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=800&auto=format&fit=crop"},{id:"veg-noodles",name:"Veg Noodles",price:120,isVeg:!0,image:"https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=800&auto=format&fit=crop"},{id:"veg-hakka-noodles",name:"Veg Hakka Noodles",price:150,isVeg:!0,image:"https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=800&auto=format&fit=crop"},{id:"veg-schezwan-noodles",name:"Veg Schezwan Noodles",price:150,isVeg:!0,image:"https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=800&auto=format&fit=crop"},{id:"chilli-garlic-noodles",name:"Chilli Garlic Noodles",price:150,isVeg:!0,image:"https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=800&auto=format&fit=crop"},{id:"singapori-noodles",name:"Singapori Noodles",price:150,isVeg:!0,image:"https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=800&auto=format&fit=crop"},{id:"paneer-noodles",name:"Paneer Noodles",price:170,isVeg:!0,image:"https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=800&auto=format&fit=crop"},{id:"mushroom-noodles",name:"Mushroom Noodles",price:170,isVeg:!0,image:"https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=800&auto=format&fit=crop"},{id:"egg-noodles",name:"Egg Noodles",price:170,isVeg:!1,image:"https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=800&auto=format&fit=crop"}]},"chinese-delights":{title:"🥢 Chinese Delights",items:[{id:"chilli-chicken-dry",name:"Chilli Chicken Dry (10 pcs)",price:250,isVeg:!1,image:"https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?q=80&w=800&auto=format&fit=crop"},{id:"chilli-chicken-gravy",name:"Chilli Chicken Gravy (10 pcs)",price:250,isVeg:!1,image:"https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?q=80&w=800&auto=format&fit=crop"},{id:"chicken-manchurian-dry",name:"Chicken Manchurian Dry (10 pcs)",price:250,isVeg:!1,image:"https://images.unsplash.com/photo-1658463878411-2a21e9a26374?q=80&w=800&auto=format&fit=crop"},{id:"chicken-manchurian-gravy",name:"Chicken Manchurian Gravy (10 pcs)",price:250,isVeg:!1,image:"https://images.unsplash.com/photo-1658463878411-2a21e9a26374?q=80&w=800&auto=format&fit=crop"},{id:"veg-manchurian-dry",name:"Veg Manchurian Dry",price:180,isVeg:!0,image:"https://images.unsplash.com/photo-1658463878411-2a21e9a26374?q=80&w=800&auto=format&fit=crop"},{id:"veg-manchurian-gravy",name:"Veg Manchurian Gravy",price:200,isVeg:!0,image:"https://images.unsplash.com/photo-1658463878411-2a21e9a26374?q=80&w=800&auto=format&fit=crop"},{id:"crispy-chilli-honey-potato",name:"Crispy Chilli Honey Potato",price:140,isVeg:!0,image:"https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?q=80&w=800&auto=format&fit=crop"},{id:"chilli-paneer-gravy",name:"Chilli Paneer Gravy",price:220,isVeg:!0,image:"https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?q=80&w=800&auto=format&fit=crop"},{id:"chilli-paneer-dry",name:"Chilli Paneer (Dry)",price:200,isVeg:!0,image:"https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?q=80&w=800&auto=format&fit=crop"},{id:"chilli-mushroom",name:"Chilli Mushroom",price:190,isVeg:!0,image:"https://images.unsplash.com/photo-1594041682319-56a0229c1b26?q=80&w=800&auto=format&fit=crop"},{id:"french-fries",name:"French Fries",price:100,isVeg:!0,image:"https://images.unsplash.com/photo-1585109649234-36a9239233f0?q=80&w=800&auto=format&fit=crop"},{id:"chilli-gobi-dry",name:"Chilli Gobi Dry",price:190,isVeg:!0,image:"https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?q=80&w=800&auto=format&fit=crop"},{id:"chilli-potato",name:"Chilli Potato",price:130,isVeg:!0,image:"https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?q=80&w=800&auto=format&fit=crop"}]},"pasta":{title:"🍝 Pasta K's Special",items:[{id:"mix-pasta",name:"Mix Pasta Mac & Cheese",price:140,isVeg:!0,image:"https://images.unsplash.com/photo-1551183053-bf91a1d81141?q=80&w=800&auto=format&fit=crop"},{id:"red-sauce-pasta",name:"Red Sauce Pasta Mac & Cheese",price:140,isVeg:!0,image:"https://images.unsplash.com/photo-1551183053-bf91a1d81141?q=80&w=800&auto=format&fit=crop"},{id:"white-sauce-pasta",name:"White Sauce Pasta Mac & Cheese",price:140,isVeg:!0,image:"https://images.unsplash.com/photo-1551183053-bf91a1d81141?q=80&w=800&auto=format&fit=crop"},{id:"chicken-mix-pasta",name:"Chicken Mix Pasta Mac & Cheese",price:180,isVeg:!1,image:"https://images.unsplash.com/photo-1551183053-bf91a1d81141?q=80&w=800&auto=format&fit=crop"},{id:"chicken-red-sauce-pasta",name:"Chicken Red Sauce Pasta Mac & Cheese",price:180,isVeg:!1,image:"https://images.unsplash.com/photo-1551183053-bf91a1d81141?q=80&w=800&auto=format&fit=crop"},{id:"chicken-white-sauce-pasta",name:"Chicken White Sauce Pasta Mac & Cheese",price:180,isVeg:!1,image:"https://images.unsplash.com/photo-1551183053-bf91a1d81141?q=80&w=800&auto=format&fit=crop"}]}}},"cat-drinks":{title:"Soft Drinks",items:[{id:"coke-large",name:"Coke/Thums Up (Large)",price:40,isVeg:!0,image:"https://images.unsplash.com/photo-1622483767028-3f66f32a64ba?q=80&w=800&auto=format&fit=crop"},{id:"coke-small",name:"Coke/Thums Up (Small)",price:20,isVeg:!0,image:"https://images.unsplash.com/photo-1622483767028-3f66f32a64ba?q=80&w=800&auto=format&fit=crop"},{id:"water-big",name:"Water Big",price:20,isVeg:!0,image:"https://images.unsplash.com/photo-1553531384-411a247ccd73?q=80&w=800&auto=format&fit=crop"},{id:"water-small",name:"Water Small",price:10,isVeg:!0,image:"https://images.unsplash.com/photo-1553531384-411a247ccd73?q=80&w=800&auto=format&fit=crop"},{id:"arora-lemon",name:"Arora Lemon",price:10,isVeg:!0,image:"https://images.unsplash.com/photo-1600788907416-92a39d48124b?q=80&w=800&auto=format&fit=crop"}]}};
     
     let cart = [];
     let currentModalItem = {};
@@ -368,14 +122,12 @@
         if (!container || !nav) return;
         container.innerHTML = '';
         nav.innerHTML = '';
-        
         for (const catId in menuData) {
             const category = menuData[catId];
             const section = document.createElement('section');
             section.id = catId;
             section.innerHTML = `<h2 class="main-category-title">${category.title}</h2>`;
             nav.innerHTML += `<a href="#${catId}">${category.title}</a>`;
-
             if (category.subCategories) {
                 for (const subCatId in category.subCategories) {
                     const subCategory = category.subCategories[subCatId];
@@ -393,31 +145,23 @@
         const itemCard = document.createElement('div');
         itemCard.className = 'item-card';
         itemCard.id = `item-${item.id}`;
-        
         const priceText = item.options ? `₹${item.price} onwards` : `₹${item.price}`;
         const vegIndicator = `<span class="item-veg-indicator ${item.isVeg ? 'veg' : 'non-veg'}"></span>`;
-        
         itemCard.innerHTML = `
             <div class="item-details">
-                <div>
-                    ${vegIndicator}
-                    <span class="item-name">${item.name}</span>
-                </div>
+                <div>${vegIndicator}<span class="item-name">${item.name}</span></div>
                 <div class="item-price">${priceText}</div>
             </div>
             <div class="item-image-cta-wrapper">
                 <img src="${item.image}" alt="${item.name}" class="item-image">
                 <div class="item-cta"></div>
-            </div>
-        `;
-        
+            </div>`;
         const wrapper = itemCard.querySelector('.item-cta');
         const addButton = document.createElement('button');
         addButton.className = 'add-btn';
         addButton.textContent = 'ADD';
         addButton.onclick = () => item.options ? showOptionsModal(item) : addItem(item.id, item.name, item.price);
         wrapper.appendChild(addButton);
-        
         return itemCard;
     }
 
@@ -429,12 +173,11 @@
         (item.options || []).forEach(group => {
             const groupDiv = document.createElement('div');
             groupDiv.className = 'option-group';
-            const requiredTag = group.required ? '<span class="required-tag">REQUIRED</span>' : '';
-            groupDiv.innerHTML = `<h3>${group.group}${requiredTag}</h3>`;
+            groupDiv.innerHTML = `<h3>${group.group}${group.required ? '<span class="required-tag"> REQUIRED</span>' : ''}</h3>`;
             group.choices.forEach((choice, index) => {
                 const isChecked = group.type === 'radio' && index === 0 ? 'checked' : '';
                 const choiceId = `${group.group.replace(/\s+/g, '-')}-${index}`;
-                groupDiv.innerHTML += `<div class="option-choice"><label for="${choiceId}"><input type="${group.type}" id="${choiceId}" name="${group.group}" value="${choice.price}" data-name="${choice.name}" onchange="updateModalPrice()" ${isChecked}><span>${choice.name}</span></label><span>₹${choice.price}</span></div>`;
+                groupDiv.innerHTML += `<div class="option-choice"><label><input type="${group.type}" id="${choiceId}" name="${group.group}" value="${choice.price}" data-name="${choice.name}" onchange="updateModalPrice()" ${isChecked}><span>${choice.name}</span></label><span>₹${choice.price}</span></div>`;
             });
             modalBody.appendChild(groupDiv);
         });
@@ -443,77 +186,120 @@
     }
 
     function updateModalPrice() {
-        let total = 0; let isRequiredMet = true;
-        (currentModalItem.options || []).forEach(group => { if (group.required && !document.querySelector(`#modalBody input[name="${group.group}"]:checked`)) { isRequiredMet = false; } });
-        document.querySelectorAll('#modalBody input:checked').forEach(input => { total += parseFloat(input.value); });
+        let total = 0;
+        let isRequiredMet = true;
+        (currentModalItem.options || []).forEach(group => {
+            if (group.required && !document.querySelector(`#modalBody input[name="${group.group}"]:checked`)) {
+                isRequiredMet = false;
+            }
+        });
+        document.querySelectorAll('#modalBody input:checked').forEach(input => {
+            total += parseFloat(input.value);
+        });
         const addButton = document.getElementById('modalAddItemBtn');
         addButton.textContent = `Add Item - ₹${total.toFixed(2)}`;
         addButton.disabled = !isRequiredMet;
     }
-    
+
     document.getElementById('modalAddItemBtn').onclick = function() {
-        let finalPrice = 0; let nameParts = [currentModalItem.name]; let idParts = [currentModalItem.id];
+        let finalPrice = 0;
+        let nameParts = [currentModalItem.name];
+        let idParts = [currentModalItem.id];
         document.querySelectorAll('#modalBody input:checked').forEach(input => {
             finalPrice += parseFloat(input.value);
             nameParts.push(`(${input.dataset.name})`);
             idParts.push(input.dataset.name.toLowerCase().replace(/\s+/g, '-'));
         });
-        const finalName = nameParts.join(' ');
-        const finalId = idParts.join('_');
-        addItem(finalId, finalName, finalPrice);
+        addItem(idParts.join('_'), nameParts.join(' '), finalPrice);
         document.getElementById('optionsModal').style.display = 'none';
     };
-    
-    document.getElementById('optionsModal').onclick = function(event) { if (event.target.id === 'optionsModal') { event.target.style.display = 'none'; } };
-    
+
+    document.getElementById('optionsModal').onclick = function(event) {
+        if (event.target.id === 'optionsModal') {
+            event.target.style.display = 'none';
+        }
+    };
+
     function addItem(id, name, price) {
         const existingItem = cart.find(item => item.id === id);
-        if (existingItem) { existingItem.quantity++; } 
-        else { cart.push({ id, name, price, quantity: 1, baseId: id.split('_')[0] }); }
+        if (existingItem) {
+            existingItem.quantity++;
+        } else {
+            cart.push({ id, name, price, quantity: 1, baseId: id.split('_')[0] });
+        }
         updateMainDisplay();
     }
 
     function removeItem(id) {
         const itemIndex = cart.findIndex(item => item.id === id);
-        if (itemIndex > -1) { cart[itemIndex].quantity--; if (cart[itemIndex].quantity === 0) { cart.splice(itemIndex, 1); } }
+        if (itemIndex > -1) {
+            cart[itemIndex].quantity--;
+            if (cart[itemIndex].quantity === 0) {
+                cart.splice(itemIndex, 1);
+            }
+        }
         updateMainDisplay();
     }
 
     function updateMainDisplay() {
-        const itemBaseIdCounts = cart.reduce((acc, item) => { acc[item.baseId] = (acc[item.baseId] || 0) + item.quantity; return acc; }, {});
+        const itemBaseIdCounts = cart.reduce((acc, item) => {
+            acc[item.baseId] = (acc[item.baseId] || 0) + item.quantity;
+            return acc;
+        }, {});
         document.querySelectorAll('.item-cta').forEach(wrapper => {
-            const itemCard = wrapper.closest('.item-card'); if(!itemCard) return; const baseId = itemCard.id.replace('item-', '');
+            const itemCard = wrapper.closest('.item-card');
+            if (!itemCard) return;
+            const baseId = itemCard.id.replace('item-', '');
             const totalQty = itemBaseIdCounts[baseId] || 0;
             if (totalQty > 0) {
                 wrapper.innerHTML = `<div class="quantity-control"><button onclick="removeLastAddedItem('${baseId}')">-</button><span class="quantity">${totalQty}</span><button onclick="reopenOptionsFor('${baseId}')">+</button></div>`;
             } else {
                 const originalItem = findMenuItemById(baseId);
                 wrapper.innerHTML = `<button class="add-btn">ADD</button>`;
-                if(originalItem){ wrapper.querySelector('.add-btn').onclick = () => originalItem.options ? showOptionsModal(originalItem) : addItem(originalItem.id, originalItem.name, originalItem.price); }
+                if (originalItem) {
+                    wrapper.querySelector('.add-btn').onclick = () => originalItem.options ? showOptionsModal(originalItem) : addItem(originalItem.id, originalItem.name, originalItem.price);
+                }
             }
         });
-        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0); const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+        const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
         const footerBtn = document.getElementById('footerCartBtn');
-        if (totalItems > 0) { footerBtn.style.display = 'block'; footerBtn.innerHTML = `View Cart (${totalItems}) &nbsp;&nbsp;&nbsp; ₹${totalPrice.toFixed(2)}`; } 
-        else { footerBtn.style.display = 'none'; }
+        if (totalItems > 0) {
+            footerBtn.style.display = 'block';
+            footerBtn.innerHTML = `View Cart (${totalItems}) &nbsp;&nbsp;&nbsp; ₹${totalPrice.toFixed(2)}`;
+        } else {
+            footerBtn.style.display = 'none';
+        }
     }
-    
+
     function removeLastAddedItem(baseId) {
-        for (let i = cart.length - 1; i >= 0; i--) { if (cart[i].baseId === baseId) { removeItem(cart[i].id); break; } }
+        for (let i = cart.length - 1; i >= 0; i--) {
+            if (cart[i].baseId === baseId) {
+                removeItem(cart[i].id);
+                break;
+            }
+        }
     }
 
     function reopenOptionsFor(baseId) {
         const originalItem = findMenuItemById(baseId);
-        if (originalItem && originalItem.options) { showOptionsModal(originalItem); } 
-        else if (originalItem) { addItem(originalItem.id, originalItem.name, originalItem.price); }
+        if (originalItem) {
+            originalItem.options ? showOptionsModal(originalItem) : addItem(originalItem.id, originalItem.name, originalItem.price);
+        }
     }
 
     function findMenuItemById(id) {
         for (const catId in menuData) {
             const category = menuData[catId];
             if (category.subCategories) {
-                for (const subCatId in category.subCategories) { const found = category.subCategories[subCatId].items.find(item => item.id === id); if (found) return found; }
-            } else { const found = category.items.find(item => item.id === id); if (found) return found; }
+                for (const subCatId in category.subCategories) {
+                    const found = category.subCategories[subCatId].items.find(item => item.id === id);
+                    if (found) return found;
+                }
+            } else {
+                const found = category.items.find(item => item.id === id);
+                if (found) return found;
+            }
         }
         return null;
     }
@@ -522,44 +308,48 @@
         if (cart.length === 0) return;
         const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
         document.getElementById("checkoutTotal").textContent = `₹${total.toFixed(2)}`;
-        
         const cartItemsList = document.getElementById("cartItemsList");
         cartItemsList.innerHTML = '';
-        cart.forEach(item => { 
-            const listItem = document.createElement('li'); 
-            listItem.textContent = `${item.quantity} x ${item.name}`; 
-            cartItemsList.appendChild(listItem); 
+        cart.forEach(item => {
+            const listItem = document.createElement('li');
+            listItem.textContent = `${item.quantity} x ${item.name}`;
+            cartItemsList.appendChild(listItem);
         });
-        
         document.getElementById("checkoutModal").style.display = "flex";
     }
     
-    document.getElementById('checkoutModal').onclick = function(event) { if (event.target.id === 'checkoutModal') { event.target.style.display = 'none'; } };
+    document.getElementById('checkoutModal').onclick = function(event) {
+        if (event.target.id === 'checkoutModal') {
+            event.target.style.display = 'none';
+        }
+    };
 
     function submitOrder() {
-        // =======================================================================
-        // THIS IS YOUR LIVE SCRIPT URL - DO NOT CHANGE
-        // =======================================================================
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxgWh-4jqQ7ytfpaaSKTMtTsOl5QFvH1YJDVFl737Ksv1c5vJcXtb8sTsBVfh35LHj9Uw/exec";
-        // =======================================================================
-
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyMyL86bYNeLYPzyV8ZNOv9HVkl41pKXjP4HJbe6aTdg3M5Zx3C1a70YHZrHFOQpICbvg/exec";
         const name = document.getElementById("customerName").value.trim();
         const phone = document.getElementById("customerPhone").value.trim();
-        
+        const selectedOrderType = document.querySelector('input[name="orderType"]:checked');
+
         if (!name || !phone) {
             alert("Please fill in your name and phone number.");
             return;
         }
-
+        if (!selectedOrderType) {
+            alert("Please select Dine-in or Takeaway.");
+            return;
+        }
+        
+        const orderType = selectedOrderType.value;
         const finalTotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
         const itemsSummary = cart.map(item => `${item.quantity} x ${item.name}`).join('\n');
         
         const orderData = {
-            name: `${name} (Takeaway)`,
+            timestamp: new Date().toISOString(),
+            name: `${name} (${orderType})`,
             phone: phone,
+            orderType: orderType,
             items: itemsSummary,
-            totalAmount: `₹${finalTotal.toFixed(2)}`,
-            timestamp: new Date().toISOString()
+            totalAmount: `₹${finalTotal.toFixed(2)}`
         };
 
         const submitButton = document.getElementById('submitBtn');
@@ -572,9 +362,7 @@
         })
         .then(response => response.json())
         .then(data => {
-            if (data.result !== 'success') {
-                throw new Error(data.message || 'The script reported an error.');
-            }
+            if (data.result !== 'success') { throw new Error(data.message || 'The script reported an error.'); }
             alert(`✅ Thank you, ${name}! Your order has been placed successfully!`);
             cart = [];
             updateMainDisplay();
@@ -595,28 +383,7 @@
     document.addEventListener('DOMContentLoaded', () => {
         generateMenu();
         updateMainDisplay();
-        
-        const sections = document.querySelectorAll('section');
-        const navLinks = document.querySelectorAll('.category-nav a');
-        
-        window.onscroll = () => {
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                if(pageYOffset >= sectionTop - 200) {
-                    current = section.getAttribute('id');
-                }
-            });
-            
-            navLinks.forEach(a => {
-                a.classList.remove('active');
-                if(a.getAttribute('href').substring(1) === current) {
-                    a.classList.add('active');
-                }
-            });
-        };
     });
 </script>
-
 </body>
 </html>
