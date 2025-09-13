@@ -1,1 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>K's Tawa - Online Ordering</title>
+  <style>
+    :root { --primary-color: #d35400; --accent-color: #ff9800; --green-color: #27ae60; --red-color: #e74c3c; --background-color: #f8f9fa; --text-color: #333; --veg-color: #27ae60; --nonveg-color: #c0392b;}
+    html { scroll-behavior: smooth; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; margin: 0; background: var(--background-color); color: var(--text-color); padding-top: 155px; padding-bottom: 150px; }
+    @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+    @keyframes flash-phone { 0%, 100% { color: white; transform: scale(1); } 50% { color: #ffeb3b; transform: scale(1.05); } }
+    @keyframes flashy-deal { 0%, 100% { transform: scale(1); box-shadow: 0 0 5px #ffeb3b; color: white; } 50% { transform: scale(1.03); box-shadow: 0 0 20px #ffeb3b, 0 0 30px #ffeb3b; color: #ffeb3b; } }
+    header { background: var(--primary-color); color: white; text-align: center; position: fixed; top: 0; width: 100%; box-sizing: border-box; z-index: 1000; padding: 10px 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+    .header-content { display: flex; justify-content: center; align-items: center; }
+    .header-logo { max-height: 50px; width: auto; flex-shrink: 0; }
+    .header-text { margin-left: 15px; text-align: left;}
+    .header-text h1 { margin: 0; font-size: 1.2em; color: white; }
+    .restaurant-info { font-size: 0.9em; font-weight: bold; line-height: 1.4; margin-top: 8px; color: white; }
+    .restaurant-info span { display: block; }
+    .restaurant-info a { color: white; text-decoration: none; display: inline-block; animation: flash-phone 2.5s infinite; }
+    .category-nav { background: white; position: fixed; top: 95px; width: 100%; box-shadow: 0 2px 5px rgba(0,0,0,0.1); white-space: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; z-index: 999; border-bottom: 1px solid #eee; }
+    .category-nav a { display: inline-block; padding: 15px; color: var(--text-color); text-decoration: none; font-weight: 600; font-size: 0.9em; border-bottom: 3px solid transparent; transition: all 0.2s; }
+    .category-nav a.active, .category-nav a:hover { border-bottom-color: var(--primary-color); color: var(--primary-color); }
+    .menu-container { padding: 75px 15px 15px; }
+    section { padding-top: 20px; }
+    .main-category-title { font-size: 1.8em; color: var(--text-color); border-bottom: 4px solid var(--primary-color); padding-bottom: 10px; margin-bottom: 25px; }
+    .sub-category-title { font-size: 1.4em; padding: 10px 0; margin-top: 30px; margin-bottom: 15px; }
+    .item-card { display: flex; background: white; padding: 15px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); margin-bottom: 20px; align-items: flex-start; }
+    .item-details { flex-grow: 1; display: flex; flex-direction: column; }
+    .item-veg-indicator { width: 12px; height: 12px; border-radius: 2px; display: inline-block; margin-right: 8px; border: 1.5px solid; }
+    .veg { border-color: var(--veg-color); background-color: var(--veg-color); }
+    .non-veg { border-color: var(--nonveg-color); background-color: var(--nonveg-color); }
+    .item-name { font-weight: 600; font-size: 1.1em; color: var(--text-color); }
+    .item-price { font-size: 1em; color: #666; margin-top: 8px; }
+    .item-image-cta-wrapper { display: flex; flex-direction: column; align-items: center; margin-left: 15px; flex-shrink: 0; }
+    .item-image { width: 120px; height: 120px; object-fit: cover; border-radius: 8px; }
+    .item-cta { margin-top: 10px; width: 100%; }
+    .add-btn { background: #fff; color: var(--green-color); border: 2px solid var(--green-color); padding: 8px 25px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; box-sizing: border-box;}
+    .quantity-control { display: flex; align-items: center; justify-content: space-between; border: 2px solid var(--green-color); border-radius: 8px; width: 100px; margin: 0 auto;}
+    .quantity-control button { background: none; border: none; color: var(--green-color); font-size: 1.5em; font-weight: bold; cursor: pointer; padding: 5px 12px; }
+    footer { position: fixed; bottom: 0; width: 100%; background: white; padding: 10px; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); text-align: center;}
+    .navratra-message { background-color: var(--red-color); color: white; padding: 12px; font-size: 1.1em; font-weight: bold; text-align: center; margin: 0 auto 10px auto; border-radius: 8px; width: 95%; max-width: 450px; box-sizing: border-box; line-height: 1.4; }
+    .footer-cart-btn { display: none; width: 95%; max-width: 450px; margin: 0 auto; padding: 16px; font-size: 1.2em; color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; background-color: var(--green-color); }
+    #optionsModal, #checkoutModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1001; background: rgba(0,0,0,0.6); align-items: center; justify-content: center; }
+    .modal-dialog { position: absolute; bottom: 0; left: 0; width: 100%; background: #fff; border-radius: 20px 20px 0 0; box-sizing: border-box; max-height: 85vh; display: flex; flex-direction: column; animation: slideUp 0.3s ease-out; }
+    .modal-header { padding: 15px 20px; border-bottom: 1px solid #eee; } .modal-header h2 { margin: 0; font-size: 1.4em; }
+    .modal-body { padding: 10px 20px; overflow-y: auto; }
+    .option-group h3 { font-size: 1.1em; margin: 20px 0 10px; } .option-choice { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; }
+    .modal-footer { padding: 15px 20px; border-top: 1px solid #eee; } .modal-add-btn { width: 100%; padding: 16px; font-size: 1.1em; font-weight: bold; color: white; background: var(--green-color); border: none; border-radius: 10px; cursor: pointer; }
+    .checkout-modal-content { background: white; padding: 25px; border-radius: 12px; width: 90%; max-width: 400px; }
+    .checkout-modal-content h2 { margin-top: 0; }
+    .checkout-modal-content ul { list-style-type: none; padding: 10px 0; max-height: 150px; overflow-y: auto; }
+    .price-summary { border-top: 1px solid #eee; margin-top: 15px; padding-top: 15px; }
+    .price-line.total { font-weight: bold; font-size: 1.2em; }
+    .checkout-modal-content input[type="text"], .checkout-modal-content input[type="tel"] { width: 100%; box-sizing: border-box; margin-bottom: 15px; padding: 14px; border: 1px solid #ccc; border-radius: 8px; font-size: 1.1em;}
+    .place-order-btn { background-color: var(--green-color); width: 100%; padding: 14px; border: none; border-radius: 8px; font-size: 1.1em; font-weight: bold; color: white; }
+    .order-type-selector { margin-bottom: 20px; padding: 10px; border: 1px solid #ccc; border-radius: 8px; }
+    .order-type-selector legend { font-weight: bold; padding: 0 5px; margin-left: 10px; }
+    .order-type-options { display: flex; justify-content: space-around; padding-top: 10px; }
+    .order-type-options label { font-size: 1.1em; }
+  </style>
+</head>
+<body>
+<header>
+    <div class="header-content">
+        <img src="https://lh3.googleusercontent.com/tHEXO53lDMWp5DAV2aD9PprhZVZm7zDNvOaQnUEw4t5CwN70xPdj0BozneN1Sa4alO1vQaZ4fv4J9vEOhkz_E7di-uMRPRa5qaTnOPmoGQ=w256-rw" alt="K's Tawa Logo" class="header-logo">
+        <div class="header-text">
+            <h1>K’s Tawa V/s Tandoor Junction</h1>
+            <div class="restaurant-info">
+                <span>C-920 Ratan Plaza, Ramphal Chowk, Dwarka Sector - 7</span>
+                <a href="tel:7678654713">Phone: 7678654713</a>
+            </div>
+        </div>
+    </div>
+</header>
+<nav class="category-nav" id="category-nav"></nav>
+<div class="menu-container" id="menu-container"></div>
 
+<footer>
+    <div class="navratra-message">
+        Non-Veg items closed till Navratra.
+    </div>
+    <button id="footerCartBtn" class="footer-cart-btn" onclick="showCheckoutForm()">View Cart</button>
+</footer>
+
+<div id="checkoutModal">
+  <div class="checkout-modal-content">
+    <h2>Enter Order Details</h2>
+    <input type="text" id="customerName" placeholder="Full Name" required />
+    <input type="tel" id="customerPhone" placeholder="Phone Number" required />
+    
+    <fieldset class="order-type-selector">
+        <legend>Order Type</legend>
+        <div class="order-type-options">
+            <label><input type="radio" name="orderType" value="Takeaway" checked> Takeaway</label>
+            <label><input type="radio" name="orderType" value="Dine-in"> Dine-in</label>
+        </div>
+    </fieldset>
+    
+    <h4>Order Summary:</h4>
+    <ul id="cartItemsList"></ul>
+    <div class="price-summary">
+        <hr>
+        <div class="price-line total">
+            <span>Total To Pay</span><span id="checkoutTotal">₹0.00</span>
+        </div>
+    </div>
+    <div><button onclick="submitOrder()" id="submitBtn" class="place-order-btn">Place Order</button></div>
+  </div>
+</div>
+
+<div id="optionsModal">
+  <div class="modal-dialog">
+    <div class="modal-header"><h2 id="modalItemName"></h2></div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-footer"><button id="modalAddItemBtn" class="modal-add-btn">Add item - ₹0</button></div>
+  </div>
+</div>
+
+<script>
+    const menuData = {"cat-starters":{title:"Chef's Specials Tandoori Starters",subCategories:{"veg-starters":{title:"🔥 Tandoori Starters (Veg)",items:[{id:"achari-chaap",name:"Achari Chaap",price:110,isVeg:!0,image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnOQ3dq-ZmXSnjRbvKNBzckbr8HOF7SEAhdA&s?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:110},{name:"Full",price:180}]}]},{id:"lemon-chaap",name:"Lemon Chaap",price:110,isVeg:!0,image:"https://shoopy.b-cdn.net/273385/1704634679406_SKU-2916_0.jpg?format=webp?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:110},{name:"Full",price:180}]}]},{id:"chatpati-chaap",name:"Chatpati Chaap",price:110,isVeg:!0,image:"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/426cfdb867684e57e63f1e0cd784d174?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:110},{name:"Full",price:180}]}]},{id:"malai-chaap",name:"Malai Chaap",price:110,isVeg:!0,image:"https://nishamadhulika.com/imgpst/featured/soya_chaap_white_gravy.jpg?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:110},{name:"Full",price:180}]}]},{id:"paneer-tikka",name:"Paneer Tikka",price:120,isVeg:!0,image:"https://www.cookwithkushi.com/wp-content/uploads/2023/02/tandoori_paneer_tikka_restaurant_style.jpg?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:120},{name:"Full",price:200}]}]},{id:"paneer-malai-tikka",name:"Paneer Malai Tikka",price:140,isVeg:!0,image:"https://i.ytimg.com/vi/Oy3YX7OTVqI/maxresdefault.jpg?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:140},{name:"Full",price:240}]}]},{id:"paneer-achari-tikka",name:"Paneer Achari Tikka",price:120,isVeg:!0,image:"https://img-global.cpcdn.com/recipes/ac467aeb4ef8bc02/1200x630cq70/photo.jpg?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:120},{name:"Full",price:200}]}]},{id:"peri-peri-soya-chaap",name:"Peri Peri Soya Chaap",price:110,isVeg:!0,image:"https://b.zmtcdn.com/data/dish_photos/2c3/63e6728d7ba3c1577efcbce416a2a2c3.jpg?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:110},{name:"Full",price:180}]}]},{id:"peri-peri-paneer-tikka",name:"Peri Peri Paneer Tikka",price:120,isVeg:!0,image:"https://ministryofcurry.com/wp-content/uploads/2021/01/Paneer-Tikka_-2-1.jpg?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:120},{name:"Full",price:200}]}]},{id:"afghani-tandoori-chaap",name:"Afghani Tandoori Chaap",price:140,isVeg:!0,image:"https://orders.popskitchen.in/storage/2024/09/image-362.png?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:140},{name:"Full",price:220}]}]}]},"non-veg-starters":{title:"🔥 Tandoori Starters (Non-Veg)",items:[{id:"bhatti-murg",name:"Bhatti Murg",price:260,isVeg:!1,image:"https://skyviewbyempyrean.com/wp-content/uploads/2022/04/chefs-speciality-scaled.jpg?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"4 pcs",price:260},{name:"8 pcs",price:480}]}]},{id:"tandoori-chicken",name:"Tandoori Chicken",price:260,isVeg:!1,image:"https://static01.nyt.com/images/2024/05/16/multimedia/fs-tandoori-chicken-hmjq/fs-tandoori-chicken-hmjq-videoSixteenByNineJumbo1600.jpg?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"4 pcs",price:260},{name:"8 pcs",price:480}]}]}]}}},"cat-platters":{title:"Platters & Meal Combos",items:[{id:"tandoori-veg-platter",name:"Tandoori Veg Platters",price:350,isVeg:!0,image:"https://thesaffronhouse.ca/wp-content/uploads/2023/11/non-veg-platter-1.jpg?q=80&w=800&auto=format&fit=crop"},{id:"malai-peri-combo",name:"Malai Chaap (Half) + Peri Peri Soya Chaap (Half)",price:279,isVeg:!0,image:"https://images.unsplash.com/photo-1628209888795-a5089ac3e0f0?q=80&w=800&auto=format&fit=crop"},{id:"lemon-chatpati-combo",name:"Lemon Chaap (Half) + Chatpati Chaap (Half)",price:279,isVeg:!0,image:"https://images.unsplash.com/photo-1625944228741-cf3ab592b868?q=80&w=800&auto=format&fit=crop"},{id:"afghani-achari-combo",name:"Afghani Tandoori Chaap (Half) + Achari Chaap (Half)",price:279,isVeg:!0,image:"https://images.unsplash.com/photo-1628209888795-a5089ac3e0f0?q=80&w=800&auto=format&fit=crop"}]},"cat-rolls":{title:"Rocking Rolls",items:[{id:"malai-chaap-roll",name:"Malai Chaap Roll",price:120,isVeg:!0,image:"https://plus.unsplash.com/premium_photo-1695299444434-297d2b9326e7?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:120},{name:"Full",price:190}]}]},{id:"chatpati-chaap-roll",name:"Chatpati Chaap Roll",price:120,isVeg:!0,image:"https://plus.unsplash.com/premium_photo-16952994444434-297d2b9326e7?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:120},{name:"Full",price:190}]}]},{id:"achari-chaap-roll",name:"Achari Chaap Roll",price:120,isVeg:!0,image:"https://plus.unsplash.com/premium_photo-1695299444434-297d2b9326e7?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:120},{name:"Full",price:190}]}]},{id:"afghani-chaap-roll",name:"Afghani Chaap Roll",price:130,isVeg:!0,image:"https://plus.unsplash.com/premium_photo-1695299444434-297d2b9326e7?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:130},{name:"Full",price:220}]}]},{id:"lemon-chaap-roll",name:"Lemon Chaap Roll",price:120,isVeg:!0,image:"https://plus.unsplash.com/premium_photo-1695299444434-297d2b9326e7?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:120},{name:"Full",price:190}]}]},{id:"paneer-tikka-roll",name:"Paneer Tikka Roll",price:120,isVeg:!0,image:"https://images.unsplash.com/photo-1615478503562-ec2d82e85b8a?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:120},{name:"Full",price:200}]}]},{id:"peri-peri-soya-roll",name:"Peri Peri Soya Chaap Roll",price:120,isVeg:!0,image:"https://plus.unsplash.com/premium_photo-1695299444434-297d2b9326e7?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:120},{name:"Full",price:190}]}]},{id:"peri-peri-paneer-roll",name:"Peri Peri Paneer Tikka Roll",price:140,isVeg:!0,image:"https://images.unsplash.com/photo-1615478503562-ec2d82e85b8a?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:140},{name:"Full",price:200}]}]}]},"cat-main-course":{title:"Main Course",subCategories:{"veg-main":{title:"🥗 Veg Main Course",items:[{id:"tawa-chaap-masala",name:"Tawa Chaap Masala",price:160,isVeg:!0,image:"https://plus.unsplash.com/premium_photo-1668618296839-a782c57c61f0?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:160},{name:"Full",price:230}]}]},{id:"tawa-paneer-masala",name:"Tawa Paneer Masala",price:160,isVeg:!0,image:"https://images.unsplash.com/photo-1668618224539-36c531a6a683?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:160},{name:"Full",price:230}]}]},{id:"paneer-takatak",name:"Paneer Takatak",price:170,isVeg:!0,image:"https://plus.unsplash.com/premium_photo-1695299444434-297d2b9326e7?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:170},{name:"Full",price:240}]}]},{id:"butter-chaap",name:"Butter Chaap",price:170,isVeg:!0,image:"https://plus.unsplash.com/premium_photo-1668618296839-a782c57c61f0?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:170},{name:"Full",price:240}]}]},{id:"shahi-paneer",name:"Shahi Paneer",price:120,isVeg:!0,image:"https://images.unsplash.com/photo-1565557623262-b27e25248540?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:120},{name:"Full",price:200}]}]},{id:"kadhai-chaap",name:"Kadhai Chaap",price:120,isVeg:!0,image:"https://plus.unsplash.com/premium_photo-1668618296839-a782c57c61f0?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:120},{name:"Full",price:210}]}]},{id:"mix-veg",name:"Mix Veg",price:120,isVeg:!0,image:"https://images.unsplash.com/photo-1533089860892-a7c6f0a485d8?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:120},{name:"Full",price:190}]}]},{id:"kadhai-paneer",name:"Kadhai Paneer",price:120,isVeg:!0,image:"https://images.unsplash.com/photo-1574484284002-952d92456975?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:120},{name:"Full",price:200}]}]},{id:"paneer-butter-masala",name:"Paneer Butter Masala",price:140,isVeg:!0,image:"https://images.unsplash.com/photo-1589647363585-f4a7d38779df?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:140},{name:"Full",price:230}]}]},{id:"matar-paneer",name:"Matar Paneer",price:130,isVeg:!0,image:"https://images.unsplash.com/photo-1563379926898-05f4575a45d8?q=80&w=800&auto=format&fit=crop",options:[{group:"Size",type:"radio",required:!0,choices:[{name:"Half",price:130},{name:"Full",price:220}]}]},{id:"paneer-lababdar",name:"Paneer Lababdar",price:160,isVeg:!0,image:"https://plus.unsplash.com/premium_photo-1695299444434-297d2b9326e7?q=80&w=800&auto=format&fit=
